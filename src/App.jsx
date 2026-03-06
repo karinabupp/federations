@@ -538,123 +538,79 @@ function CountryStateMap({ country, states, onBack, onSaveStates }) {
     return m;
   },[localStates]);
 
-  // ISO3 codes for geoBoundaries API
-  const COUNTRY_ISO3 = {
-    "Brazil":"BRA","Argentina":"ARG","Colombia":"COL","Chile":"CHL",
-    "United States":"USA","Canada":"CAN","Mexico":"MEX",
-    "England":"GBR","France":"FRA","Germany":"DEU","Spain":"ESP",
-    "Italy":"ITA","Poland":"POL","Australia":"AUS","Japan":"JPN",
-    "South Korea":"KOR","China":"CHN","India":"IND","Indonesia":"IDN",
-    "Taiwan":"TWN","Israel":"ISR","Egypt":"EGY","South Africa":"ZAF",
-    "Nigeria":"NGA","Portugal":"PRT","Netherlands":"NLD","Belgium":"BEL",
-    "Sweden":"SWE","Norway":"NOR","Denmark":"DNK","Finland":"FIN",
-    "Switzerland":"CHE","Austria":"AUT","Greece":"GRC","Turkey":"TUR",
-    "Romania":"ROU","Hungary":"HUN","Czech Republic":"CZE","Slovakia":"SVK",
-    "Ukraine":"UKR","Russia":"RUS","Kazakhstan":"KAZ","Thailand":"THA",
-    "Vietnam":"VNM","Malaysia":"MYS","Philippines":"PHL","Pakistan":"PAK",
-    "Bangladesh":"BGD","Peru":"PER","Venezuela":"VEN","Ecuador":"ECU",
-    "Bolivia":"BOL","Paraguay":"PRY","Uruguay":"URY","Morocco":"MAR",
-    "Algeria":"DZA","Tunisia":"TUN","Kenya":"KEN","Ethiopia":"ETH",
-    "Ghana":"GHA","Cameroon":"CMR","Senegal":"SEN","Angola":"AGO",
-    "New Zealand":"NZL","United Arab Emirates":"ARE","Saudi Arabia":"SAU",
-  };
+  // Countries that have a local GeoJSON in /public/geo/
+  const GEO_AVAILABLE = ["Brazil","Australia","Canada","England","Germany","Israel","Japan","Mexico","Taiwan"];
 
   useEffect(()=>{
     const el=containerRef.current;
     if(!el) return;
     let cancelled=false;
 
-    const iso3 = COUNTRY_ISO3[country.country];
+    const hasGeo = GEO_AVAILABLE.includes(country.country);
 
-    // Show loading state
-    el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px">Loading map…</div>`;
-
-    if(!iso3){
+    if(!hasGeo){
       el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px;font-style:italic">State map for ${country.country} not yet available.</div>`;
       return;
     }
 
-    const renderMap=(geoData)=>{
-      if(cancelled||!el||!geoData) return;
+    el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px">Loading map…</div>`;
 
-      const features=geoData.features||[];
-      if(features.length===0){
-        el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px;font-style:italic">No region data available for ${country.country}.</div>`;
-        return;
-      }
+    fetch(`/geo/${country.country}.json`)
+      .then(r=>{ if(!r.ok) throw new Error("not found"); return r.json(); })
+      .then(geoData=>{
+        if(cancelled||!el) return;
 
-      // Try to find name property (geoBoundaries uses shapeName)
-      const nameKey = features[0]?.properties?.shapeName !== undefined ? "shapeName"
-        : features[0]?.properties?.name !== undefined ? "name"
-        : features[0]?.properties?.NAME_1 !== undefined ? "NAME_1"
-        : Object.keys(features[0]?.properties||{})[0] || "shapeName";
+        const features = geoData.features||[];
+        if(features.length===0) throw new Error("empty");
 
-      const names = features.map(f=>f.properties[nameKey]||"");
+        const nameKey = Object.keys(features[0]?.properties||{}).find(k=>
+          ["name","shapeName","NAME_1","NAME"].includes(k)
+        ) || Object.keys(features[0]?.properties||{})[0];
 
-      const STATUS_Z={Member:0,Negotiating:1,Documentation:2,Needed:3};
-      const z=names.map(name=>{
-        const st=statesByName[name.toLowerCase()];
-        return st?(STATUS_Z[st.memberStatus]??4):4;
-      });
-      const colorscale=[
-        [0/4,"#22c55e"],[1/4,"#22c55e"],
-        [1/4,"#f59e0b"],[2/4,"#f59e0b"],
-        [2/4,"#60a5fa"],[3/4,"#60a5fa"],
-        [3/4,"#ef4444"],[3.5/4,"#ef4444"],
-        [3.5/4,"#dde3ea"],[1.0,"#dde3ea"],
-      ];
-      const hovertemplate=names.map(name=>{
-        const st=statesByName[name.toLowerCase()];
-        const trophy=(showTrophies&&st&&st.tournament)?" 🏆":"";
-        if(st){
-          const sc=STATUS_CFG[st.memberStatus]?.dot||"#22c55e";
-          return `<b>${name}${trophy}</b><br><span style="color:${sc}">${st.memberStatus||"Member"}</span> · ${st.federation||"—"}<br><span style="color:#9ca3af">${st.rep||""}</span><extra></extra>`;
-        }
-        return `<b>${name}</b><br><span style="color:#9ca3af;font-style:italic">No federation</span><extra></extra>`;
-      });
+        const names = features.map(f=>f.properties[nameKey]||"");
+        const STATUS_Z = {Member:0,Negotiating:1,Documentation:2,Needed:3};
+        const z = names.map(name=>{
+          const st=statesByName[name.toLowerCase()];
+          return st?(STATUS_Z[st.memberStatus]??4):4;
+        });
+        const colorscale=[
+          [0/4,"#22c55e"],[1/4,"#22c55e"],
+          [1/4,"#f59e0b"],[2/4,"#f59e0b"],
+          [2/4,"#60a5fa"],[3/4,"#60a5fa"],
+          [3/4,"#ef4444"],[3.5/4,"#ef4444"],
+          [3.5/4,"#dde3ea"],[1.0,"#dde3ea"],
+        ];
+        const hovertemplate=names.map(name=>{
+          const st=statesByName[name.toLowerCase()];
+          const trophy=(showTrophies&&st&&st.tournament)?" 🏆":"";
+          if(st){
+            const sc=STATUS_CFG[st.memberStatus]?.dot||"#22c55e";
+            return `<b>${name}${trophy}</b><br><span style="color:${sc}">${st.memberStatus||"Member"}</span> · ${st.federation||"—"}<br><span style="color:#9ca3af">${st.rep||""}</span><extra></extra>`;
+          }
+          return `<b>${name}</b><br><span style="color:#9ca3af;font-style:italic">No federation</span><extra></extra>`;
+        });
 
-      // Remap feature id key to match shapeName
-      const remapped = {
-        ...geoData,
-        features: features.map(f=>({
-          ...f,
-          properties:{...f.properties, _label: f.properties[nameKey]},
-        }))
-      };
-
-      el.innerHTML="";
-      Plotly.newPlot(el,[{
-        type:"choropleth",
-        geojson:geoData,
-        locations:names,
-        featureidkey:`properties.${nameKey}`,
-        z, zmin:0, zmax:4,
-        colorscale, showscale:false,
-        marker:{line:{color:"white",width:1}},
-        hovertemplate,
-      }],{
-        geo:{fitbounds:"geojson",visible:false,bgcolor:"#f1f5f9"},
-        margin:{t:0,b:0,l:0,r:0},
-        paper_bgcolor:"#f1f5f9",
-        height:480,
-        hoverlabel:{bgcolor:"#fff",bordercolor:"#e5e7eb",font:{size:12,family:"Inter,sans-serif"}},
-      },{displayModeBar:false,responsive:true});
-    };
-
-    // Fetch from geoBoundaries API — real administrative boundaries
-    const url=`https://www.geoboundaries.org/api/current/gbOpen/${iso3}/ADM1/`;
-    fetch(url)
-      .then(r=>r.json())
-      .then(meta=>{
-        if(cancelled) return;
-        if(!meta.gjDownloadURL) throw new Error("no download URL");
-        return fetch(meta.gjDownloadURL);
+        el.innerHTML="";
+        Plotly.newPlot(el,[{
+          type:"choropleth",
+          geojson:geoData,
+          locations:names,
+          featureidkey:`properties.${nameKey}`,
+          z, zmin:0, zmax:4,
+          colorscale, showscale:false,
+          marker:{line:{color:"white",width:1}},
+          hovertemplate,
+        }],{
+          geo:{fitbounds:"geojson",visible:false,bgcolor:"#f1f5f9"},
+          margin:{t:0,b:0,l:0,r:0},
+          paper_bgcolor:"#f1f5f9",
+          height:480,
+          hoverlabel:{bgcolor:"#fff",bordercolor:"#e5e7eb",font:{size:12,family:"Inter,sans-serif"}},
+        },{displayModeBar:false,responsive:true});
       })
-      .then(r=>r.json())
-      .then(geoData=>{ if(!cancelled) renderMap(geoData); })
       .catch(()=>{
         if(!cancelled)
-          el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px;font-style:italic">Could not load map for ${country.country}.</div>`;
+          el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px;font-style:italic">State map for ${country.country} not yet available.</div>`;
       });
 
     return()=>{ cancelled=true; if(el&&window.Plotly) Plotly.purge(el); };
