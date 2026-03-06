@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import * as d3 from "d3";
-import Plotly from "plotly.js-dist";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { Globe, Users, AlertTriangle, XCircle, X, Plus, Database, LayoutDashboard, Target, ChevronDown, ChevronRight, History, ExternalLink, ArrowLeft, Map } from "lucide-react";
 
@@ -538,82 +537,137 @@ function CountryStateMap({ country, states, onBack, onSaveStates }) {
     return m;
   },[localStates]);
 
-  // Countries that have a local GeoJSON in /public/geo/
-  const GEO_AVAILABLE = ["Brazil","Australia","Canada","England","Germany","Israel","Japan","Mexico","Taiwan"];
+  // ISO3 → geoBoundaries
+  const COUNTRY_ISO3 = {
+    "Brazil":"BRA","Argentina":"ARG","Colombia":"COL","Chile":"CHL",
+    "United States":"USA","Canada":"CAN","Mexico":"MEX",
+    "England":"GBR","France":"FRA","Germany":"DEU","Spain":"ESP",
+    "Italy":"ITA","Poland":"POL","Australia":"AUS","Japan":"JPN",
+    "South Korea":"KOR","China":"CHN","India":"IND","Indonesia":"IDN",
+    "Taiwan":"TWN","Israel":"ISR","Egypt":"EGY","South Africa":"ZAF",
+    "Nigeria":"NGA","Portugal":"PRT","Netherlands":"NLD","Belgium":"BEL",
+    "Sweden":"SWE","Norway":"NOR","Denmark":"DNK","Finland":"FIN",
+    "Switzerland":"CHE","Austria":"AUT","Greece":"GRC","Turkey":"TUR",
+    "Romania":"ROU","Hungary":"HUN","Czech Republic":"CZE","Slovakia":"SVK",
+    "Ukraine":"UKR","Russia":"RUS","Kazakhstan":"KAZ","Thailand":"THA",
+    "Vietnam":"VNM","Malaysia":"MYS","Philippines":"PHL","Pakistan":"PAK",
+    "Bangladesh":"BGD","Peru":"PER","Venezuela":"VEN","Ecuador":"ECU",
+    "Bolivia":"BOL","Paraguay":"PRY","Uruguay":"URY","Morocco":"MAR",
+    "Algeria":"DZA","Tunisia":"TUN","Kenya":"KEN","Ethiopia":"ETH",
+    "Ghana":"GHA","Cameroon":"CMR","Senegal":"SEN","Angola":"AGO",
+    "New Zealand":"NZL","United Arab Emirates":"ARE","Saudi Arabia":"SAU",
+  };
+
+  const mapRef = useRef(null); // holds the Leaflet map instance
 
   useEffect(()=>{
-    const el=containerRef.current;
+    const el = containerRef.current;
     if(!el) return;
-    let cancelled=false;
+    let cancelled = false;
 
-    const hasGeo = GEO_AVAILABLE.includes(country.country);
+    const iso3 = COUNTRY_ISO3[country.country];
 
-    if(!hasGeo){
-      el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px;font-style:italic">State map for ${country.country} not yet available.</div>`;
+    // Destroy previous Leaflet map if exists
+    if(mapRef.current){ mapRef.current.remove(); mapRef.current=null; }
+    el.innerHTML="";
+
+    if(!iso3){
+      el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:480px;color:#9ca3af;font-size:13px;font-style:italic">State map for ${country.country} not yet available.</div>`;
       return;
     }
 
-    el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px">Loading map…</div>`;
+    el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:480px;color:#9ca3af;font-size:13px">Loading map…</div>`;
 
-    fetch(`/geo/${country.country}.json`)
-      .then(r=>{ if(!r.ok) throw new Error("not found"); return r.json(); })
-      .then(geoData=>{
-        if(cancelled||!el) return;
+    const loadLeaflet = () => new Promise(resolve=>{
+      if(window.L){ resolve(window.L); return; }
+      // CSS
+      if(!document.getElementById("leaflet-css")){
+        const link=document.createElement("link");
+        link.id="leaflet-css"; link.rel="stylesheet";
+        link.href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+        document.head.appendChild(link);
+      }
+      // JS
+      const s=document.createElement("script");
+      s.src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+      s.onload=()=>resolve(window.L);
+      document.head.appendChild(s);
+    });
 
-        const features = geoData.features||[];
-        if(features.length===0) throw new Error("empty");
+    const STATUS_COLOR={
+      Member:"#22c55e", Negotiating:"#f59e0b",
+      Documentation:"#60a5fa", Needed:"#ef4444",
+    };
 
-        const nameKey = Object.keys(features[0]?.properties||{}).find(k=>
-          ["name","shapeName","NAME_1","NAME"].includes(k)
-        ) || Object.keys(features[0]?.properties||{})[0];
+    Promise.all([
+      loadLeaflet(),
+      fetch(`https://www.geoboundaries.org/api/current/gbOpen/${iso3}/ADM1/`)
+        .then(r=>r.json())
+        .then(meta=>fetch(meta.gjDownloadURL).then(r=>r.json()))
+    ]).then(([L, geoData])=>{
+      if(cancelled||!containerRef.current) return;
 
-        const names = features.map(f=>f.properties[nameKey]||"");
-        const STATUS_Z = {Member:0,Negotiating:1,Documentation:2,Needed:3};
-        const z = names.map(name=>{
+      el.innerHTML="";
+      el.style.height="480px";
+
+      const map = L.map(el,{zoomControl:true, attributionControl:false});
+      mapRef.current = map;
+
+      // CartoDB Positron — clean, light basemap, no API key
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",{
+        subdomains:"abcd", maxZoom:19,
+      }).addTo(map);
+
+      const features = geoData.features||[];
+      const nameKey = ["shapeName","name","NAME_1","NAME"]
+        .find(k=>features[0]?.properties?.[k]!==undefined)
+        || Object.keys(features[0]?.properties||{})[0];
+
+      const geoLayer = L.geoJSON(geoData,{
+        style: feat=>{
+          const name=(feat.properties[nameKey]||"").toLowerCase();
+          const st=statesByName[name];
+          const color=st?( STATUS_COLOR[st.memberStatus]||"#22c55e" ):"#dde3ea";
+          return {
+            fillColor: color,
+            fillOpacity: st?0.75:0.4,
+            color:"#fff",
+            weight:1.5,
+          };
+        },
+        onEachFeature:(feat,layer)=>{
+          const name=feat.properties[nameKey]||"";
           const st=statesByName[name.toLowerCase()];
-          return st?(STATUS_Z[st.memberStatus]??4):4;
-        });
-        const colorscale=[
-          [0/4,"#22c55e"],[1/4,"#22c55e"],
-          [1/4,"#f59e0b"],[2/4,"#f59e0b"],
-          [2/4,"#60a5fa"],[3/4,"#60a5fa"],
-          [3/4,"#ef4444"],[3.5/4,"#ef4444"],
-          [3.5/4,"#dde3ea"],[1.0,"#dde3ea"],
-        ];
-        const hovertemplate=names.map(name=>{
-          const st=statesByName[name.toLowerCase()];
-          const trophy=(showTrophies&&st&&st.tournament)?" 🏆":"";
-          if(st){
-            const sc=STATUS_CFG[st.memberStatus]?.dot||"#22c55e";
-            return `<b>${name}${trophy}</b><br><span style="color:${sc}">${st.memberStatus||"Member"}</span> · ${st.federation||"—"}<br><span style="color:#9ca3af">${st.rep||""}</span><extra></extra>`;
-          }
-          return `<b>${name}</b><br><span style="color:#9ca3af;font-style:italic">No federation</span><extra></extra>`;
-        });
+          const trophy=(showTrophies&&st?.tournament)?" 🏆":"";
+          const color=st?( STATUS_COLOR[st.memberStatus]||"#22c55e" ):"#9ca3af";
+          const html=st
+            ?`<div style="font-size:12px;line-height:1.6;min-width:140px">
+                <b>${name}${trophy}</b><br/>
+                <span style="color:${color};font-weight:600">${st.memberStatus}</span>
+                ${st.federation?` · <span style="color:#16a34a;font-weight:600">${st.federation}</span>`:""}
+                ${st.rep?`<br/><span style="color:#9ca3af">${st.rep}</span>`:""}
+              </div>`
+            :`<div style="font-size:12px"><b>${name}</b><br/><span style="color:#9ca3af;font-style:italic">No federation</span></div>`;
 
-        el.innerHTML="";
-        Plotly.newPlot(el,[{
-          type:"choropleth",
-          geojson:geoData,
-          locations:names,
-          featureidkey:`properties.${nameKey}`,
-          z, zmin:0, zmax:4,
-          colorscale, showscale:false,
-          marker:{line:{color:"white",width:1}},
-          hovertemplate,
-        }],{
-          geo:{fitbounds:"geojson",visible:false,bgcolor:"#f1f5f9"},
-          margin:{t:0,b:0,l:0,r:0},
-          paper_bgcolor:"#f1f5f9",
-          height:480,
-          hoverlabel:{bgcolor:"#fff",bordercolor:"#e5e7eb",font:{size:12,family:"Inter,sans-serif"}},
-        },{displayModeBar:false,responsive:true});
-      })
-      .catch(()=>{
-        if(!cancelled)
-          el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px;font-style:italic">State map for ${country.country} not yet available.</div>`;
-      });
+          layer.bindTooltip(html,{sticky:true,opacity:1,className:""});
+          layer.on({
+            mouseover(e){ e.target.setStyle({fillOpacity:1,weight:2.5,color:"#334155"}); },
+            mouseout(e){ geoLayer.resetStyle(e.target); },
+          });
+        }
+      }).addTo(map);
 
-    return()=>{ cancelled=true; if(el&&window.Plotly) Plotly.purge(el); };
+      map.fitBounds(geoLayer.getBounds(),{padding:[16,16]});
+
+    }).catch(()=>{
+      if(!cancelled)
+        el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:480px;color:#9ca3af;font-size:13px;font-style:italic">Could not load map for ${country.country}.</div>`;
+    });
+
+    return()=>{
+      cancelled=true;
+      if(mapRef.current){ mapRef.current.remove(); mapRef.current=null; }
+    };
   },[country,statesByName,showTrophies]);
 
   const cfg=STATUS_CFG[country.memberStatus]||STATUS_CFG.Needed;
@@ -660,7 +714,7 @@ function CountryStateMap({ country, states, onBack, onSaveStates }) {
             </label>
           </div>
         </div>
-        <div ref={containerRef} style={{width:"100%",borderRadius:8,overflow:"hidden"}}/>
+        <div ref={containerRef} style={{width:"100%",borderRadius:8,overflow:"hidden",minHeight:480}}/>
       </div>
 
       {/* States Table */}
