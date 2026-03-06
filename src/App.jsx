@@ -507,134 +507,6 @@ function EditModal({ row, onClose, onSave, onExpandCountry }) {
 }
 
 
-// ── Embedded state geodata (no external fetch needed) ──────────
-const GEO_STATES = {
-  "Brazil": {"type":"FeatureCollection","features":[{"type":"Feature","properties":{"name":"Roraima"},"geometry":{"type":"Polygon","coordinates":[[[-64.4,5.27],[-61.3,5.27],[-59.85,4.5],[-59.4,2.68],[-60.2,1.9],[-62.1,1.9],[-63.4,2.2],[-64.0,1.3],[-64.8,0.8],[-64.8,2.5],[-63.5,3.8],[-64.4,5.27]]]}},{"type":"Feature","properties":{"name":"Amapá"},"geometry":{"type":"Polygon","coordinates":[[[-54.07,4.38],[-51.22,4.38],[-50.44,3.2],[-50.77,1.58],[-51.79,0.62],[-52.38,0.05],[-54.07,0.5],[-54.07,4.38]]]}},{"type":"Feature","properties":{"name":"Pará"},"geometry":{"type":"Polygon","coordinates":[[[-54.07,4.38],[-54.07,0.5],[-56.0,1.5],[-57.5,2.0],[-60.5,2.0],[-60.5,-0.5],[-60.0,-2.0],[-57.5,-4.0],[-56.5,-4.0],[-52.5,-8.0],[-50.7,-5.2],[-47.0,-5.2],[-46.0,-3.5],[-46.0,-0.5],[-47.5,0.5],[-49.5,1.2],[-50.8,2.5],[-51.22,4.38],[-54.07,4.38]]]}},{"type":"Feature","properties":{"name":"Amazonas"},"geometry":{"type":"Polygon","coordinates":[[[-74.0,2.2],[-74.0,-7.5],[-66.8,-7.9],[-60.5,-7.9],[-60.5,2.0],[-57.5,2.0],[-56.0,1.5],[-54.07,0.5],[-54.07,4.38],[-57.5,4.5],[-60.0,4.0],[-62.0,4.2],[-64.4,5.27],[-64.8,0.8],[-64.0,1.3],[-63.4,2.2],[-62.1,1.9],[-60.2,1.9],[-59.4,2.68],[-59.85,4.5],[-61.3,5.27],[-64.4,5.27],[-68.0,2.2],[-74.0,2.2]]]}},{"type":"Feature","properties":{"name":"Acre"},"geometry":{"type":"Polygon","coordinates":[[[-74.0,-7.5],[-66.8,-7.9],[-65.3,-10.0],[-67.3,-10.3],[-68.0,-11.0],[-70.5,-11.0],[-72.5,-9.5],[-74.0,-7.5]]]}},{"type":"Feature","properties":{"name":"Rondônia"},"geometry":{"type":"Polygon","coordinates":[[[-66.8,-7.9],[-60.5,-7.9],[-60.5,-9.8],[-63.0,-10.0],[-65.3,-10.0],[-66.8,-7.9]]]}},{"type":"Feature","properties":{"name":"Tocantins"},"geometry":{"type":"Polygon","coordinates":[[[-50.7,-5.2],[-47.0,-5.2],[-46.0,-7.0],[-46.0,-10.5],[-48.5,-13.4],[-50.7,-13.4],[-52.5,-11.0],[-52.5,-8.0],[-50.7,-5.2]]]}},{"type":"Feature","properties":{"name":"Maranhão"},"geometry":{"type":"Polygon","coordinates":[[[-48.8,-1.0],[-44.5,-1.0],[-43.0,-2.5],[-41.4,-2.8],[-41.4,-7.9],[-43.5,-9.5],[-46.0,-10.5],[-46.0,-7.0],[-47.0,-5.2],[-48.8,-3.5],[-48.8,-1.0]]]}},{"type":"Feature","properties":{"name":"Piauí"},"geometry":{"type":"Polygon","coordinates":[[[-41.4,-2.8],[-43.0,-2.5],[-44.5,-1.0],[-45.9,-3.0],[-45.9,-9.5],[-43.5,-9.5],[-41.4,-7.9],[-41.4,-2.8]]]}},{"type":"Feature","properties":{"name":"Ceará"},"geometry":{"type":"Polygon","coordinates":[[[-41.4,-2.8],[-37.3,-2.8],[-34.9,-4.8],[-37.3,-6.5],[-38.6,-6.9],[-41.4,-7.9],[-41.4,-2.8]]]}},{"type":"Feature","properties":{"name":"Rio Grande do Norte"},"geometry":{"type":"Polygon","coordinates":[[[-38.6,-4.8],[-34.9,-4.8],[-35.0,-6.0],[-37.3,-6.5],[-38.6,-4.8]]]}},{"type":"Feature","properties":{"name":"Paraíba"},"geometry":{"type":"Polygon","coordinates":[[[-38.8,-6.0],[-35.0,-6.0],[-34.8,-7.2],[-36.5,-7.2],[-38.8,-7.5],[-38.8,-6.0]]]}},{"type":"Feature","properties":{"name":"Pernambuco"},"geometry":{"type":"Polygon","coordinates":[[[-41.4,-7.9],[-38.6,-6.9],[-37.3,-6.5],[-35.0,-6.0],[-34.8,-7.2],[-34.8,-9.0],[-37.5,-9.5],[-40.0,-9.5],[-41.4,-9.5],[-41.4,-7.9]]]}},{"type":"Feature","properties":{"name":"Alagoas"},"geometry":{"type":"Polygon","coordinates":[[[-38.0,-9.0],[-35.0,-9.0],[-35.2,-10.5],[-37.0,-10.5],[-38.2,-10.0],[-38.0,-9.0]]]}},{"type":"Feature","properties":{"name":"Sergipe"},"geometry":{"type":"Polygon","coordinates":[[[-38.2,-9.5],[-37.0,-10.5],[-35.2,-10.5],[-35.2,-11.5],[-37.0,-11.5],[-38.2,-10.5],[-38.2,-9.5]]]}},{"type":"Feature","properties":{"name":"Bahia"},"geometry":{"type":"Polygon","coordinates":[[[-45.9,-9.5],[-40.0,-9.5],[-37.5,-9.5],[-34.8,-9.0],[-35.2,-11.5],[-37.0,-11.5],[-38.2,-10.5],[-39.5,-14.5],[-39.5,-18.4],[-40.5,-19.0],[-42.5,-18.4],[-44.5,-17.5],[-46.5,-15.5],[-47.5,-14.0],[-46.0,-10.5],[-45.9,-9.5]]]}},{"type":"Feature","properties":{"name":"Mato Grosso"},"geometry":{"type":"Polygon","coordinates":[[[-61.6,-7.5],[-57.5,-7.5],[-52.5,-8.0],[-52.5,-11.0],[-50.7,-13.4],[-51.5,-14.5],[-53.5,-17.5],[-58.2,-17.5],[-61.6,-14.0],[-61.6,-7.5]]]}},{"type":"Feature","properties":{"name":"Goiás"},"geometry":{"type":"Polygon","coordinates":[[[-53.5,-11.5],[-47.5,-11.5],[-47.5,-14.0],[-46.5,-15.5],[-48.0,-17.5],[-50.0,-19.5],[-51.5,-18.5],[-53.5,-17.5],[-51.5,-14.5],[-50.7,-13.4],[-52.5,-11.0],[-52.5,-8.0],[-53.5,-11.5]]]}},{"type":"Feature","properties":{"name":"Distrito Federal"},"geometry":{"type":"Polygon","coordinates":[[[-48.3,-15.5],[-47.3,-15.5],[-47.3,-16.1],[-48.3,-16.1],[-48.3,-15.5]]]}},{"type":"Feature","properties":{"name":"Mato Grosso do Sul"},"geometry":{"type":"Polygon","coordinates":[[[-58.2,-17.5],[-53.5,-17.5],[-51.5,-18.5],[-50.0,-19.5],[-50.0,-22.5],[-51.0,-22.5],[-54.6,-22.5],[-58.2,-24.1],[-58.2,-17.5]]]}},{"type":"Feature","properties":{"name":"Minas Gerais"},"geometry":{"type":"Polygon","coordinates":[[[-51.0,-14.2],[-47.5,-14.0],[-46.5,-15.5],[-44.5,-17.5],[-42.5,-18.4],[-40.5,-19.0],[-39.5,-18.4],[-39.5,-21.3],[-41.9,-21.3],[-44.9,-23.0],[-46.5,-23.5],[-48.0,-23.0],[-50.0,-22.5],[-51.0,-22.5],[-51.0,-14.2]]]}},{"type":"Feature","properties":{"name":"Espírito Santo"},"geometry":{"type":"Polygon","coordinates":[[[-41.9,-17.9],[-39.5,-17.9],[-39.5,-21.3],[-41.9,-21.3],[-41.9,-17.9]]]}},{"type":"Feature","properties":{"name":"Rio de Janeiro"},"geometry":{"type":"Polygon","coordinates":[[[-44.9,-21.0],[-41.9,-21.3],[-41.0,-23.4],[-43.5,-23.4],[-44.9,-23.0],[-46.5,-23.5],[-44.9,-21.0]]]}},{"type":"Feature","properties":{"name":"São Paulo"},"geometry":{"type":"Polygon","coordinates":[[[-53.1,-20.0],[-51.0,-19.8],[-48.0,-23.0],[-46.5,-23.5],[-44.9,-23.0],[-44.9,-24.0],[-47.5,-24.5],[-50.0,-24.5],[-51.0,-25.5],[-53.1,-25.0],[-53.1,-20.0]]]}},{"type":"Feature","properties":{"name":"Paraná"},"geometry":{"type":"Polygon","coordinates":[[[-54.6,-22.5],[-51.0,-22.5],[-50.0,-22.5],[-50.0,-24.5],[-51.0,-25.5],[-53.1,-25.0],[-54.6,-25.5],[-54.6,-22.5]]]}},{"type":"Feature","properties":{"name":"Santa Catarina"},"geometry":{"type":"Polygon","coordinates":[[[-53.9,-25.9],[-51.0,-25.5],[-48.5,-26.5],[-48.4,-29.4],[-51.5,-29.4],[-53.9,-29.4],[-53.9,-25.9]]]}},{"type":"Feature","properties":{"name":"Rio Grande do Sul"},"geometry":{"type":"Polygon","coordinates":[[[-57.6,-27.1],[-53.9,-27.1],[-51.5,-29.4],[-53.5,-33.8],[-57.6,-33.8],[-57.6,-27.1]]]}}]},
-  "Australia": {"type":"FeatureCollection","features":[
-    {"type":"Feature","properties":{"name":"Western Australia"},"geometry":{"type":"Polygon","coordinates":[[[113.5,-35.5],[129.0,-35.5],[129.0,-25.9],[129.0,-13.7],[121.5,-13.7],[114.5,-22.0],[113.5,-26.0],[113.5,-35.5]]]}},
-    {"type":"Feature","properties":{"name":"Northern Territory"},"geometry":{"type":"Polygon","coordinates":[[[129.0,-13.7],[138.0,-11.5],[138.0,-26.0],[129.0,-25.9],[129.0,-13.7]]]}},
-    {"type":"Feature","properties":{"name":"South Australia"},"geometry":{"type":"Polygon","coordinates":[[[129.0,-25.9],[138.0,-26.0],[141.0,-26.0],[141.0,-38.0],[129.0,-38.0],[129.0,-25.9]]]}},
-    {"type":"Feature","properties":{"name":"Queensland"},"geometry":{"type":"Polygon","coordinates":[[[138.0,-11.5],[154.0,-11.5],[154.0,-29.0],[141.0,-29.0],[141.0,-26.0],[138.0,-26.0],[138.0,-11.5]]]}},
-    {"type":"Feature","properties":{"name":"New South Wales"},"geometry":{"type":"Polygon","coordinates":[[[141.0,-29.0],[154.0,-29.0],[151.0,-37.5],[141.0,-37.5],[141.0,-29.0]]]}},
-    {"type":"Feature","properties":{"name":"Victoria"},"geometry":{"type":"Polygon","coordinates":[[[141.0,-37.5],[151.0,-37.5],[149.5,-38.5],[146.0,-39.0],[141.0,-38.8],[141.0,-37.5]]]}},
-    {"type":"Feature","properties":{"name":"Tasmania"},"geometry":{"type":"Polygon","coordinates":[[[144.5,-40.5],[148.7,-40.5],[148.7,-43.6],[144.5,-43.6],[144.5,-40.5]]]}},
-    {"type":"Feature","properties":{"name":"Australian Capital Territory"},"geometry":{"type":"Polygon","coordinates":[[[148.8,-35.1],[149.4,-35.1],[149.4,-35.9],[148.8,-35.9],[148.8,-35.1]]]}}
-  ]},
-  "Canada": {"type":"FeatureCollection","features":[
-    {"type":"Feature","properties":{"name":"Yukon"},"geometry":{"type":"Polygon","coordinates":[[[-141.0,70.0],[-124.0,70.0],[-124.0,60.0],[-141.0,60.0],[-141.0,70.0]]]}},
-    {"type":"Feature","properties":{"name":"Northwest Territories"},"geometry":{"type":"Polygon","coordinates":[[[-136.5,70.0],[-102.0,70.0],[-102.0,60.0],[-120.0,60.0],[-124.0,60.0],[-124.0,67.0],[-136.5,67.0],[-136.5,70.0]]]}},
-    {"type":"Feature","properties":{"name":"Nunavut"},"geometry":{"type":"Polygon","coordinates":[[[-102.0,70.0],[-61.0,70.0],[-61.0,62.0],[-95.0,62.0],[-102.0,60.0],[-102.0,70.0]]]}},
-    {"type":"Feature","properties":{"name":"British Columbia"},"geometry":{"type":"Polygon","coordinates":[[[-139.0,60.0],[-114.0,60.0],[-114.0,49.0],[-124.0,49.0],[-124.5,48.4],[-139.0,49.0],[-139.0,60.0]]]}},
-    {"type":"Feature","properties":{"name":"Alberta"},"geometry":{"type":"Polygon","coordinates":[[[-114.0,60.0],[-110.0,60.0],[-110.0,49.0],[-114.0,49.0],[-114.0,60.0]]]}},
-    {"type":"Feature","properties":{"name":"Saskatchewan"},"geometry":{"type":"Polygon","coordinates":[[[-110.0,60.0],[-101.5,60.0],[-101.5,49.0],[-110.0,49.0],[-110.0,60.0]]]}},
-    {"type":"Feature","properties":{"name":"Manitoba"},"geometry":{"type":"Polygon","coordinates":[[[-101.5,60.0],[-89.0,60.0],[-89.0,49.0],[-101.5,49.0],[-101.5,60.0]]]}},
-    {"type":"Feature","properties":{"name":"Ontario"},"geometry":{"type":"Polygon","coordinates":[[[-95.0,57.0],[-74.0,57.0],[-74.0,44.0],[-76.5,44.0],[-83.0,42.0],[-89.0,46.5],[-95.0,47.0],[-95.0,57.0]]]}},
-    {"type":"Feature","properties":{"name":"Quebec"},"geometry":{"type":"Polygon","coordinates":[[[-79.5,62.5],[-57.0,62.5],[-57.0,46.0],[-67.0,44.5],[-74.0,45.0],[-79.5,47.0],[-79.5,62.5]]]}},
-    {"type":"Feature","properties":{"name":"New Brunswick"},"geometry":{"type":"Polygon","coordinates":[[[-67.5,48.0],[-63.8,48.0],[-63.8,44.6],[-67.5,44.6],[-67.5,48.0]]]}},
-    {"type":"Feature","properties":{"name":"Nova Scotia"},"geometry":{"type":"Polygon","coordinates":[[[-66.0,47.0],[-60.0,47.0],[-59.7,43.5],[-66.3,43.5],[-66.0,47.0]]]}},
-    {"type":"Feature","properties":{"name":"Prince Edward Island"},"geometry":{"type":"Polygon","coordinates":[[[-64.4,47.1],[-62.0,47.1],[-62.0,46.0],[-64.4,46.0],[-64.4,47.1]]]}},
-    {"type":"Feature","properties":{"name":"Newfoundland and Labrador"},"geometry":{"type":"Polygon","coordinates":[[[-64.0,55.0],[-52.0,55.0],[-52.0,46.5],[-59.5,46.0],[-64.0,47.0],[-64.0,55.0]]]}}
-  ]},
-  "England": {"type":"FeatureCollection","features":[
-    {"type":"Feature","properties":{"name":"North East"},"geometry":{"type":"Polygon","coordinates":[[[-2.7,54.5],[-1.0,54.5],[-1.0,55.8],[-2.7,55.8],[-2.7,54.5]]]}},
-    {"type":"Feature","properties":{"name":"North West"},"geometry":{"type":"Polygon","coordinates":[[[-5.2,53.3],[-2.0,53.3],[-2.0,55.4],[-3.5,55.4],[-5.2,55.0],[-5.2,53.3]]]}},
-    {"type":"Feature","properties":{"name":"Yorkshire and The Humber"},"geometry":{"type":"Polygon","coordinates":[[[-2.1,53.3],[0.0,53.3],[0.0,54.5],[-2.7,54.5],[-2.1,53.3]]]}},
-    {"type":"Feature","properties":{"name":"East Midlands"},"geometry":{"type":"Polygon","coordinates":[[[-2.2,52.2],[0.0,52.2],[0.0,53.3],[-2.1,53.3],[-2.2,52.2]]]}},
-    {"type":"Feature","properties":{"name":"West Midlands"},"geometry":{"type":"Polygon","coordinates":[[[-3.1,51.9],[-1.5,51.9],[-1.5,52.9],[-3.1,52.9],[-3.1,51.9]]]}},
-    {"type":"Feature","properties":{"name":"East of England"},"geometry":{"type":"Polygon","coordinates":[[[0.0,51.5],[1.8,51.5],[1.8,53.0],[0.0,53.0],[0.0,51.5]]]}},
-    {"type":"Feature","properties":{"name":"London"},"geometry":{"type":"Polygon","coordinates":[[[-0.5,51.3],[0.3,51.3],[0.3,51.7],[-0.5,51.7],[-0.5,51.3]]]}},
-    {"type":"Feature","properties":{"name":"South East"},"geometry":{"type":"Polygon","coordinates":[[[-1.8,50.7],[1.8,50.7],[1.8,51.6],[-1.8,51.6],[-1.8,50.7]]]}},
-    {"type":"Feature","properties":{"name":"South West"},"geometry":{"type":"Polygon","coordinates":[[[-5.7,50.0],[0.0,50.0],[0.0,51.8],[-2.0,51.8],[-5.7,51.5],[-5.7,50.0]]]}}
-  ]},
-  "Germany": {"type":"FeatureCollection","features":[
-    {"type":"Feature","properties":{"name":"Schleswig-Holstein"},"geometry":{"type":"Polygon","coordinates":[[[8.0,53.5],[11.0,53.5],[11.0,55.1],[8.0,55.1],[8.0,53.5]]]}},
-    {"type":"Feature","properties":{"name":"Hamburg"},"geometry":{"type":"Polygon","coordinates":[[[9.7,53.4],[10.3,53.4],[10.3,53.8],[9.7,53.8],[9.7,53.4]]]}},
-    {"type":"Feature","properties":{"name":"Bremen"},"geometry":{"type":"Polygon","coordinates":[[[8.5,53.0],[8.9,53.0],[8.9,53.6],[8.5,53.6],[8.5,53.0]]]}},
-    {"type":"Feature","properties":{"name":"Lower Saxony"},"geometry":{"type":"Polygon","coordinates":[[[6.7,51.3],[11.6,51.3],[11.6,53.5],[6.7,53.5],[6.7,51.3]]]}},
-    {"type":"Feature","properties":{"name":"Mecklenburg-Vorpommern"},"geometry":{"type":"Polygon","coordinates":[[[10.6,53.2],[14.4,53.2],[14.4,54.7],[10.6,54.7],[10.6,53.2]]]}},
-    {"type":"Feature","properties":{"name":"Berlin"},"geometry":{"type":"Polygon","coordinates":[[[13.1,52.3],[13.8,52.3],[13.8,52.7],[13.1,52.7],[13.1,52.3]]]}},
-    {"type":"Feature","properties":{"name":"Brandenburg"},"geometry":{"type":"Polygon","coordinates":[[[11.3,51.4],[14.8,51.4],[14.8,53.5],[11.3,53.5],[11.3,51.4]]]}},
-    {"type":"Feature","properties":{"name":"Saxony-Anhalt"},"geometry":{"type":"Polygon","coordinates":[[[10.6,51.0],[13.2,51.0],[13.2,53.0],[10.6,53.0],[10.6,51.0]]]}},
-    {"type":"Feature","properties":{"name":"North Rhine-Westphalia"},"geometry":{"type":"Polygon","coordinates":[[[6.0,50.3],[9.5,50.3],[9.5,52.5],[6.0,52.5],[6.0,50.3]]]}},
-    {"type":"Feature","properties":{"name":"Hesse"},"geometry":{"type":"Polygon","coordinates":[[[7.8,49.5],[10.3,49.5],[10.3,51.5],[7.8,51.5],[7.8,49.5]]]}},
-    {"type":"Feature","properties":{"name":"Thuringia"},"geometry":{"type":"Polygon","coordinates":[[[9.9,50.2],[12.7,50.2],[12.7,51.7],[9.9,51.7],[9.9,50.2]]]}},
-    {"type":"Feature","properties":{"name":"Saxony"},"geometry":{"type":"Polygon","coordinates":[[[12.1,50.2],[15.0,50.2],[15.0,51.7],[12.1,51.7],[12.1,50.2]]]}},
-    {"type":"Feature","properties":{"name":"Rhineland-Palatinate"},"geometry":{"type":"Polygon","coordinates":[[[6.1,49.1],[8.5,49.1],[8.5,50.9],[6.1,50.9],[6.1,49.1]]]}},
-    {"type":"Feature","properties":{"name":"Saarland"},"geometry":{"type":"Polygon","coordinates":[[[6.4,49.1],[7.4,49.1],[7.4,49.7],[6.4,49.7],[6.4,49.1]]]}},
-    {"type":"Feature","properties":{"name":"Baden-Württemberg"},"geometry":{"type":"Polygon","coordinates":[[[7.5,47.5],[10.5,47.5],[10.5,49.8],[7.5,49.8],[7.5,47.5]]]}},
-    {"type":"Feature","properties":{"name":"Bavaria"},"geometry":{"type":"Polygon","coordinates":[[[9.0,47.3],[15.0,47.3],[15.0,50.5],[9.0,50.5],[9.0,47.3]]]}}
-  ]},
-  "Israel": {"type":"FeatureCollection","features":[
-    {"type":"Feature","properties":{"name":"Northern District"},"geometry":{"type":"Polygon","coordinates":[[[35.0,32.5],[35.9,32.5],[35.9,33.3],[35.0,33.3],[35.0,32.5]]]}},
-    {"type":"Feature","properties":{"name":"Haifa District"},"geometry":{"type":"Polygon","coordinates":[[[34.85,32.5],[35.15,32.5],[35.15,32.8],[34.85,32.8],[34.85,32.5]]]}},
-    {"type":"Feature","properties":{"name":"Central District"},"geometry":{"type":"Polygon","coordinates":[[[34.8,31.9],[35.1,31.9],[35.1,32.3],[34.8,32.3],[34.8,31.9]]]}},
-    {"type":"Feature","properties":{"name":"Tel Aviv District"},"geometry":{"type":"Polygon","coordinates":[[[34.75,32.0],[34.95,32.0],[34.95,32.2],[34.75,32.2],[34.75,32.0]]]}},
-    {"type":"Feature","properties":{"name":"Jerusalem District"},"geometry":{"type":"Polygon","coordinates":[[[34.9,31.5],[35.3,31.5],[35.3,31.9],[34.9,31.9],[34.9,31.5]]]}},
-    {"type":"Feature","properties":{"name":"Southern District"},"geometry":{"type":"Polygon","coordinates":[[[34.3,29.5],[35.2,29.5],[35.2,31.5],[34.3,31.5],[34.3,29.5]]]}}
-  ]},
-  "Japan": {"type":"FeatureCollection","features":[
-    {"type":"Feature","properties":{"name":"Hokkaido"},"geometry":{"type":"Polygon","coordinates":[[[140.0,41.5],[145.8,41.5],[145.8,45.5],[141.0,45.5],[140.0,44.0],[140.0,41.5]]]}},
-    {"type":"Feature","properties":{"name":"Tohoku"},"geometry":{"type":"Polygon","coordinates":[[[140.0,36.9],[141.5,36.9],[141.5,41.0],[140.0,41.5],[140.0,36.9]]]}},
-    {"type":"Feature","properties":{"name":"Kanto"},"geometry":{"type":"Polygon","coordinates":[[[138.5,35.0],[140.9,35.0],[140.9,37.0],[138.5,37.0],[138.5,35.0]]]}},
-    {"type":"Feature","properties":{"name":"Chubu"},"geometry":{"type":"Polygon","coordinates":[[[136.0,35.0],[138.5,35.0],[138.5,37.5],[136.0,37.5],[136.0,35.0]]]}},
-    {"type":"Feature","properties":{"name":"Kansai"},"geometry":{"type":"Polygon","coordinates":[[[134.5,33.5],[136.5,33.5],[136.5,35.5],[134.5,35.5],[134.5,33.5]]]}},
-    {"type":"Feature","properties":{"name":"Chugoku"},"geometry":{"type":"Polygon","coordinates":[[[131.5,34.0],[134.5,34.0],[134.5,35.5],[131.5,35.5],[131.5,34.0]]]}},
-    {"type":"Feature","properties":{"name":"Shikoku"},"geometry":{"type":"Polygon","coordinates":[[[132.5,33.0],[134.5,33.0],[134.5,34.1],[132.5,34.1],[132.5,33.0]]]}},
-    {"type":"Feature","properties":{"name":"Kyushu"},"geometry":{"type":"Polygon","coordinates":[[[129.5,31.0],[131.8,31.0],[131.8,34.0],[129.5,34.0],[129.5,31.0]]]}}
-  ]},
-  "Mexico": {"type":"FeatureCollection","features":[
-    {"type":"Feature","properties":{"name":"Baja California"},"geometry":{"type":"Polygon","coordinates":[[[-117.1,32.7],[-109.8,32.7],[-109.8,28.0],[-117.1,28.0],[-117.1,32.7]]]}},
-    {"type":"Feature","properties":{"name":"Baja California Sur"},"geometry":{"type":"Polygon","coordinates":[[[-115.0,28.0],[-109.4,28.0],[-109.4,22.8],[-115.0,22.8],[-115.0,28.0]]]}},
-    {"type":"Feature","properties":{"name":"Sonora"},"geometry":{"type":"Polygon","coordinates":[[[-117.1,32.7],[-108.2,32.7],[-108.2,26.3],[-117.1,26.3],[-117.1,32.7]]]}},
-    {"type":"Feature","properties":{"name":"Chihuahua"},"geometry":{"type":"Polygon","coordinates":[[[-108.2,32.7],[-103.0,32.7],[-103.0,26.0],[-108.2,26.0],[-108.2,32.7]]]}},
-    {"type":"Feature","properties":{"name":"Coahuila"},"geometry":{"type":"Polygon","coordinates":[[[-103.0,29.9],[-99.0,29.9],[-99.0,25.5],[-103.0,25.5],[-103.0,29.9]]]}},
-    {"type":"Feature","properties":{"name":"Nuevo León"},"geometry":{"type":"Polygon","coordinates":[[[-101.0,27.5],[-98.5,27.5],[-98.5,23.2],[-101.0,23.2],[-101.0,27.5]]]}},
-    {"type":"Feature","properties":{"name":"Tamaulipas"},"geometry":{"type":"Polygon","coordinates":[[[-99.0,27.5],[-96.7,27.5],[-96.7,22.0],[-99.0,22.0],[-99.0,27.5]]]}},
-    {"type":"Feature","properties":{"name":"Sinaloa"},"geometry":{"type":"Polygon","coordinates":[[[-111.0,26.0],[-106.0,26.0],[-106.0,22.5],[-111.0,22.5],[-111.0,26.0]]]}},
-    {"type":"Feature","properties":{"name":"Durango"},"geometry":{"type":"Polygon","coordinates":[[[-107.5,26.5],[-103.5,26.5],[-103.5,23.0],[-107.5,23.0],[-107.5,26.5]]]}},
-    {"type":"Feature","properties":{"name":"Zacatecas"},"geometry":{"type":"Polygon","coordinates":[[[-104.5,24.5],[-101.0,24.5],[-101.0,21.0],[-104.5,21.0],[-104.5,24.5]]]}},
-    {"type":"Feature","properties":{"name":"San Luis Potosí"},"geometry":{"type":"Polygon","coordinates":[[[-101.5,23.0],[-98.5,23.0],[-98.5,21.0],[-101.5,21.0],[-101.5,23.0]]]}},
-    {"type":"Feature","properties":{"name":"Jalisco"},"geometry":{"type":"Polygon","coordinates":[[[-105.5,22.5],[-101.5,22.5],[-101.5,19.5],[-105.5,19.5],[-105.5,22.5]]]}},
-    {"type":"Feature","properties":{"name":"Nayarit"},"geometry":{"type":"Polygon","coordinates":[[[-105.8,23.0],[-103.7,23.0],[-103.7,21.5],[-105.8,21.5],[-105.8,23.0]]]}},
-    {"type":"Feature","properties":{"name":"Aguascalientes"},"geometry":{"type":"Polygon","coordinates":[[[-102.8,22.4],[-101.7,22.4],[-101.7,21.5],[-102.8,21.5],[-102.8,22.4]]]}},
-    {"type":"Feature","properties":{"name":"Guanajuato"},"geometry":{"type":"Polygon","coordinates":[[[-102.0,21.5],[-99.7,21.5],[-99.7,20.1],[-102.0,20.1],[-102.0,21.5]]]}},
-    {"type":"Feature","properties":{"name":"Querétaro"},"geometry":{"type":"Polygon","coordinates":[[[-100.5,21.4],[-99.0,21.4],[-99.0,20.1],[-100.5,20.1],[-100.5,21.4]]]}},
-    {"type":"Feature","properties":{"name":"Hidalgo"},"geometry":{"type":"Polygon","coordinates":[[[-99.3,21.0],[-97.7,21.0],[-97.7,19.8],[-99.3,19.8],[-99.3,21.0]]]}},
-    {"type":"Feature","properties":{"name":"Mexico City"},"geometry":{"type":"Polygon","coordinates":[[[-99.4,19.6],[-98.9,19.6],[-98.9,19.1],[-99.4,19.1],[-99.4,19.6]]]}},
-    {"type":"Feature","properties":{"name":"State of Mexico"},"geometry":{"type":"Polygon","coordinates":[[[-100.5,20.1],[-98.5,20.1],[-98.5,18.8],[-100.5,18.8],[-100.5,20.1]]]}},
-    {"type":"Feature","properties":{"name":"Tlaxcala"},"geometry":{"type":"Polygon","coordinates":[[[-98.7,19.5],[-97.9,19.5],[-97.9,19.0],[-98.7,19.0],[-98.7,19.5]]]}},
-    {"type":"Feature","properties":{"name":"Puebla"},"geometry":{"type":"Polygon","coordinates":[[[-99.0,19.8],[-97.1,19.8],[-97.1,17.8],[-99.0,17.8],[-99.0,19.8]]]}},
-    {"type":"Feature","properties":{"name":"Veracruz"},"geometry":{"type":"Polygon","coordinates":[[[-98.5,22.5],[-96.0,22.5],[-96.0,17.2],[-98.5,17.2],[-98.5,22.5]]]}},
-    {"type":"Feature","properties":{"name":"Guerrero"},"geometry":{"type":"Polygon","coordinates":[[[-102.5,18.8],[-98.5,18.8],[-98.5,16.3],[-102.5,16.3],[-102.5,18.8]]]}},
-    {"type":"Feature","properties":{"name":"Morelos"},"geometry":{"type":"Polygon","coordinates":[[[-99.5,19.0],[-98.6,19.0],[-98.6,18.3],[-99.5,18.3],[-99.5,19.0]]]}},
-    {"type":"Feature","properties":{"name":"Colima"},"geometry":{"type":"Polygon","coordinates":[[[-104.5,19.7],[-103.4,19.7],[-103.4,18.7],[-104.5,18.7],[-104.5,19.7]]]}},
-    {"type":"Feature","properties":{"name":"Michoacán"},"geometry":{"type":"Polygon","coordinates":[[[-103.7,20.3],[-100.0,20.3],[-100.0,18.0],[-103.7,18.0],[-103.7,20.3]]]}},
-    {"type":"Feature","properties":{"name":"Oaxaca"},"geometry":{"type":"Polygon","coordinates":[[[-98.5,18.0],[-95.0,18.0],[-95.0,15.7],[-98.5,15.7],[-98.5,18.0]]]}},
-    {"type":"Feature","properties":{"name":"Chiapas"},"geometry":{"type":"Polygon","coordinates":[[[-95.0,17.0],[-91.0,17.0],[-91.0,14.5],[-95.0,14.5],[-95.0,17.0]]]}},
-    {"type":"Feature","properties":{"name":"Tabasco"},"geometry":{"type":"Polygon","coordinates":[[[-94.5,18.5],[-90.5,18.5],[-90.5,17.2],[-94.5,17.2],[-94.5,18.5]]]}},
-    {"type":"Feature","properties":{"name":"Campeche"},"geometry":{"type":"Polygon","coordinates":[[[-91.5,20.5],[-89.0,20.5],[-89.0,17.8],[-91.5,17.8],[-91.5,20.5]]]}},
-    {"type":"Feature","properties":{"name":"Yucatán"},"geometry":{"type":"Polygon","coordinates":[[[-90.5,21.6],[-87.5,21.6],[-87.5,19.5],[-90.5,19.5],[-90.5,21.6]]]}},
-    {"type":"Feature","properties":{"name":"Quintana Roo"},"geometry":{"type":"Polygon","coordinates":[[[-88.5,21.6],[-86.7,21.6],[-86.7,18.2],[-88.5,18.2],[-88.5,21.6]]]}}
-  ]},
-  "Taiwan": {"type":"FeatureCollection","features":[
-    {"type":"Feature","properties":{"name":"New Taipei"},"geometry":{"type":"Polygon","coordinates":[[[121.2,25.3],[121.9,25.3],[121.9,24.6],[121.2,24.6],[121.2,25.3]]]}},
-    {"type":"Feature","properties":{"name":"Taipei City"},"geometry":{"type":"Polygon","coordinates":[[[121.45,25.2],[121.65,25.2],[121.65,25.0],[121.45,25.0],[121.45,25.2]]]}},
-    {"type":"Feature","properties":{"name":"Taoyuan"},"geometry":{"type":"Polygon","coordinates":[[[121.0,25.0],[121.6,25.0],[121.6,24.7],[121.0,24.7],[121.0,25.0]]]}},
-    {"type":"Feature","properties":{"name":"Hsinchu"},"geometry":{"type":"Polygon","coordinates":[[[120.7,24.7],[121.3,24.7],[121.3,24.3],[120.7,24.3],[120.7,24.7]]]}},
-    {"type":"Feature","properties":{"name":"Miaoli"},"geometry":{"type":"Polygon","coordinates":[[[120.6,24.4],[121.2,24.4],[121.2,23.9],[120.6,23.9],[120.6,24.4]]]}},
-    {"type":"Feature","properties":{"name":"Taichung"},"geometry":{"type":"Polygon","coordinates":[[[120.4,24.2],[121.4,24.2],[121.4,23.8],[120.4,23.8],[120.4,24.2]]]}},
-    {"type":"Feature","properties":{"name":"Nantou"},"geometry":{"type":"Polygon","coordinates":[[[120.7,24.1],[121.5,24.1],[121.5,23.4],[120.7,23.4],[120.7,24.1]]]}},
-    {"type":"Feature","properties":{"name":"Changhua"},"geometry":{"type":"Polygon","coordinates":[[[120.2,24.0],[120.8,24.0],[120.8,23.7],[120.2,23.7],[120.2,24.0]]]}},
-    {"type":"Feature","properties":{"name":"Yunlin"},"geometry":{"type":"Polygon","coordinates":[[[120.0,23.8],[120.7,23.8],[120.7,23.4],[120.0,23.4],[120.0,23.8]]]}},
-    {"type":"Feature","properties":{"name":"Chiayi"},"geometry":{"type":"Polygon","coordinates":[[[120.0,23.5],[120.7,23.5],[120.7,23.0],[120.0,23.0],[120.0,23.5]]]}},
-    {"type":"Feature","properties":{"name":"Tainan"},"geometry":{"type":"Polygon","coordinates":[[[120.0,23.2],[120.6,23.2],[120.6,22.5],[120.0,22.5],[120.0,23.2]]]}},
-    {"type":"Feature","properties":{"name":"Kaohsiung"},"geometry":{"type":"Polygon","coordinates":[[[120.2,22.8],[121.0,22.8],[121.0,22.3],[120.2,22.3],[120.2,22.8]]]}},
-    {"type":"Feature","properties":{"name":"Pingtung"},"geometry":{"type":"Polygon","coordinates":[[[120.4,22.4],[120.9,22.4],[120.9,21.9],[120.4,21.9],[120.4,22.4]]]}},
-    {"type":"Feature","properties":{"name":"Hualien"},"geometry":{"type":"Polygon","coordinates":[[[121.3,24.5],[121.9,24.5],[121.9,23.0],[121.3,23.0],[121.3,24.5]]]}},
-    {"type":"Feature","properties":{"name":"Taitung"},"geometry":{"type":"Polygon","coordinates":[[[120.9,23.2],[121.7,23.2],[121.7,22.1],[120.9,22.1],[120.9,23.2]]]}}
-  ]},
-};
-
 // ── Country State Map ──────────────────────────────────────────
 function CountryStateMap({ country, states, onBack, onSaveStates }) {
   const containerRef = useRef(null);
@@ -666,56 +538,126 @@ function CountryStateMap({ country, states, onBack, onSaveStates }) {
     return m;
   },[localStates]);
 
+  // ISO3 codes for geoBoundaries API
+  const COUNTRY_ISO3 = {
+    "Brazil":"BRA","Argentina":"ARG","Colombia":"COL","Chile":"CHL",
+    "United States":"USA","Canada":"CAN","Mexico":"MEX",
+    "England":"GBR","France":"FRA","Germany":"DEU","Spain":"ESP",
+    "Italy":"ITA","Poland":"POL","Australia":"AUS","Japan":"JPN",
+    "South Korea":"KOR","China":"CHN","India":"IND","Indonesia":"IDN",
+    "Taiwan":"TWN","Israel":"ISR","Egypt":"EGY","South Africa":"ZAF",
+    "Nigeria":"NGA","Portugal":"PRT","Netherlands":"NLD","Belgium":"BEL",
+    "Sweden":"SWE","Norway":"NOR","Denmark":"DNK","Finland":"FIN",
+    "Switzerland":"CHE","Austria":"AUT","Greece":"GRC","Turkey":"TUR",
+    "Romania":"ROU","Hungary":"HUN","Czech Republic":"CZE","Slovakia":"SVK",
+    "Ukraine":"UKR","Russia":"RUS","Kazakhstan":"KAZ","Thailand":"THA",
+    "Vietnam":"VNM","Malaysia":"MYS","Philippines":"PHL","Pakistan":"PAK",
+    "Bangladesh":"BGD","Peru":"PER","Venezuela":"VEN","Ecuador":"ECU",
+    "Bolivia":"BOL","Paraguay":"PRY","Uruguay":"URY","Morocco":"MAR",
+    "Algeria":"DZA","Tunisia":"TUN","Kenya":"KEN","Ethiopia":"ETH",
+    "Ghana":"GHA","Cameroon":"CMR","Senegal":"SEN","Angola":"AGO",
+    "New Zealand":"NZL","United Arab Emirates":"ARE","Saudi Arabia":"SAU",
+  };
+
   useEffect(()=>{
     const el=containerRef.current;
     if(!el) return;
+    let cancelled=false;
 
-    const geoData=GEO_STATES[country.country];
+    const iso3 = COUNTRY_ISO3[country.country];
 
-    if(!geoData||!geoData.features||geoData.features.length===0){
+    // Show loading state
+    el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px">Loading map…</div>`;
+
+    if(!iso3){
       el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px;font-style:italic">State map for ${country.country} not yet available.</div>`;
       return;
     }
 
-    const features=geoData.features;
-    const names=features.map(f=>f.properties.name||"");
-    const STATUS_Z={Member:0,Negotiating:1,Documentation:2,Needed:3};
-    const z=names.map(name=>{
-      const st=statesByName[name.toLowerCase()];
-      return st?(STATUS_Z[st.memberStatus]??4):4;
-    });
-    const colorscale=[
-      [0/4,"#22c55e"],[1/4,"#22c55e"],
-      [1/4,"#f59e0b"],[2/4,"#f59e0b"],
-      [2/4,"#60a5fa"],[3/4,"#60a5fa"],
-      [3/4,"#ef4444"],[3.5/4,"#ef4444"],
-      [3.5/4,"#dde3ea"],[1.0,"#dde3ea"],
-    ];
-    const hovertemplate=names.map(name=>{
-      const st=statesByName[name.toLowerCase()];
-      const trophy=(showTrophies&&st&&st.tournament)?" 🏆":"";
-      if(st){
-        const sc=STATUS_CFG[st.memberStatus]?.dot||"#22c55e";
-        return `<b>${name}${trophy}</b><br><span style="color:${sc}">${st.memberStatus||"Member"}</span> · ${st.federation||"—"}<br><span style="color:#9ca3af">${st.rep||""}</span><extra></extra>`;
+    const renderMap=(geoData)=>{
+      if(cancelled||!el||!geoData) return;
+
+      const features=geoData.features||[];
+      if(features.length===0){
+        el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px;font-style:italic">No region data available for ${country.country}.</div>`;
+        return;
       }
-      return `<b>${name}</b><br><span style="color:#9ca3af;font-style:italic">No federation</span><extra></extra>`;
-    });
 
-    Plotly.newPlot(el,[{
-      type:"choropleth",geojson:geoData,locations:names,
-      featureidkey:"properties.name",z,zmin:0,zmax:4,
-      colorscale,showscale:false,
-      marker:{line:{color:"white",width:1.5}},
-      hovertemplate,
-    }],{
-      geo:{fitbounds:"geojson",visible:false,bgcolor:"#f1f5f9"},
-      margin:{t:0,b:0,l:0,r:0},
-      paper_bgcolor:"#f1f5f9",
-      height:460,
-      hoverlabel:{bgcolor:"#fff",bordercolor:"#e5e7eb",font:{size:12,family:"Inter,sans-serif"}},
-    },{displayModeBar:false,responsive:true});
+      // Try to find name property (geoBoundaries uses shapeName)
+      const nameKey = features[0]?.properties?.shapeName !== undefined ? "shapeName"
+        : features[0]?.properties?.name !== undefined ? "name"
+        : features[0]?.properties?.NAME_1 !== undefined ? "NAME_1"
+        : Object.keys(features[0]?.properties||{})[0] || "shapeName";
 
-    return()=>{ Plotly.purge(el); };
+      const names = features.map(f=>f.properties[nameKey]||"");
+
+      const STATUS_Z={Member:0,Negotiating:1,Documentation:2,Needed:3};
+      const z=names.map(name=>{
+        const st=statesByName[name.toLowerCase()];
+        return st?(STATUS_Z[st.memberStatus]??4):4;
+      });
+      const colorscale=[
+        [0/4,"#22c55e"],[1/4,"#22c55e"],
+        [1/4,"#f59e0b"],[2/4,"#f59e0b"],
+        [2/4,"#60a5fa"],[3/4,"#60a5fa"],
+        [3/4,"#ef4444"],[3.5/4,"#ef4444"],
+        [3.5/4,"#dde3ea"],[1.0,"#dde3ea"],
+      ];
+      const hovertemplate=names.map(name=>{
+        const st=statesByName[name.toLowerCase()];
+        const trophy=(showTrophies&&st&&st.tournament)?" 🏆":"";
+        if(st){
+          const sc=STATUS_CFG[st.memberStatus]?.dot||"#22c55e";
+          return `<b>${name}${trophy}</b><br><span style="color:${sc}">${st.memberStatus||"Member"}</span> · ${st.federation||"—"}<br><span style="color:#9ca3af">${st.rep||""}</span><extra></extra>`;
+        }
+        return `<b>${name}</b><br><span style="color:#9ca3af;font-style:italic">No federation</span><extra></extra>`;
+      });
+
+      // Remap feature id key to match shapeName
+      const remapped = {
+        ...geoData,
+        features: features.map(f=>({
+          ...f,
+          properties:{...f.properties, _label: f.properties[nameKey]},
+        }))
+      };
+
+      el.innerHTML="";
+      Plotly.newPlot(el,[{
+        type:"choropleth",
+        geojson:geoData,
+        locations:names,
+        featureidkey:`properties.${nameKey}`,
+        z, zmin:0, zmax:4,
+        colorscale, showscale:false,
+        marker:{line:{color:"white",width:1}},
+        hovertemplate,
+      }],{
+        geo:{fitbounds:"geojson",visible:false,bgcolor:"#f1f5f9"},
+        margin:{t:0,b:0,l:0,r:0},
+        paper_bgcolor:"#f1f5f9",
+        height:480,
+        hoverlabel:{bgcolor:"#fff",bordercolor:"#e5e7eb",font:{size:12,family:"Inter,sans-serif"}},
+      },{displayModeBar:false,responsive:true});
+    };
+
+    // Fetch from geoBoundaries API — real administrative boundaries
+    const url=`https://www.geoboundaries.org/api/current/gbOpen/${iso3}/ADM1/`;
+    fetch(url)
+      .then(r=>r.json())
+      .then(meta=>{
+        if(cancelled) return;
+        if(!meta.gjDownloadURL) throw new Error("no download URL");
+        return fetch(meta.gjDownloadURL);
+      })
+      .then(r=>r.json())
+      .then(geoData=>{ if(!cancelled) renderMap(geoData); })
+      .catch(()=>{
+        if(!cancelled)
+          el.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;height:400px;color:#9ca3af;font-size:13px;font-style:italic">Could not load map for ${country.country}.</div>`;
+      });
+
+    return()=>{ cancelled=true; if(el&&window.Plotly) Plotly.purge(el); };
   },[country,statesByName,showTrophies]);
 
   const cfg=STATUS_CFG[country.memberStatus]||STATUS_CFG.Needed;
