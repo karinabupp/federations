@@ -80,37 +80,51 @@ const COUNTRY_CENTERS = {
 
 // ── Embedded GeoJSON fallback (Brazil) ────────────────────────
 // Used when /geo/ local files aren't available
-const GEO_STATES = {
-  "Brazil": {"type":"FeatureCollection","features":[
-    {"type":"Feature","properties":{"name":"Roraima"},"geometry":{"type":"Polygon","coordinates":[[[-64.4,5.27],[-61.3,5.27],[-59.85,4.5],[-59.4,2.68],[-60.2,1.9],[-62.1,1.9],[-63.4,2.2],[-64.0,1.3],[-64.8,0.8],[-64.8,2.5],[-63.5,3.8],[-64.4,5.27]]]}},
-    {"type":"Feature","properties":{"name":"Amapá"},"geometry":{"type":"Polygon","coordinates":[[[-54.07,4.38],[-51.22,4.38],[-50.44,3.2],[-50.77,1.58],[-51.79,0.62],[-52.38,0.05],[-54.07,0.5],[-54.07,4.38]]]}},
-    {"type":"Feature","properties":{"name":"Pará"},"geometry":{"type":"Polygon","coordinates":[[[-54.07,4.38],[-54.07,0.5],[-56.0,1.5],[-57.5,2.0],[-60.5,2.0],[-60.5,-0.5],[-60.0,-2.0],[-57.5,-4.0],[-56.5,-4.0],[-52.5,-8.0],[-50.7,-5.2],[-47.0,-5.2],[-46.0,-3.5],[-46.0,-0.5],[-47.5,0.5],[-49.5,1.2],[-50.8,2.5],[-51.22,4.38],[-54.07,4.38]]]}},
-    {"type":"Feature","properties":{"name":"Amazonas"},"geometry":{"type":"Polygon","coordinates":[[[-74.0,2.2],[-74.0,-7.5],[-66.8,-7.9],[-60.5,-7.9],[-60.5,2.0],[-57.5,2.0],[-56.0,1.5],[-54.07,0.5],[-54.07,4.38],[-57.5,4.5],[-60.0,4.0],[-62.0,4.2],[-64.4,5.27],[-64.8,0.8],[-64.0,1.3],[-63.4,2.2],[-62.1,1.9],[-60.2,1.9],[-59.4,2.68],[-59.85,4.5],[-61.3,5.27],[-64.4,5.27],[-68.0,2.2],[-74.0,2.2]]]}},
-    {"type":"Feature","properties":{"name":"Acre"},"geometry":{"type":"Polygon","coordinates":[[[-74.0,-7.5],[-66.8,-7.9],[-65.3,-10.0],[-67.3,-10.3],[-68.0,-11.0],[-70.5,-11.0],[-72.5,-9.5],[-74.0,-7.5]]]}},
-    {"type":"Feature","properties":{"name":"Rondônia"},"geometry":{"type":"Polygon","coordinates":[[[-66.8,-7.9],[-60.5,-7.9],[-60.5,-9.8],[-63.0,-10.0],[-65.3,-10.0],[-66.8,-7.9]]]}},
-    {"type":"Feature","properties":{"name":"Tocantins"},"geometry":{"type":"Polygon","coordinates":[[[-50.7,-5.2],[-47.0,-5.2],[-46.0,-7.0],[-46.0,-10.5],[-48.5,-13.4],[-50.7,-13.4],[-52.5,-11.0],[-52.5,-8.0],[-50.7,-5.2]]]}},
-    {"type":"Feature","properties":{"name":"Maranhão"},"geometry":{"type":"Polygon","coordinates":[[[-48.8,-1.0],[-44.5,-1.0],[-43.0,-2.5],[-41.4,-2.8],[-41.4,-7.9],[-43.5,-9.5],[-46.0,-10.5],[-46.0,-7.0],[-47.0,-5.2],[-48.8,-3.5],[-48.8,-1.0]]]}},
-    {"type":"Feature","properties":{"name":"Piauí"},"geometry":{"type":"Polygon","coordinates":[[[-41.4,-2.8],[-43.0,-2.5],[-44.5,-1.0],[-45.9,-3.0],[-45.9,-9.5],[-43.5,-9.5],[-41.4,-7.9],[-41.4,-2.8]]]}},
-    {"type":"Feature","properties":{"name":"Ceará"},"geometry":{"type":"Polygon","coordinates":[[[-41.4,-2.8],[-37.3,-2.8],[-34.9,-4.8],[-37.3,-6.5],[-38.6,-6.9],[-41.4,-7.9],[-41.4,-2.8]]]}},
-    {"type":"Feature","properties":{"name":"Rio Grande do Norte"},"geometry":{"type":"Polygon","coordinates":[[[-38.6,-4.8],[-34.9,-4.8],[-35.0,-6.0],[-37.3,-6.5],[-38.6,-4.8]]]}},
-    {"type":"Feature","properties":{"name":"Paraíba"},"geometry":{"type":"Polygon","coordinates":[[[-38.8,-6.0],[-35.0,-6.0],[-34.8,-7.2],[-36.5,-7.2],[-38.8,-7.5],[-38.8,-6.0]]]}},
-    {"type":"Feature","properties":{"name":"Pernambuco"},"geometry":{"type":"Polygon","coordinates":[[[-41.4,-7.9],[-38.6,-6.9],[-37.3,-6.5],[-35.0,-6.0],[-34.8,-7.2],[-34.8,-9.0],[-37.5,-9.5],[-40.0,-9.5],[-41.4,-9.5],[-41.4,-7.9]]]}},
-    {"type":"Feature","properties":{"name":"Alagoas"},"geometry":{"type":"Polygon","coordinates":[[[-38.0,-9.0],[-35.0,-9.0],[-35.2,-10.5],[-37.0,-10.5],[-38.2,-10.0],[-38.0,-9.0]]]}},
-    {"type":"Feature","properties":{"name":"Sergipe"},"geometry":{"type":"Polygon","coordinates":[[[-38.2,-9.5],[-37.0,-10.5],[-35.2,-10.5],[-35.2,-11.5],[-37.0,-11.5],[-38.2,-10.5],[-38.2,-9.5]]]}},
-    {"type":"Feature","properties":{"name":"Bahia"},"geometry":{"type":"Polygon","coordinates":[[[-45.9,-9.5],[-40.0,-9.5],[-37.5,-9.5],[-34.8,-9.0],[-35.2,-11.5],[-37.0,-11.5],[-38.2,-10.5],[-39.5,-14.5],[-39.5,-18.4],[-40.5,-19.0],[-42.5,-18.4],[-44.5,-17.5],[-46.5,-15.5],[-47.5,-14.0],[-46.0,-10.5],[-45.9,-9.5]]]}},
-    {"type":"Feature","properties":{"name":"Mato Grosso"},"geometry":{"type":"Polygon","coordinates":[[[-61.6,-7.5],[-57.5,-7.5],[-52.5,-8.0],[-52.5,-11.0],[-50.7,-13.4],[-51.5,-14.5],[-53.5,-17.5],[-58.2,-17.5],[-61.6,-14.0],[-61.6,-7.5]]]}},
-    {"type":"Feature","properties":{"name":"Goiás"},"geometry":{"type":"Polygon","coordinates":[[[-53.5,-11.5],[-47.5,-11.5],[-47.5,-14.0],[-46.5,-15.5],[-48.0,-17.5],[-50.0,-19.5],[-51.5,-18.5],[-53.5,-17.5],[-51.5,-14.5],[-50.7,-13.4],[-52.5,-11.0],[-52.5,-8.0],[-53.5,-11.5]]]}},
-    {"type":"Feature","properties":{"name":"Distrito Federal"},"geometry":{"type":"Polygon","coordinates":[[[-48.3,-15.5],[-47.3,-15.5],[-47.3,-16.1],[-48.3,-16.1],[-48.3,-15.5]]]}},
-    {"type":"Feature","properties":{"name":"Mato Grosso do Sul"},"geometry":{"type":"Polygon","coordinates":[[[-58.2,-17.5],[-53.5,-17.5],[-51.5,-18.5],[-50.0,-19.5],[-50.0,-22.5],[-51.0,-22.5],[-54.6,-22.5],[-58.2,-24.1],[-58.2,-17.5]]]}},
-    {"type":"Feature","properties":{"name":"Minas Gerais"},"geometry":{"type":"Polygon","coordinates":[[[-51.0,-14.2],[-47.5,-14.0],[-46.5,-15.5],[-44.5,-17.5],[-42.5,-18.4],[-40.5,-19.0],[-39.5,-18.4],[-39.5,-21.3],[-41.9,-21.3],[-44.9,-23.0],[-46.5,-23.5],[-48.0,-23.0],[-50.0,-22.5],[-51.0,-22.5],[-51.0,-14.2]]]}},
-    {"type":"Feature","properties":{"name":"Espírito Santo"},"geometry":{"type":"Polygon","coordinates":[[[-41.9,-17.9],[-39.5,-17.9],[-39.5,-21.3],[-41.9,-21.3],[-41.9,-17.9]]]}},
-    {"type":"Feature","properties":{"name":"Rio de Janeiro"},"geometry":{"type":"Polygon","coordinates":[[[-44.9,-21.0],[-41.9,-21.3],[-41.0,-23.4],[-43.5,-23.4],[-44.9,-23.0],[-46.5,-23.5],[-44.9,-21.0]]]}},
-    {"type":"Feature","properties":{"name":"São Paulo"},"geometry":{"type":"Polygon","coordinates":[[[-53.1,-20.0],[-51.0,-19.8],[-48.0,-23.0],[-46.5,-23.5],[-44.9,-23.0],[-44.9,-24.0],[-47.5,-24.5],[-50.0,-24.5],[-51.0,-25.5],[-53.1,-25.0],[-53.1,-20.0]]]}},
-    {"type":"Feature","properties":{"name":"Paraná"},"geometry":{"type":"Polygon","coordinates":[[[-54.6,-22.5],[-51.0,-22.5],[-50.0,-22.5],[-50.0,-24.5],[-51.0,-25.5],[-53.1,-25.0],[-54.6,-25.5],[-54.6,-22.5]]]}},
-    {"type":"Feature","properties":{"name":"Santa Catarina"},"geometry":{"type":"Polygon","coordinates":[[[-53.9,-25.9],[-51.0,-25.5],[-48.5,-26.5],[-48.4,-29.4],[-51.5,-29.4],[-53.9,-29.4],[-53.9,-25.9]]]}},
-    {"type":"Feature","properties":{"name":"Rio Grande do Sul"},"geometry":{"type":"Polygon","coordinates":[[[-57.6,-27.1],[-53.9,-27.1],[-51.5,-29.4],[-53.5,-33.8],[-57.6,-33.8],[-57.6,-27.1]]]}},
-  ]},
+const GEO_STATES = {};
+
+
+
+// ── Country → Continent mapping ────────────────────────────────
+const COUNTRY_CONTINENT = {
+  "Brazil":"South America","Argentina":"South America","Colombia":"South America",
+  "Chile":"South America","Peru":"South America","Venezuela":"South America",
+  "Ecuador":"South America","Bolivia":"South America","Paraguay":"South America",
+  "Uruguay":"South America","Guyana":"South America","Suriname":"South America",
+  "United States":"North America","Canada":"North America","Mexico":"North America",
+  "Cuba":"North America","Jamaica":"North America","Haiti":"North America",
+  "Dominican Republic":"North America","Puerto Rico":"North America",
+  "England":"Europe","France":"Europe","Germany":"Europe","Spain":"Europe",
+  "Italy":"Europe","Poland":"Europe","Portugal":"Europe","Netherlands":"Europe",
+  "Belgium":"Europe","Sweden":"Europe","Norway":"Europe","Denmark":"Europe",
+  "Finland":"Europe","Switzerland":"Europe","Austria":"Europe","Greece":"Europe",
+  "Turkey":"Europe","Romania":"Europe","Hungary":"Europe","Czech Republic":"Europe",
+  "Ukraine":"Europe","Russia":"Europe","Serbia":"Europe","Croatia":"Europe",
+  "Slovakia":"Europe","Bulgaria":"Europe","Slovenia":"Europe","Lithuania":"Europe",
+  "Latvia":"Europe","Estonia":"Europe","Iceland":"Europe","Ireland":"Europe",
+  "Scotland":"Europe","Wales":"Europe","United Kingdom":"Europe","Kosovo":"Europe",
+  "Japan":"Asia","South Korea":"Asia","China":"Asia","India":"Asia",
+  "Indonesia":"Asia","Taiwan":"Asia","Thailand":"Asia","Vietnam":"Asia",
+  "Malaysia":"Asia","Philippines":"Asia","Singapore":"Asia","Bangladesh":"Asia",
+  "Pakistan":"Asia","Sri Lanka":"Asia","Nepal":"Asia","Myanmar":"Asia",
+  "Cambodia":"Asia","Mongolia":"Asia","Kazakhstan":"Asia","Uzbekistan":"Asia",
+  "Azerbaijan":"Asia","Armenia":"Asia","Georgia":"Asia","Kyrgyzstan":"Asia",
+  "Tajikistan":"Asia","Turkmenistan":"Asia","Afghanistan":"Asia",
+  "Australia":"Oceania","New Zealand":"Oceania","Fiji":"Oceania",
+  "Papua New Guinea":"Oceania","Samoa":"Oceania","Tonga":"Oceania",
+  "South Africa":"Africa","Nigeria":"Africa","Egypt":"Africa","Kenya":"Africa",
+  "Ethiopia":"Africa","Ghana":"Africa","Tanzania":"Africa","Uganda":"Africa",
+  "Morocco":"Africa","Algeria":"Africa","Tunisia":"Africa","Cameroon":"Africa",
+  "Ivory Coast":"Africa","Senegal":"Africa","Zimbabwe":"Africa","Mozambique":"Africa",
+  "Israel":"Middle East","Saudi Arabia":"Middle East","United Arab Emirates":"Middle East",
+  "Iran":"Middle East","Iraq":"Middle East","Jordan":"Middle East","Lebanon":"Middle East",
+  "Kuwait":"Middle East","Qatar":"Middle East","Bahrain":"Middle East","Oman":"Middle East",
+  "Yemen":"Middle East","Syria":"Middle East","Palestine":"Middle East",
 };
+
+function continentFromCountry(countryName) {
+  if (!countryName) return "";
+  return COUNTRY_CONTINENT[countryName] || "";
+}
 
 const CONTINENTS = ["All Continents","South America","North America","Europe","Asia","Oceania","Africa","Middle East"];
 const STATUSES   = ["All Status","Member","Negotiating","Documentation","Needed"];
@@ -477,6 +491,10 @@ function EditModal({ row, onClose, onSave, onExpandCountry }) {
                 :<input type={type} value={f[k]||""} onChange={e=>{
                     set(k,e.target.value);
                     if(k==="inicio") set("quarter", quarterFromDate(e.target.value));
+                    if(k==="country") {
+                      const autoContinent = continentFromCountry(e.target.value);
+                      if(autoContinent) set("continent", autoContinent);
+                    }
                   }}
                   style={{width:"100%",border:"1px solid #e5e7eb",borderRadius:8,padding:"7px 10px",fontSize:13,boxSizing:"border-box"}}/>
               }
@@ -577,251 +595,564 @@ function EditModal({ row, onClose, onSave, onExpandCountry }) {
   );
 }
 
-// ── World Map ──────────────────────────────────────────────────
-// Uses topojson-client imported via npm (no dynamic script injection)
-function WorldMap({ countries, onCountryClick, showTrophies, showTasks }) {
-  const containerRef = useRef(null);
+// ── Approximate lat/lon centers for countries ──────────────────
+const COUNTRY_LATLON = {
+  "Brazil":[-14.2,-51.9],"England":[52.4,-1.6],"Australia":[-25.3,133.8],
+  "Taiwan":[23.7,121.0],"Mexico":[23.6,-102.6],"Israel":[31.0,34.9],
+  "Germany":[51.2,10.4],"Japan":[36.2,138.3],"Canada":[56.1,-106.3],
+  "United States":[37.1,-95.7],"France":[46.2,2.2],"Argentina":[-38.4,-63.6],
+  "Colombia":[4.6,-74.1],"South Africa":[-30.6,22.9],"Nigeria":[9.1,8.7],
+  "Egypt":[26.8,30.8],"Poland":[51.9,19.1],"Spain":[40.5,-3.7],
+  "Italy":[41.9,12.6],"Turkey":[38.9,35.2],"South Korea":[35.9,127.8],
+  "Indonesia":[-0.8,113.9],"Thailand":[15.9,100.9],"New Zealand":[-40.9,174.9],
+  "China":[35.9,104.2],"India":[20.6,78.9],"Portugal":[39.4,-8.2],
+  "Chile":[-35.7,-71.5],"Peru":[-9.2,-75.0],"Venezuela":[6.4,-66.6],
+};
 
+// ── Shared world features cache (loaded once, reused everywhere) ─
+let _worldFeaturesCache = null;
+let _worldFeaturesLoading = false;
+let _worldFeaturesCallbacks = [];
+function loadWorldFeatures(cb) {
+  if (_worldFeaturesCache) { cb(_worldFeaturesCache); return; }
+  _worldFeaturesCallbacks.push(cb);
+  if (_worldFeaturesLoading) return;
+  _worldFeaturesLoading = true;
+  const ensureTopojson = (done) => {
+    if (window.topojson) { done(); return; }
+    const s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js";
+    s.onload = done; s.onerror = () => { _worldFeaturesLoading=false; }; document.head.appendChild(s);
+  };
+  ensureTopojson(() => {
+    fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
+      .then(r=>r.json())
+      .then(world => {
+        _worldFeaturesCache = window.topojson.feature(world, world.objects.countries).features;
+        _worldFeaturesCallbacks.forEach(fn=>fn(_worldFeaturesCache));
+        _worldFeaturesCallbacks = [];
+      })
+      .catch(() => { _worldFeaturesLoading=false; });
+  });
+}
+
+// ── World Map (D3 + topojson via CDN, with marker fallback) ────
+function WorldMap({ countries, onCountryClick, showTrophies, showTasks, responsibles=[] }) {
+  const svgRef = useRef(null);
+  const [tooltip, setTooltip] = useState(null);
+  const [mapReady, setMapReady] = useState(false);
+  const [features, setFeatures] = useState(null);
+  const [projFn, setProjFn] = useState(null);
+
+  // Load world features (shared cache)
   useEffect(() => {
-    const el = containerRef.current; if (!el) return;
     let cancelled = false;
+    loadWorldFeatures(feats => {
+      if (!cancelled) { setFeatures(feats); setMapReady(true); }
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  // Draw SVG map
+  useEffect(() => {
+    if (!mapReady || mapReady === "error" || !features || !svgRef.current) return;
+    const el = svgRef.current;
+    const W = el.parentElement?.clientWidth || 900;
+    const H = Math.round(W * 0.5);
+    el.setAttribute("width", W);
+    el.setAttribute("height", H);
+    el.setAttribute("viewBox", `0 0 ${W} ${H}`);
 
     const byIso = {};
     countries.forEach(c => { if (c.country && ISO_MAP[c.country]) byIso[ISO_MAP[c.country]] = c; });
 
-    const render = (world) => {
-      if (cancelled || !containerRef.current) return;
-      // ✅ Rule 1: Read width inside async callback — DOM is painted by now
-      const W = el.clientWidth || 900;
-      const H = Math.round(W * 0.52);
+    const proj = d3.geoNaturalEarth1().fitSize([W, H], { type:"Sphere" });
+    const path = d3.geoPath().projection(proj);
+    setProjFn(() => proj);
 
-      d3.select(el).selectAll("*").remove();
-      const svg = d3.select(el).append("svg")
-        .attr("width","100%").attr("height",H)
-        .attr("viewBox",`0 0 ${W} ${H}`);
-      svg.append("rect").attr("width",W).attr("height",H).attr("fill","#f1f5f9").attr("rx",8);
+    // Clear
+    while (el.firstChild) el.removeChild(el.firstChild);
 
-      // ✅ Rule 2: geoNaturalEarth1 + Sphere for world maps
-      const proj = d3.geoNaturalEarth1().fitSize([W, H], { type:"Sphere" });
-      const path = d3.geoPath().projection(proj);
-      const features = window.topojson.feature(world, world.objects.countries).features;
+    // Ocean bg
+    const ns = "http://www.w3.org/2000/svg";
+    const defs = document.createElementNS(ns, "defs");
+    // Ocean gradient — soft slate blue
+    const lg = document.createElementNS(ns, "linearGradient");
+    lg.setAttribute("id","ocean-grad"); lg.setAttribute("x1","0"); lg.setAttribute("y1","0"); lg.setAttribute("x2","0"); lg.setAttribute("y2","1");
+    const s1=document.createElementNS(ns,"stop"); s1.setAttribute("offset","0%"); s1.setAttribute("stop-color","#e8ecf0");
+    const s2=document.createElementNS(ns,"stop"); s2.setAttribute("offset","100%"); s2.setAttribute("stop-color","#dde3e9");
+    lg.appendChild(s1); lg.appendChild(s2); defs.appendChild(lg);
+    // Subtle drop shadow filter for tracked countries
+    const filt = document.createElementNS(ns,"filter");
+    filt.setAttribute("id","cShadow"); filt.setAttribute("x","-10%"); filt.setAttribute("y","-10%"); filt.setAttribute("width","120%"); filt.setAttribute("height","120%");
+    const fe = document.createElementNS(ns,"feDropShadow");
+    fe.setAttribute("dx","0"); fe.setAttribute("dy","1"); fe.setAttribute("stdDeviation","1.5"); fe.setAttribute("flood-color","rgba(0,0,0,0.18)");
+    filt.appendChild(fe); defs.appendChild(filt);
+    el.appendChild(defs);
+    const bg = document.createElementNS(ns,"rect");
+    bg.setAttribute("width",W); bg.setAttribute("height",H); bg.setAttribute("fill","url(#ocean-grad)"); bg.setAttribute("rx","10");
+    el.appendChild(bg);
 
-      svg.selectAll("path").data(features).enter().append("path")
-        .attr("d", path)
-        .attr("fill", d => { const c = byIso[+d.id]; return c ? (STATUS_CFG[c.memberStatus]?.dot || "#cbd5e1") : "#dde3ea"; })
-        .attr("stroke","#fff")
-        .attr("stroke-width", d => byIso[+d.id] ? 1 : 0.4)
-        .style("cursor", d => byIso[+d.id] ? "pointer" : "default")
-        .on("mouseenter", function(e,d) { if (byIso[+d.id]) d3.select(this).attr("opacity",0.72); })
-        .on("mouseleave", function(e,d) { d3.select(this).attr("opacity",1); })
-        .on("click", (e,d) => { const c = byIso[+d.id]; if(c) onCountryClick(c); });
+    // Untracked countries group (no filter)
+    const gUntracked = document.createElementNS(ns,"g");
+    // Tracked countries group (with shadow)
+    const gTracked = document.createElementNS(ns,"g");
+    gTracked.setAttribute("filter","url(#cShadow)");
 
-      Object.entries(byIso).forEach(([iso,c]) => {
-        const feat = features.find(f => +f.id === +iso); if (!feat) return;
-        const cen = path.centroid(feat); if (!cen || isNaN(cen[0]) || isNaN(cen[1])) return;
-
-        const hasTrophy = showTrophies && c.tournament;
-        const tasks = c.tasks || [];
-        const openTasks = tasks.filter(t => t.taskStatus !== "Done");
-        const overdueTasks = openTasks.filter(t => t.deadline && new Date(t.deadline) < new Date());
-        const taskEmoji = showTasks && openTasks.length > 0 ? (overdueTasks.length > 0 ? "🔴" : "⚠️") : null;
-        const hasExtra = hasTrophy || taskEmoji;
-
-        svg.append("text").attr("x",cen[0]).attr("y",cen[1]+(hasExtra?10:2))
-          .attr("text-anchor","middle").attr("font-size","9").attr("font-weight","700")
-          .attr("fill","#1e293b").attr("pointer-events","none")
-          .style("text-shadow","0 1px 2px rgba(255,255,255,0.9)").text(c.country);
-
-        if (hasTrophy) {
-          svg.append("text").attr("x",cen[0]-(taskEmoji?7:0)).attr("y",cen[1]-2)
-            .attr("text-anchor","middle").attr("font-size","12").attr("pointer-events","none")
-            .style("filter","drop-shadow(0 1px 2px rgba(0,0,0,0.3))").text("🏆");
-        }
-        if (taskEmoji) {
-          svg.append("text").attr("x",cen[0]+(hasTrophy?7:0)).attr("y",cen[1]-2)
-            .attr("text-anchor","middle").attr("font-size","12").attr("pointer-events","none")
-            .style("filter","drop-shadow(0 1px 2px rgba(0,0,0,0.3))").text(taskEmoji);
-        }
-      });
-    };
-
-    const loadAndRender = () => {
-      fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
-        .then(r => r.json())
-        .then(world => { if (!cancelled) render(world); })
-        .catch(() => {
-          if (!cancelled && containerRef.current)
-            containerRef.current.innerHTML = '<p style="text-align:center;padding:60px;color:#9ca3af;font-size:13px">Map unavailable</p>';
+    // Countries
+    features.forEach(f => {
+      const c = byIso[+f.id];
+      const d = path(f); if (!d) return;
+      const pathEl = document.createElementNS(ns, "path");
+      pathEl.setAttribute("d", d);
+      // Untracked: warm light grey; tracked: vibrant status color
+      pathEl.setAttribute("fill", c ? (STATUS_CFG[c.memberStatus]?.dot || "#94a3b8") : "#d4dbe3");
+      // Refined border: very subtle
+      pathEl.setAttribute("stroke", c ? "#a0aab4" : "#c2cad3");
+      pathEl.setAttribute("stroke-width", c ? "0.6" : "0.3");
+      pathEl.setAttribute("stroke-linejoin","round");
+      pathEl.style.cursor = c ? "pointer" : "default";
+      pathEl.style.transition = "opacity 0.15s";
+      if (c) {
+        pathEl.addEventListener("mouseenter", e => {
+          pathEl.setAttribute("opacity","0.78");
+          const rect = el.getBoundingClientRect();
+          setTooltip({ c, x: e.clientX - rect.left, y: e.clientY - rect.top });
         });
+        pathEl.addEventListener("mousemove", e => {
+          const rect = el.getBoundingClientRect();
+          setTooltip(prev => prev ? {...prev, x: e.clientX-rect.left, y: e.clientY-rect.top} : prev);
+        });
+        pathEl.addEventListener("mouseleave", () => { pathEl.setAttribute("opacity","1"); setTooltip(null); });
+        pathEl.addEventListener("click", () => onCountryClick(c));
+        gTracked.appendChild(pathEl);
+      } else {
+        gUntracked.appendChild(pathEl);
+      }
+    });
+    el.appendChild(gUntracked);
+    el.appendChild(gTracked);
+
+    // Avatar helpers (mirror of JS avatarColor/initials)
+    const AVATAR_COLORS = ["#6366f1","#f59e0b","#22c55e","#ef4444","#3b82f6","#ec4899","#8b5cf6","#14b8a6","#f97316","#64748b"];
+    const avatarCol = name => {
+      let hash=0; for(let i=0;i<(name||"").length;i++) hash=name.charCodeAt(i)+((hash<<5)-hash);
+      return AVATAR_COLORS[Math.abs(hash)%AVATAR_COLORS.length];
+    };
+    const avatarInit = name => {
+      if(!name) return "?";
+      const parts=name.trim().split(/\s+/);
+      return parts.length===1 ? parts[0].slice(0,2).toUpperCase() : (parts[0][0]+parts[parts.length-1][0]).toUpperCase();
+    };
+    const drawAvatar = (g, x, y, r, name, photo) => {
+      const bg = avatarCol(name);
+      // white ring
+      const ring = document.createElementNS(ns,"circle");
+      ring.setAttribute("cx",x); ring.setAttribute("cy",y); ring.setAttribute("r",r+1.5);
+      ring.setAttribute("fill","#fff"); ring.setAttribute("opacity","0.9");
+      g.appendChild(ring);
+      if (photo) {
+        // clip path for round photo
+        const clipId = "avc_"+Math.random().toString(36).slice(2,7);
+        const defs2 = document.createElementNS(ns,"defs");
+        const cp = document.createElementNS(ns,"clipPath"); cp.setAttribute("id",clipId);
+        const cpc = document.createElementNS(ns,"circle"); cpc.setAttribute("cx",x); cpc.setAttribute("cy",y); cpc.setAttribute("r",r);
+        cp.appendChild(cpc); defs2.appendChild(cp); g.appendChild(defs2);
+        const img = document.createElementNS(ns,"image");
+        img.setAttribute("href",photo); img.setAttribute("x",x-r); img.setAttribute("y",y-r);
+        img.setAttribute("width",r*2); img.setAttribute("height",r*2);
+        img.setAttribute("clip-path",`url(#${clipId})`); img.setAttribute("preserveAspectRatio","xMidYMid slice");
+        g.appendChild(img);
+      } else {
+        const circle = document.createElementNS(ns,"circle");
+        circle.setAttribute("cx",x); circle.setAttribute("cy",y); circle.setAttribute("r",r);
+        circle.setAttribute("fill",bg); g.appendChild(circle);
+        const txt = document.createElementNS(ns,"text");
+        txt.setAttribute("x",x); txt.setAttribute("y",y+r*0.36);
+        txt.setAttribute("text-anchor","middle"); txt.setAttribute("font-size",r*0.9);
+        txt.setAttribute("font-weight","700"); txt.setAttribute("fill","#fff");
+        txt.setAttribute("font-family","DM Sans,system-ui,sans-serif");
+        txt.setAttribute("pointer-events","none"); txt.textContent=avatarInit(name);
+        g.appendChild(txt);
+      }
     };
 
-    // ✅ Load topojson parser dynamically (no npm needed)
-    if (window.topojson) {
-      loadAndRender();
-    } else {
-      const s = document.createElement("script");
-      s.src = "https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js";
-      s.onload = () => { if (!cancelled) loadAndRender(); };
-      s.onerror = () => {
-        if (!cancelled && containerRef.current)
-          containerRef.current.innerHTML = '<p style="text-align:center;padding:60px;color:#9ca3af;font-size:13px">Map unavailable</p>';
-      };
-      document.head.appendChild(s);
-    }
+    // Labels + avatar bubbles for tracked countries
+    const gLabels = document.createElementNS(ns,"g");
+    countries.filter(c=>c.country && ISO_MAP[c.country]).forEach(c => {
+      const feat = features.find(f => +f.id === ISO_MAP[c.country]); if (!feat) return;
+      const cen = path.centroid(feat); if (!cen || isNaN(cen[0])) return;
+      const hasTrophy = showTrophies && c.tournament;
+      const tasks = c.tasks||[];
+      const openTasks = tasks.filter(t=>t.taskStatus!=="Done");
 
-    return () => { cancelled = true; };
-  }, [countries, showTrophies, showTasks]);
+      // Collect unique responsible persons for open tasks
+      const responsibleMap = {};
+      if (showTasks) {
+        openTasks.forEach(t => {
+          const name = (t.responsible||"").trim();
+          if (name && !responsibleMap[name]) responsibleMap[name] = t;
+        });
+      }
+      const responsibles = Object.keys(responsibleMap).slice(0, 4); // max 4 avatars
 
-  return <div ref={containerRef} style={{width:"100%",minHeight:460,borderRadius:8,overflow:"hidden"}}/>;
+      const hasExtras = hasTrophy || responsibles.length > 0;
+      const AVATAR_R = 7;
+      const AVATAR_Y = cen[1] - (hasExtras ? 14 : 0);
+
+      // Trophy icon above
+      if (hasTrophy) {
+        const t = document.createElementNS(ns,"text");
+        const trophyX = responsibles.length > 0 ? cen[0] - (responsibles.length * (AVATAR_R*2+2))/2 - 8 : cen[0];
+        t.setAttribute("x", trophyX);
+        t.setAttribute("y", cen[1] - (responsibles.length>0 ? 6 : 3));
+        t.setAttribute("text-anchor","middle"); t.setAttribute("font-size","10");
+        t.setAttribute("pointer-events","none");
+        t.textContent = "🏆";
+        gLabels.appendChild(t);
+      }
+
+      // Avatar row for task responsibles
+      if (responsibles.length > 0) {
+        const totalW = responsibles.length * (AVATAR_R*2+3) - 3;
+        const startX = cen[0] + (hasTrophy ? 8 : 0) - totalW/2 + AVATAR_R;
+        responsibles.forEach((name, i) => {
+          const ax = startX + i*(AVATAR_R*2+3);
+          const ay = cen[1] - 12;
+          // get photo from responsibles list if available (passed via country data)
+          const respObj = responsibles.find(r=>r.name===name);
+          drawAvatar(gLabels, ax, ay, AVATAR_R, name, respObj?.photo||null);
+        });
+      }
+
+      // Country name label
+      const lbl = document.createElementNS(ns,"text");
+      lbl.setAttribute("x", cen[0]); lbl.setAttribute("y", cen[1]+(hasExtras ? 6 : 4));
+      lbl.setAttribute("text-anchor","middle"); lbl.setAttribute("font-size","8");
+      lbl.setAttribute("font-weight","600"); lbl.setAttribute("fill","#1e2d3d");
+      lbl.setAttribute("letter-spacing","0.3");
+      lbl.setAttribute("pointer-events","none");
+      lbl.style.textShadow="0 1px 3px rgba(255,255,255,0.9), 0 0 6px rgba(255,255,255,0.6)";
+      lbl.textContent = c.country.length>12 ? c.country.slice(0,11)+"…" : c.country;
+      gLabels.appendChild(lbl);
+    });
+    el.appendChild(gLabels);
+  }, [mapReady, features, countries, showTrophies, showTasks, responsibles]);
+
+  // Fallback marker map when D3 fails
+  const MarkerMap = () => {
+    const W=900, H=440;
+    const toXY = (lat,lon) => [(lon+180)*(W/360), (90-lat)*(H/180)];
+    return (
+      <svg viewBox={`0 0 ${W} ${H}`} style={{width:"100%",height:"auto",borderRadius:10}}>
+        <defs>
+          <linearGradient id="ocean2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#dbeafe"/><stop offset="100%" stopColor="#bfdbfe"/>
+          </linearGradient>
+        </defs>
+        <rect width={W} height={H} fill="url(#ocean2)" rx="10"/>
+        <text x={W/2} y={H/2-30} textAnchor="middle" fontSize="14" fill="#94a3b8" fontWeight="600">World Map</text>
+        {countries.filter(c=>c.country && COUNTRY_LATLON[c.country]).map(c => {
+          const [lat,lon] = COUNTRY_LATLON[c.country];
+          const [x,y] = toXY(lat,lon);
+          const col = STATUS_CFG[c.memberStatus]?.dot || "#94a3b8";
+          return (
+            <g key={c.id} style={{cursor:"pointer"}} onClick={()=>onCountryClick(c)}>
+              <circle cx={x} cy={y} r={12} fill={col} opacity={0.9} stroke="#fff" strokeWidth={2}/>
+              <text x={x} y={y+4} textAnchor="middle" fontSize="7" fontWeight="700" fill="#fff" pointerEvents="none">
+                {c.country.slice(0,3).toUpperCase()}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+    );
+  };
+
+  if (mapReady === "error") return <MarkerMap/>;
+
+  return (
+    <div style={{position:"relative",width:"100%"}}>
+      {!mapReady && (
+        <div style={{height:460,display:"flex",alignItems:"center",justifyContent:"center",color:"#94a3b8",fontSize:13,background:"#f1f5f9",borderRadius:10}}>
+          Carregando mapa…
+        </div>
+      )}
+      <svg ref={svgRef} style={{width:"100%",display:mapReady&&mapReady!=="error"?"block":"none",borderRadius:10}}/>
+      {tooltip && (
+        <div style={{position:"absolute",left:tooltip.x+12,top:tooltip.y-50,background:"#1e293b",color:"#fff",
+          borderRadius:10,padding:"8px 12px",fontSize:12,pointerEvents:"none",zIndex:10,
+          boxShadow:"0 4px 20px rgba(0,0,0,0.25)",maxWidth:200}}>
+          <div style={{fontWeight:700,marginBottom:3}}>{tooltip.c.country}</div>
+          <div style={{display:"flex",alignItems:"center",gap:5}}>
+            <span style={{width:7,height:7,borderRadius:"50%",background:STATUS_CFG[tooltip.c.memberStatus]?.dot,display:"inline-block"}}/>
+            <span style={{color:STATUS_CFG[tooltip.c.memberStatus]?.dot}}>{tooltip.c.memberStatus}</span>
+          </div>
+          {tooltip.c.empresa && <div style={{color:"#94a3b8",fontSize:11,marginTop:2}}>{tooltip.c.empresa}</div>}
+          {showTrophies && tooltip.c.tournament && <div style={{fontSize:11,marginTop:2}}>🏆 {tooltip.c.tournament}</div>}
+          <div style={{fontSize:10,color:"#64748b",marginTop:4}}>Click to edit</div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-// ── Country State Map ──────────────────────────────────────────
-// Uses Natural Earth / geoBoundaries GeoJSON fetched from CDN
-// Falls back to embedded simplified polygons for Brazil
-function CountryStateMap({ country, states, onBack, onSaveStates }) {
+// ── Country Zoom Map ───────────────────────────────────────────
+// Member Map style, zoomed into the country, state outlines overlay.
+// Unregistered states = white. Registered = status color.
+function CountryZoomMap({ country, localStates, showTrophies, worldFeatures }) {
   const svgRef = useRef(null);
-  const [localStates, setLocalStates] = useState(states || []);
-  const [showTrophies, setShowTrophies] = useState(true);
-  const [tooltip, setTooltip] = useState(null); // {name, x, y, status, federation}
-  const [geoData, setGeoData] = useState(null);
-  const [geoLoading, setGeoLoading] = useState(true);
+  const [stateGeo, setStateGeo] = useState(null);
+  const [tooltip, setTooltip] = useState(null);
+  const [hoveredState, setHoveredState] = useState(null);
+  const W = 860, H = 480;
 
-  useEffect(() => { setLocalStates(states || []); }, [states]);
-
-  // Load GeoJSON for country states/provinces
   useEffect(() => {
-    setGeoLoading(true);
+    setStateGeo(null);
     const iso3 = COUNTRY_ISO3[country.country];
-    if (!iso3) {
-      // use embedded fallback
-      const emb = GEO_STATES[country.country];
-      setGeoData(emb || null);
-      setGeoLoading(false);
-      return;
-    }
-    // Try geoBoundaries via jsDelivr CDN
+    if (!iso3) { setStateGeo(GEO_STATES[country.country] || "none"); return; }
     const url = `https://cdn.jsdelivr.net/gh/wmgeolab/geoBoundaries@main/releaseData/gbOpen/${iso3}/ADM1/geoBoundaries-${iso3}-ADM1_simplified.geojson`;
-    fetch(url)
-      .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-      .then(geo => { setGeoData(geo); setGeoLoading(false); })
-      .catch(() => {
-        const emb = GEO_STATES[country.country];
-        setGeoData(emb || null);
-        setGeoLoading(false);
-      });
+    fetch(url).then(r=>{if(!r.ok)throw 0;return r.json();})
+      .then(geo => setStateGeo(geo))
+      .catch(() => setStateGeo(GEO_STATES[country.country] || "none"));
   }, [country.country]);
 
-  // Render SVG map whenever geoData or states change
   useEffect(() => {
     const el = svgRef.current;
-    if (!el || !geoData || geoLoading) return;
+    if (!el || !worldFeatures) return;
+    const ns = "http://www.w3.org/2000/svg";
+    const STATUS_COLOR = { Member:"#22c55e", Negotiating:"#f59e0b", Documentation:"#60a5fa", Needed:"#ef4444" };
 
-    const STATUS_COLOR = {
-      Member:"#22c55e", Negotiating:"#f59e0b",
-      Documentation:"#60a5fa", Needed:"#ef4444",
-    };
+    const iso = ISO_MAP[country.country];
+    const targetFeat = iso ? worldFeatures.find(f => +f.id === iso) : null;
 
+    // Projection: zoom into target country exactly like geoMercator fitExtent
+    let proj;
+    if (targetFeat) {
+      proj = d3.geoMercator().fitExtent([[50, 40], [W-50, H-40]], targetFeat);
+    } else {
+      proj = d3.geoNaturalEarth1().fitSize([W, H], {type:"Sphere"});
+    }
+    const path = d3.geoPath().projection(proj);
+
+    el.setAttribute("viewBox", `0 0 ${W} ${H}`);
+    while (el.firstChild) el.removeChild(el.firstChild);
+
+    // ── Defs ──
+    const defs = document.createElementNS(ns,"defs");
+    // Same ocean gradient as WorldMap
+    const lg = document.createElementNS(ns,"linearGradient");
+    lg.setAttribute("id","czm-bg"); lg.setAttribute("x1","0"); lg.setAttribute("y1","0"); lg.setAttribute("x2","0"); lg.setAttribute("y2","1");
+    const s1=document.createElementNS(ns,"stop"); s1.setAttribute("offset","0%"); s1.setAttribute("stop-color","#e8ecf0");
+    const s2=document.createElementNS(ns,"stop"); s2.setAttribute("offset","100%"); s2.setAttribute("stop-color","#dde3e9");
+    lg.appendChild(s1); lg.appendChild(s2); defs.appendChild(lg);
+    // Shadow for target country
+    const filt=document.createElementNS(ns,"filter"); filt.setAttribute("id","czm-sh");
+    filt.setAttribute("x","-15%"); filt.setAttribute("y","-15%"); filt.setAttribute("width","130%"); filt.setAttribute("height","130%");
+    const fe=document.createElementNS(ns,"feDropShadow");
+    fe.setAttribute("dx","0"); fe.setAttribute("dy","2"); fe.setAttribute("stdDeviation","5"); fe.setAttribute("flood-color","rgba(0,0,0,0.2)");
+    filt.appendChild(fe); defs.appendChild(filt);
+    el.appendChild(defs);
+
+    // ── Background ──
+    const bg=document.createElementNS(ns,"rect");
+    bg.setAttribute("width",W); bg.setAttribute("height",H); bg.setAttribute("fill","url(#czm-bg)"); bg.setAttribute("rx","12");
+    el.appendChild(bg);
+
+    // ── World countries — same style as WorldMap ──
+    const gWorld=document.createElementNS(ns,"g");
+    worldFeatures.forEach(f => {
+      const isTarget = iso && +f.id === iso;
+      const d = path(f); if (!d) return;
+      const p=document.createElementNS(ns,"path");
+      p.setAttribute("d", d);
+      // Target country: filled with its member status color (same as WorldMap)
+      // Neighbours: same muted grey as WorldMap untracked countries
+      const cData = isTarget ? country : null;
+      p.setAttribute("fill", isTarget
+        ? (STATUS_CFG[country.memberStatus]?.dot || "#94a3b8")
+        : "#d4dbe3");
+      p.setAttribute("stroke", isTarget ? "#a0aab4" : "#c2cad3");
+      p.setAttribute("stroke-width", isTarget ? "0.8" : "0.3");
+      p.setAttribute("stroke-linejoin","round");
+      gWorld.appendChild(p);
+    });
+    el.appendChild(gWorld);
+
+    // ── State outlines (on top of country fill) ──
     const statesByName = {};
     localStates.forEach(s => { if (s.name) statesByName[s.name.toLowerCase()] = s; });
 
-    const W = el.parentElement?.clientWidth || 700;
-    const H = Math.round(W * 0.6);
+    if (stateGeo && stateGeo !== "none" && stateGeo.features?.length) {
+      const feats = stateGeo.features;
+      const nk = ["shapeName","name","NAME_1","NAME","shapenam"]
+        .find(k => feats[0]?.properties?.[k] !== undefined)
+        || Object.keys(feats[0]?.properties||{})[0] || "name";
 
-    d3.select(el).attr("width", W).attr("height", H).attr("viewBox", `0 0 ${W} ${H}`);
-    d3.select(el).selectAll("*").remove();
+      // State fills
+      const gStates = document.createElementNS(ns,"g");
+      gStates.setAttribute("filter","url(#czm-sh)");
+      feats.forEach(f => {
+        const name = f.properties[nk] || "";
+        const st = statesByName[name.toLowerCase()];
+        const d = path(f); if (!d) return;
+        const p = document.createElementNS(ns,"path");
+        p.setAttribute("d", d);
+        // Registered federation → status color. No federation → white.
+        p.setAttribute("fill", st ? (STATUS_COLOR[st.memberStatus] || "#22c55e") : "#ffffff");
+        p.setAttribute("stroke", "#a0aab4");
+        p.setAttribute("stroke-width", "0.7");
+        p.setAttribute("stroke-linejoin","round");
+        p.style.cursor = "pointer";
+        p.style.transition = "opacity 0.12s";
+        p.addEventListener("mouseenter", e => {
+          p.setAttribute("opacity","0.78");
+          setHoveredState(name);
+          const rect = el.getBoundingClientRect();
+          setTooltip({ name, st, x:(e.clientX-rect.left)*(W/rect.width), y:(e.clientY-rect.top)*(H/rect.height) });
+        });
+        p.addEventListener("mousemove", e => {
+          const rect = el.getBoundingClientRect();
+          setTooltip(prev => prev ? {...prev, x:(e.clientX-rect.left)*(W/rect.width), y:(e.clientY-rect.top)*(H/rect.height)} : prev);
+        });
+        p.addEventListener("mouseleave", () => { p.setAttribute("opacity","1"); setHoveredState(null); setTooltip(null); });
+        gStates.appendChild(p);
+      });
+      el.appendChild(gStates);
 
-    // background
-    d3.select(el).append("rect").attr("width", W).attr("height", H).attr("fill", "#f1f5f9").attr("rx", 10);
-
-    const features = geoData.features || [];
-    if (!features.length) {
-      d3.select(el).append("text").attr("x", W/2).attr("y", H/2)
-        .attr("text-anchor","middle").attr("fill","#9ca3af").attr("font-size","13")
-        .text("No state boundaries available for this country yet.");
-      return;
+      // State labels
+      const gLabels = document.createElementNS(ns,"g");
+      feats.forEach(f => {
+        const name = f.properties[nk] || "";
+        const st = statesByName[name.toLowerCase()];
+        const cen = path.centroid(f);
+        if (!cen || isNaN(cen[0])) return;
+        const hasTrophy = showTrophies && st?.tournament;
+        if (hasTrophy) {
+          const t=document.createElementNS(ns,"text");
+          t.setAttribute("x",cen[0]); t.setAttribute("y",cen[1]-8);
+          t.setAttribute("text-anchor","middle"); t.setAttribute("font-size","11");
+          t.setAttribute("pointer-events","none"); t.textContent="🏆";
+          gLabels.appendChild(t);
+        }
+        const short = name.length>16 ? name.slice(0,14)+"…" : name;
+        const lbl=document.createElementNS(ns,"text");
+        lbl.setAttribute("x",cen[0]); lbl.setAttribute("y",cen[1]+(hasTrophy?8:3));
+        lbl.setAttribute("text-anchor","middle"); lbl.setAttribute("font-size","9");
+        lbl.setAttribute("font-weight","700");
+        lbl.setAttribute("fill", st ? "#fff" : "#1e2d3d");
+        lbl.setAttribute("paint-order","stroke");
+        lbl.setAttribute("stroke", st ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.9)");
+        lbl.setAttribute("stroke-width","2.5"); lbl.setAttribute("stroke-linejoin","round");
+        lbl.setAttribute("pointer-events","none");
+        lbl.textContent = short;
+        gLabels.appendChild(lbl);
+      });
+      el.appendChild(gLabels);
     }
 
-    const nameKey = ["shapeName","name","NAME_1","NAME","shapenam"]
-      .find(k => features[0]?.properties?.[k] !== undefined)
-      || Object.keys(features[0]?.properties || {})[0] || "name";
-
-    const collection = { type:"FeatureCollection", features };
-    const proj = d3.geoMercator().fitSize([W - 10, H - 10], collection).translate(
-      [d3.geoMercator().fitSize([W - 10, H - 10], collection).translate()[0] + 5,
-       d3.geoMercator().fitSize([W - 10, H - 10], collection).translate()[1] + 5]
-    );
-    const path = d3.geoPath().projection(proj);
-
-    const g = d3.select(el).append("g");
-
-    g.selectAll("path").data(features).enter().append("path")
-      .attr("d", path)
-      .attr("fill", d => {
-        const name = (d.properties[nameKey] || "").toLowerCase();
-        const st = statesByName[name];
-        return st ? (STATUS_COLOR[st.memberStatus] || "#22c55e") : "#dde3ea";
-      })
-      .attr("stroke", "#fff")
-      .attr("stroke-width", d => statesByName[(d.properties[nameKey]||"").toLowerCase()] ? 1.5 : 0.6)
-      .style("cursor", "pointer")
-      .on("mouseenter", function(e, d) {
-        d3.select(this).attr("opacity", 0.75);
-        const name = d.properties[nameKey] || "";
-        const st = statesByName[name.toLowerCase()];
-        const rect = el.getBoundingClientRect();
-        setTooltip({ name, st, x: e.clientX - rect.left, y: e.clientY - rect.top });
-      })
-      .on("mousemove", function(e) {
-        const rect = el.getBoundingClientRect();
-        setTooltip(prev => prev ? { ...prev, x: e.clientX - rect.left, y: e.clientY - rect.top } : prev);
-      })
-      .on("mouseleave", function() {
-        d3.select(this).attr("opacity", 1);
-        setTooltip(null);
-      });
-
-    // State name labels
-    features.forEach(d => {
-      const name = d.properties[nameKey] || "";
-      const st = statesByName[name.toLowerCase()];
-      const cen = path.centroid(d);
-      if (!cen || isNaN(cen[0]) || isNaN(cen[1])) return;
-      const hasTrophy = showTrophies && st?.tournament;
-      const short = name.length > 14 ? name.slice(0, 12) + "…" : name;
-      d3.select(el).append("text")
-        .attr("x", cen[0]).attr("y", cen[1] + (hasTrophy ? 6 : 1))
-        .attr("text-anchor","middle").attr("font-size","8").attr("font-weight","700")
-        .attr("fill", st ? "#fff" : "#6b7280").attr("pointer-events","none")
-        .style("text-shadow", st ? "0 1px 3px rgba(0,0,0,0.6)" : "0 1px 2px rgba(255,255,255,0.9)")
-        .text(short);
-      if (hasTrophy) {
-        d3.select(el).append("text")
-          .attr("x", cen[0]).attr("y", cen[1] - 6)
-          .attr("text-anchor","middle").attr("font-size","11").attr("pointer-events","none")
-          .style("filter","drop-shadow(0 1px 2px rgba(0,0,0,0.3))").text("🏆");
+    // ── Tooltip ──
+    if (tooltip) {
+      const STATUS_COLOR2 = { Member:"#22c55e", Negotiating:"#f59e0b", Documentation:"#60a5fa", Needed:"#ef4444" };
+      const tg=document.createElementNS(ns,"g");
+      const tx=Math.min(tooltip.x+14,W-205), ty=Math.max(tooltip.y-75,6);
+      const bh = tooltip.st ? (tooltip.st.federation ? (tooltip.st.rep?88:70) : 52) : 44;
+      const box=document.createElementNS(ns,"rect");
+      box.setAttribute("x",tx); box.setAttribute("y",ty); box.setAttribute("width","195"); box.setAttribute("height",bh);
+      box.setAttribute("rx","8"); box.setAttribute("fill","#1e293b"); box.setAttribute("opacity","0.94");
+      tg.appendChild(box);
+      const tn=document.createElementNS(ns,"text");
+      tn.setAttribute("x",tx+10); tn.setAttribute("y",ty+17); tn.setAttribute("font-size","12");
+      tn.setAttribute("font-weight","700"); tn.setAttribute("fill","#fff");
+      tn.textContent=tooltip.name+(showTrophies&&tooltip.st?.tournament?" 🏆":"");
+      tg.appendChild(tn);
+      if (tooltip.st) {
+        const dot=document.createElementNS(ns,"circle");
+        dot.setAttribute("cx",tx+10); dot.setAttribute("cy",ty+32); dot.setAttribute("r","5");
+        dot.setAttribute("fill",STATUS_COLOR2[tooltip.st.memberStatus]||"#94a3b8"); tg.appendChild(dot);
+        const ts=document.createElementNS(ns,"text");
+        ts.setAttribute("x",tx+20); ts.setAttribute("y",ty+36); ts.setAttribute("font-size","11");
+        ts.setAttribute("fill",STATUS_COLOR2[tooltip.st.memberStatus]||"#94a3b8"); ts.setAttribute("font-weight","600");
+        ts.textContent=tooltip.st.memberStatus; tg.appendChild(ts);
+        if(tooltip.st.federation){const tf=document.createElementNS(ns,"text"); tf.setAttribute("x",tx+10); tf.setAttribute("y",ty+52); tf.setAttribute("font-size","10"); tf.setAttribute("fill","#86efac"); tf.textContent=tooltip.st.federation; tg.appendChild(tf);}
+        if(tooltip.st.rep){const tr=document.createElementNS(ns,"text"); tr.setAttribute("x",tx+10); tr.setAttribute("y",ty+68); tr.setAttribute("font-size","10"); tr.setAttribute("fill","#94a3b8"); tr.textContent=tooltip.st.rep; tg.appendChild(tr);}
+      } else {
+        const tn2=document.createElementNS(ns,"text");
+        tn2.setAttribute("x",tx+10); tn2.setAttribute("y",ty+34); tn2.setAttribute("font-size","10");
+        tn2.setAttribute("fill","#94a3b8"); tn2.setAttribute("font-style","italic");
+        tn2.textContent="No federation registered"; tg.appendChild(tn2);
       }
-    });
-  }, [geoData, geoLoading, localStates, showTrophies]);
+      el.appendChild(tg);
+    }
+
+  }, [worldFeatures, stateGeo, localStates, showTrophies, tooltip, hoveredState]);
+
+  return (
+    <div style={{position:"relative",width:"100%"}}>
+      {!stateGeo && (
+        <div style={{height:460,display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:12,background:"url(#czm-bg)",borderRadius:12,background:"#e8ecf0"}}>
+          <div style={{width:36,height:36,border:"3px solid #e0e7ff",borderTopColor:"#6366f1",borderRadius:"50%",animation:"spin 0.9s linear infinite"}}/>
+          <span style={{color:"#9ca3af",fontSize:13}}>Loading map…</span>
+        </div>
+      )}
+      {stateGeo && <svg ref={svgRef} style={{width:"100%",height:"auto",display:"block",borderRadius:12}}/>}
+    </div>
+  );
+}
+
+// ── Country State Map ──────────────────────────────────────────
+function CountryStateMap({ country, states, onBack, onSaveStates }) {
+  const [localStates, setLocalStates] = useState(states || []);
+  const [showTrophies, setShowTrophies] = useState(true);
+  const [tooltip, setTooltip] = useState(null);
+  const [geoData, setGeoData] = useState(null);
+  const [geoLoading, setGeoLoading] = useState(true);
+  const [hoveredName, setHoveredName] = useState(null);
+  const [paths, setPaths] = useState([]);
+  const [worldFeatures, setWorldFeatures] = useState(null);
+  const W = 800, H = 500;
+
+  // Load shared world features for zoom map
+  useEffect(() => {
+    loadWorldFeatures(feats => setWorldFeatures(feats));
+  }, []);
+
+  useEffect(() => { setLocalStates(states || []); }, [states]);
+
+  useEffect(() => {
+    setGeoLoading(true); setGeoData(null); setPaths([]);
+    const iso3 = COUNTRY_ISO3[country.country];
+    const tryLoad = (geo) => { setGeoData(geo); setGeoLoading(false); };
+    if (!iso3) { const emb=GEO_STATES[country.country]; tryLoad(emb||null); return; }
+    const url = `https://cdn.jsdelivr.net/gh/wmgeolab/geoBoundaries@main/releaseData/gbOpen/${iso3}/ADM1/geoBoundaries-${iso3}-ADM1_simplified.geojson`;
+    fetch(url).then(r=>{if(!r.ok)throw 0;return r.json();}).then(tryLoad).catch(()=>{tryLoad(GEO_STATES[country.country]||null);});
+  }, [country.country]);
+
+  // Compute SVG paths with d3 projection
+  useEffect(() => {
+    if (!geoData) { setPaths([]); return; }
+    const features = geoData.features || [];
+    if (!features.length) { setPaths([]); return; }
+    const nk = ["shapeName","name","NAME_1","NAME","shapenam"]
+      .find(k=>features[0]?.properties?.[k]!==undefined)
+      || Object.keys(features[0]?.properties||{})[0] || "name";
+    const collection = {type:"FeatureCollection",features};
+    const proj = d3.geoMercator().fitSize([W-40,H-40],collection);
+    const [ptx,pty] = proj.translate();
+    proj.translate([ptx+20,pty+20]);
+    const pathFn = d3.geoPath().projection(proj);
+    const result = features.map(f => {
+      const name = f.properties[nk] || "";
+      const dStr = pathFn(f);
+      const cen = pathFn.centroid(f);
+      return { name, dStr, cx: isNaN(cen[0])?null:cen[0], cy: isNaN(cen[1])?null:cen[1] };
+    }).filter(p=>p.dStr);
+    setPaths(result);
+  }, [geoData]);
+
 
   const addState = () => {
-    const s = {id:`s${Date.now()}`, name:"", federation:"", memberStatus:"Member", tournament:"", inicio:"", fim:"", rep:"", email:"", tel:""};
-    const next = [...localStates, s];
-    setLocalStates(next);
-    if (onSaveStates) onSaveStates(next);
-  };
-  const updateState = (sid, field, val) => {
-    const next = localStates.map(s => s.id === sid ? {...s,[field]:val} : s);
-    setLocalStates(next);
-    if (onSaveStates) onSaveStates(next);
-  };
-  const removeState = (sid) => {
-    const next = localStates.filter(s => s.id !== sid);
-    setLocalStates(next);
-    if (onSaveStates) onSaveStates(next);
-  };
-
-  const addState = () => {
-    const s = {id:`s${Date.now()}`, name:"", federation:"", memberStatus:"Member", tournament:"", inicio:"", fim:"", rep:"", email:"", tel:""};
+    const s = {id:`s${Date.now()}`, name:"", type:"Federation", federation:"", memberStatus:"Member", tournament:"", inicio:"", fim:"", rep:"", email:"", tel:""};
     const next = [...localStates, s];
     setLocalStates(next);
     if (onSaveStates) onSaveStates(next);
@@ -893,53 +1224,35 @@ function CountryStateMap({ country, states, onBack, onSaveStates }) {
               🏆 Tournaments
             </label>
           </div>
-          <div style={{width:"100%",borderRadius:10,overflow:"hidden",minHeight:420,position:"relative",background:"#f8fafc"}}>
-            {geoLoading && (
-              <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center",color:"#9ca3af",fontSize:13}}>
-                Loading map…
-              </div>
-            )}
-            <svg ref={svgRef} style={{width:"100%",display:"block"}}/>
-            {tooltip && (
-              <div style={{position:"absolute",left:tooltip.x+14,top:tooltip.y-40,background:"#fff",border:"1px solid #e5e7eb",borderRadius:10,padding:"10px 14px",fontSize:12,boxShadow:"0 4px 16px rgba(0,0,0,.12)",pointerEvents:"none",maxWidth:220,zIndex:10}}>
-                <div style={{fontWeight:700,marginBottom:4,color:"#1a1a1a"}}>
-                  {tooltip.name}{showTrophies && tooltip.st?.tournament ? " 🏆" : ""}
-                </div>
-                {tooltip.st ? (
-                  <div style={{lineHeight:1.8}}>
-                    <span style={{color:STATUS_CFG[tooltip.st.memberStatus]?.color,fontWeight:700,background:STATUS_CFG[tooltip.st.memberStatus]?.bg,padding:"1px 8px",borderRadius:10,fontSize:11}}>{tooltip.st.memberStatus}</span>
-                    {tooltip.st.federation && <div style={{color:"#16a34a",fontWeight:600,marginTop:3}}>{tooltip.st.federation}</div>}
-                    {tooltip.st.rep && <div style={{color:"#9ca3af",marginTop:2}}>{tooltip.st.rep}</div>}
-                  </div>
-                ) : (
-                  <div style={{color:"#9ca3af",fontStyle:"italic",fontSize:11}}>No federation registered</div>
-                )}
-              </div>
-            )}
-          </div>
+          <CountryZoomMap
+            country={country}
+            localStates={localStates}
+            showTrophies={showTrophies}
+            worldFeatures={worldFeatures}
+          />
         </div>
 
-        {/* ── States Table ── */}
+        {/* ── National Entities Table ── */}
         <div style={{background:"#fff",borderRadius:16,padding:"22px 24px",boxShadow:"0 1px 4px rgba(0,0,0,0.07)"}}>
           <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
-            <h2 style={{fontSize:15,fontWeight:700,margin:0,fontFamily:"'Playfair Display',Georgia,serif"}}>Registered States & Federations</h2>
+            <h2 style={{fontSize:15,fontWeight:700,margin:0,fontFamily:"'Playfair Display',Georgia,serif"}}>National Entities</h2>
             <div style={{display:"flex",gap:8,alignItems:"center"}}>
-              <span style={{background:"#f3f4f6",borderRadius:20,padding:"3px 10px",fontSize:11,fontWeight:600,color:"#6b7280"}}>{localStates.length} states</span>
+              <span style={{background:"#f3f4f6",borderRadius:20,padding:"3px 10px",fontSize:11,fontWeight:600,color:"#6b7280"}}>{localStates.length} records</span>
               <button onClick={addState}
                 style={{display:"flex",alignItems:"center",gap:4,background:"#f0fdf4",border:"1px solid #86efac",borderRadius:8,padding:"6px 12px",cursor:"pointer",fontSize:12,color:"#16a34a",fontWeight:600}}
                 onMouseEnter={e=>e.currentTarget.style.background="#dcfce7"}
                 onMouseLeave={e=>e.currentTarget.style.background="#f0fdf4"}>
-                <Plus size={12}/> Add State
+                <Plus size={12}/> Add Entity
               </button>
             </div>
           </div>
           {localStates.length===0
-            ?<div style={{padding:"40px 0",textAlign:"center",color:"#c4c9d4",fontSize:13,fontStyle:"italic"}}>No states registered yet. Click "Add State" to begin.</div>
+            ?<div style={{padding:"40px 0",textAlign:"center",color:"#c4c9d4",fontSize:13,fontStyle:"italic"}}>No entities registered yet. Click "Add Entity" to begin.</div>
             :<div style={{overflowX:"auto"}}>
               <table style={{width:"100%",borderCollapse:"collapse",fontSize:12}}>
                 <thead>
                   <tr style={{borderBottom:"2px solid #f3f4f6",background:"#fafafa"}}>
-                    {["State / Province","Status","Tournament 🏆","Federation","Entry Date","Exit Date","Representative","Email","Phone",""].map(h=>(
+                    {["Name","Type","Status","Tournament 🏆","Federation","Entry Date","Exit Date","Representative","Email","Phone",""].map(h=>(
                       <th key={h} style={{textAlign:"left",padding:"10px 12px",fontSize:10,color:"#9ca3af",fontWeight:700,textTransform:"uppercase",letterSpacing:.5,whiteSpace:"nowrap"}}>{h}</th>
                     ))}
                   </tr>
@@ -950,8 +1263,18 @@ function CountryStateMap({ country, states, onBack, onSaveStates }) {
                       onMouseEnter={e=>e.currentTarget.style.background="#f8faff"}
                       onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
                       <td style={{padding:"9px 12px"}}>
-                        <input value={st.name||""} onChange={e=>updateState(st.id,"name",e.target.value)} placeholder="State name"
+                        <input value={st.name||""} onChange={e=>updateState(st.id,"name",e.target.value)} placeholder="Name"
                           style={{border:"none",borderBottom:"1px solid #e5e7eb",padding:"2px 0",fontSize:12,fontWeight:600,background:"transparent",outline:"none",width:"100%",minWidth:100}}/>
+                      </td>
+                      <td style={{padding:"9px 8px",minWidth:110}}>
+                        <select value={st.type||"Federation"} onChange={e=>updateState(st.id,"type",e.target.value)}
+                          style={{border:"1px solid #e5e7eb",borderRadius:6,padding:"3px 7px",fontSize:11,background:"#fff",cursor:"pointer",fontWeight:600,
+                            color:st.type==="Media"?"#7c3aed":st.type==="Club"?"#0ea5e9":st.type==="Other"?"#6b7280":"#16a34a"}}>
+                          <option value="Federation">🏛 Federation</option>
+                          <option value="Media">📺 Media</option>
+                          <option value="Club">♟ Club</option>
+                          <option value="Other">• Other</option>
+                        </select>
                       </td>
                       <td style={{padding:"9px 12px",minWidth:130}}>
                         <select value={st.memberStatus||"Member"} onChange={e=>updateState(st.id,"memberStatus",e.target.value)}
@@ -1250,7 +1573,7 @@ function StatusHistoryEditor({ record, onUpdate, responsibles, setResponsibles }
 }
 
 // ── Dashboard Tab ──────────────────────────────────────────────
-function DashboardTab({ data, setData, goals = {} }) {
+function DashboardTab({ data, setData, goals = {}, responsibles = [] }) {
   const [kpiModal,   setKpiModal]   = useState(null);
   const [chartModal, setChartModal] = useState(null);
   const [stairModal, setStairModal] = useState(null);
@@ -1342,7 +1665,7 @@ function DashboardTab({ data, setData, goals = {} }) {
             </label>
           </div>
         </div>
-        <WorldMap countries={named} onCountryClick={setEditModal} showTrophies={showTrophies} showTasks={showTasks}/>
+        <WorldMap countries={named} onCountryClick={setEditModal} showTrophies={showTrophies} showTasks={showTasks} responsibles={responsibles}/>
       </div>
 
       <div style={{background:"#fff",borderRadius:12,padding:22,marginBottom:18,boxShadow:"0 1px 4px rgba(0,0,0,0.07)"}}>
@@ -1550,6 +1873,11 @@ function DataTab({ data, setData, responsibles, setResponsibles }) {
                             ?<span style={{fontSize:12,fontWeight:700,color:row[c.key]?"#6366f1":"#d1d5db",padding:"3px 4px",display:"block"}}>{row[c.key]||"—"}</span>
                             :c.key==="inicio"||c.key==="fim"
                             ?<EditableCell value={row[c.key]} type="date" onChange={val=>save({...row,[c.key]:val})}/>
+                            :c.key==="country"
+                            ?<EditableCell value={row[c.key]} onChange={val=>{
+                              const auto = continentFromCountry(val);
+                              save({...row, country:val, ...(auto?{continent:auto}:{})});
+                            }}/>
                             :<EditableCell value={row[c.key]} onChange={val=>save({...row,[c.key]:val})}/>
                           }
                         </td>
@@ -1612,8 +1940,11 @@ function initials(name) {
   if (parts.length === 1) return parts[0].slice(0,2).toUpperCase();
   return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
 }
-function Avatar({ name, size=42 }) {
+function Avatar({ name, size=42, photo }) {
   const bg = avatarColor(name||"?");
+  if (photo) return (
+    <img src={photo} alt={name} style={{width:size,height:size,borderRadius:"50%",objectFit:"cover",flexShrink:0,border:"2px solid #e0e7ff"}}/>
+  );
   return (
     <div style={{width:size,height:size,borderRadius:"50%",background:bg,display:"flex",alignItems:"center",justifyContent:"center",
       color:"#fff",fontWeight:700,fontSize:size*0.36,flexShrink:0,fontFamily:"'DM Sans',system-ui,sans-serif",letterSpacing:".5px"}}>
@@ -1623,7 +1954,7 @@ function Avatar({ name, size=42 }) {
 }
 
 // ── Responsible Modal ──────────────────────────────────────────
-function ResponsibleModal({ person, onClose }) {
+function ResponsibleModal({ person, onClose, onPhotoChange }) {
   const { name, area, tasks } = person;
   const total    = tasks.length;
   const done     = tasks.filter(t => t.taskStatus === "Done").length;
@@ -1644,7 +1975,18 @@ function ResponsibleModal({ person, onClose }) {
       style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.5)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:1200,padding:16}}>
       <div style={{background:"#fff",borderRadius:20,width:680,maxWidth:"100%",maxHeight:"90vh",display:"flex",flexDirection:"column",boxShadow:"0 32px 80px rgba(0,0,0,0.22)"}}>
         <div style={{padding:"28px 28px 20px",borderBottom:"1px solid #f3f4f6",display:"flex",alignItems:"center",gap:18}}>
-          <Avatar name={name} size={64}/>
+          <label style={{cursor:"pointer",position:"relative",flexShrink:0}} title="Click to change photo">
+            <Avatar name={name} size={64} photo={person.photo}/>
+            <div style={{position:"absolute",bottom:2,right:2,background:"#6366f1",color:"#fff",borderRadius:"50%",
+              width:20,height:20,display:"flex",alignItems:"center",justifyContent:"center",fontSize:11,
+              fontWeight:700,border:"2px solid #fff",boxShadow:"0 1px 4px rgba(0,0,0,0.2)"}}>✎</div>
+            <input type="file" accept="image/*" style={{display:"none"}} onChange={e=>{
+              const file=e.target.files[0]; if(!file||!onPhotoChange) return;
+              const reader=new FileReader();
+              reader.onload=ev=>onPhotoChange(ev.target.result);
+              reader.readAsDataURL(file);
+            }}/>
+          </label>
           <div style={{flex:1}}>
             <h2 style={{margin:"0 0 4px",fontSize:20,fontWeight:700,fontFamily:"'Playfair Display',Georgia,serif"}}>{name}</h2>
             <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
@@ -1718,7 +2060,7 @@ function ResponsiblesTab({ data, responsibles, setResponsibles }) {
   const people = useMemo(() => {
     const map = {};
     (responsibles||[]).forEach(r => {
-      map[r.name] = { name: r.name, area: r.area ? [r.area] : [], tasks: [], rId: r.id };
+      map[r.name] = { name: r.name, area: r.area ? [r.area] : [], tasks: [], rId: r.id, photo: r.photo||null };
     });
     data.forEach(record => {
       (record.tasks||[]).forEach(t => {
@@ -1746,6 +2088,7 @@ function ResponsiblesTab({ data, responsibles, setResponsibles }) {
   };
   const removePerson = (id) => setResponsibles(p=>p.filter(r=>r.id!==id));
   const updateArea   = (id, area) => setResponsibles(p=>p.map(r=>r.id===id?{...r,area}:r));
+  const updatePhoto  = (id, photo) => setResponsibles(p=>p.map(r=>r.id===id?{...r,photo}:r));
 
   return (
     <div style={{maxWidth:1000,margin:"0 auto",padding:"32px 20px"}}>
@@ -1765,11 +2108,21 @@ function ResponsiblesTab({ data, responsibles, setResponsibles }) {
           <div style={{fontSize:11,fontWeight:700,color:"#6366f1",textTransform:"uppercase",letterSpacing:.8,marginBottom:12}}>People List</div>
           <div style={{display:"flex",flexWrap:"wrap",gap:8,marginBottom:14}}>
             {(responsibles||[]).map(r=>(
-              <div key={r.id} style={{display:"flex",alignItems:"center",gap:6,background:"#f8faff",border:"1px solid #e0e7ff",borderRadius:20,padding:"4px 8px 4px 10px"}}>
-                <Avatar name={r.name} size={20}/>
+              <div key={r.id} style={{display:"flex",alignItems:"center",gap:7,background:"#f8faff",border:"1px solid #e0e7ff",borderRadius:12,padding:"6px 10px 6px 8px"}}>
+                <label style={{cursor:"pointer",position:"relative",flexShrink:0}} title="Click to change photo">
+                  <Avatar name={r.name} size={28} photo={r.photo}/>
+                  <span style={{position:"absolute",bottom:0,right:0,background:"#6366f1",color:"#fff",borderRadius:"50%",width:13,height:13,display:"flex",alignItems:"center",justifyContent:"center",fontSize:8,fontWeight:700,border:"1.5px solid #fff"}}>✎</span>
+                  <input type="file" accept="image/*" style={{display:"none"}} onChange={e=>{
+                    const file=e.target.files[0]; if(!file) return;
+                    const reader=new FileReader();
+                    reader.onload=ev=>updatePhoto(r.id,ev.target.result);
+                    reader.readAsDataURL(file);
+                  }}/>
+                </label>
                 <span style={{fontSize:12,fontWeight:600,color:"#1a1a1a"}}>{r.name}</span>
                 <input value={r.area||""} onChange={e=>updateArea(r.id,e.target.value)} placeholder="area"
                   style={{border:"none",borderBottom:"1px solid #c7d2fe",background:"transparent",outline:"none",fontSize:11,color:"#6366f1",width:80,padding:"1px 0"}}/>
+                {r.photo && <button onClick={()=>updatePhoto(r.id,null)} title="Remove photo" style={{background:"none",border:"none",cursor:"pointer",color:"#fca5a5",padding:1,fontSize:10}} onMouseEnter={e=>e.currentTarget.style.color="#ef4444"} onMouseLeave={e=>e.currentTarget.style.color="#fca5a5"}>✕</button>}
                 <button onClick={()=>removePerson(r.id)} style={{background:"none",border:"none",cursor:"pointer",color:"#d1d5db",padding:2,display:"flex",alignItems:"center",borderRadius:4}} onMouseEnter={e=>e.currentTarget.style.color="#ef4444"} onMouseLeave={e=>e.currentTarget.style.color="#d1d5db"}><X size={11}/></button>
               </div>
             ))}
@@ -1813,7 +2166,26 @@ function ResponsiblesTab({ data, responsibles, setResponsibles }) {
                     onMouseEnter={e=>e.currentTarget.style.background="#f0f7ff"}
                     onMouseLeave={e=>e.currentTarget.style.background=i%2===0?"#fff":"#fafbfc"}
                     onClick={()=>setSelected(p)}>
-                    <td style={{padding:"12px 16px"}}><div style={{display:"flex",alignItems:"center",gap:10}}><Avatar name={p.name} size={34}/><span style={{fontSize:13,fontWeight:700,color:"#1a1a1a"}}>{p.name}</span></div></td>
+                    <td style={{padding:"12px 16px"}}>
+                      <div style={{display:"flex",alignItems:"center",gap:10}}>
+                        <label style={{cursor:"pointer",position:"relative",flexShrink:0}} title="Click to change photo" onClick={e=>e.stopPropagation()}>
+                          <Avatar name={p.name} size={34} photo={p.photo}/>
+                          <div style={{position:"absolute",bottom:0,right:0,background:"#6366f1",color:"#fff",
+                            borderRadius:"50%",width:13,height:13,display:"flex",alignItems:"center",
+                            justifyContent:"center",fontSize:8,fontWeight:700,border:"1.5px solid #fff"}}>✎</div>
+                          <input type="file" accept="image/*" style={{display:"none"}} onChange={e=>{
+                            const file=e.target.files[0]; if(!file) return;
+                            const reader=new FileReader();
+                            reader.onload=ev=>{
+                              const r=(responsibles||[]).find(r=>r.name===p.name);
+                              if(r) updatePhoto(r.id,ev.target.result);
+                            };
+                            reader.readAsDataURL(file);
+                          }}/>
+                        </label>
+                        <span style={{fontSize:13,fontWeight:700,color:"#1a1a1a"}}>{p.name}</span>
+                      </div>
+                    </td>
                     <td style={{padding:"12px 16px"}}>{p.area.length > 0 ? <div style={{display:"flex",flexWrap:"wrap",gap:4}}>{p.area.map(a=>(<span key={a} style={{background:"#f3f4f6",color:"#374151",borderRadius:20,padding:"2px 9px",fontSize:11,fontWeight:500}}>{a}</span>))}</div> : <span style={{color:"#d1d5db",fontSize:12}}>—</span>}</td>
                     <td style={{padding:"12px 16px",fontSize:13,fontWeight:700,color:"#6366f1"}}>{total||<span style={{color:"#d1d5db"}}>0</span>}</td>
                     <td style={{padding:"12px 16px"}}>{total > 0 ? <div style={{display:"flex",alignItems:"center",gap:6}}><span style={{fontSize:13,fontWeight:700,color:"#15803d"}}>{done}</span><div style={{width:48,height:4,background:"#f3f4f6",borderRadius:2,overflow:"hidden"}}><div style={{height:"100%",width:`${pct}%`,background:"#22c55e",borderRadius:2}}/></div><span style={{fontSize:10,color:"#9ca3af"}}>{pct}%</span></div> : <span style={{color:"#d1d5db",fontSize:12}}>—</span>}</td>
@@ -1827,7 +2199,11 @@ function ResponsiblesTab({ data, responsibles, setResponsibles }) {
         )}
       </div>
 
-      {selected && <ResponsibleModal person={selected} onClose={()=>setSelected(null)}/>}
+      {selected && <ResponsibleModal person={selected} onClose={()=>setSelected(null)}
+        onPhotoChange={photo => {
+          const r = (responsibles||[]).find(r=>r.name===selected.name);
+          if (r) { updatePhoto(r.id, photo); setSelected(prev=>({...prev, photo})); }
+        }}/>}
     </div>
   );
 }
@@ -2025,7 +2401,7 @@ export default function App() {
           </button>
         ))}
       </div>
-      {tab==="dashboard"    && <DashboardTab     data={data} setData={setData} goals={goals}/>}
+      {tab==="dashboard"    && <DashboardTab     data={data} setData={setData} goals={goals} responsibles={responsibles}/>}
       {tab==="data"         && <DataTab          data={data} setData={setData} responsibles={responsibles} setResponsibles={setResponsibles}/>}
       {tab==="responsibles" && <ResponsiblesTab  data={data} responsibles={responsibles} setResponsibles={setResponsibles}/>}
       {tab==="goals"        && <GoalsTab         goals={goals} setGoals={setGoals} data={data}/>}
