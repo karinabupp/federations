@@ -7,7 +7,7 @@ import { Globe, Users, AlertTriangle, XCircle, X, Plus, Database, LayoutDashboar
 if (typeof document !== "undefined" && !document.getElementById("wpf-fonts")) {
   const l = document.createElement("link");
   l.id = "wpf-fonts"; l.rel = "stylesheet";
-  l.href = "https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap";
+  l.href = "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap";
   document.head.appendChild(l);
 }
 
@@ -362,7 +362,7 @@ function StaircaseBlock({ data, onStepClick, goals = {} }) {
       cumulative += count;
       const qGoal = goals[q]?.target ?? [10,20,35,55][i];
       const onTrack = cumulative >= qGoal;
-      const purpleColors = ["#c4b5fd","#a78bfa","#7c3aed","#4c1d95"];
+      const purpleColors = ["#d1d5db","#9ca3af","#6b7280","#374151"];
       const greenColors  = ["#86efac","#4ade80","#16a34a","#14532d"];
       const color = onTrack ? greenColors[i] : purpleColors[i];
       return {
@@ -382,20 +382,19 @@ function StaircaseBlock({ data, onStepClick, goals = {} }) {
       <div style={{display:"flex",alignItems:"flex-start",justifyContent:"space-between",marginBottom:20}}>
         <div>
           <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:3}}>
-            <Target size={15} color="#6366f1"/>
-            <h2 style={{fontSize:14,fontWeight:700,margin:0}}>Path to {goalTotal} Federations</h2>
+            <h2 style={{fontSize:14,fontWeight:700,margin:0,letterSpacing:1,textTransform:"uppercase"}}>Goals</h2>
           </div>
           <p style={{fontSize:11,color:"#9ca3af",margin:0}}>Quarterly member acquisition target · Click a step to see records</p>
         </div>
         <div style={{textAlign:"right"}}>
-          <div style={{fontSize:28,fontWeight:700,color:"#1a1a1a",lineHeight:1,fontFamily:"'Playfair Display',Georgia,serif"}}>
+          <div style={{fontSize:28,fontWeight:700,color:"#1a1a1a",lineHeight:1,fontFamily:"'Inter',system-ui,sans-serif"}}>
             {totalMembers}<span style={{fontSize:14,color:"#9ca3af",fontWeight:400,marginLeft:4}}>/ {goalTotal}</span>
           </div>
           <div style={{fontSize:11,color:"#9ca3af",marginTop:2}}>{Math.round(pct)}% of goal</div>
         </div>
       </div>
       <div style={{height:4,background:"#f3f4f6",borderRadius:4,marginBottom:22,overflow:"hidden"}}>
-        <div style={{height:"100%",width:`${pct}%`,background: pct >= 100 ? "linear-gradient(90deg,#16a34a,#4ade80)" : "linear-gradient(90deg,#c4b5fd,#7c3aed)",borderRadius:4,transition:"width 0.6s ease"}}/>
+        <div style={{height:"100%",width:`${pct}%`,background: pct >= 100 ? "linear-gradient(90deg,#16a34a,#4ade80)" : "linear-gradient(90deg,#4ade80,#16a34a)",borderRadius:4,transition:"width 0.6s ease"}}/>
       </div>
       <div style={{display:"flex",alignItems:"flex-end",gap:10}}>
         {steps.map((step, i) => {
@@ -406,9 +405,9 @@ function StaircaseBlock({ data, onStepClick, goals = {} }) {
               {/* ✅ Show goal target above bar (replacing old "new members" count) */}
               <div style={{marginBottom:8,textAlign:"center"}}>
                 <div style={{fontSize:11,color:"#9ca3af",marginBottom:2}}>meta</div>
-                <div style={{fontSize:22,fontWeight:700,lineHeight:1,fontFamily:"'Playfair Display',Georgia,serif",color:step.onTrack?"#16a34a":"#7c3aed"}}>{step.qGoal}</div>
+                <div style={{fontSize:22,fontWeight:700,lineHeight:1,fontFamily:"'Inter',system-ui,sans-serif",color:step.onTrack?"#16a34a":"#1a1a1a"}}>{step.qGoal}</div>
                 <div style={{fontSize:9,fontWeight:700,marginTop:3,color:step.onTrack?"#22c55e":"#ef4444"}}>
-                  {step.onTrack?"✓ on track":"✗ behind"}
+                  {step.onTrack?"on track":"behind"}
                 </div>
               </div>
               <button
@@ -421,7 +420,7 @@ function StaircaseBlock({ data, onStepClick, goals = {} }) {
                 })}
                 style={{width:"100%",height:stepH,
                   background:isActive?`linear-gradient(180deg,${step.color}22 0%,${step.color}44 100%)`:"#f9fafb",
-                  border:`2px solid ${isActive?step.color:"#e5e7eb"}`,
+                  border:`2px solid ${isActive?step.color:"#d1d5db"}`,
                   borderRadius:"10px 10px 0 0",cursor:step.rows.length>0?"pointer":"default",
                   display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-start",
                   padding:"12px 8px 0",transition:"all 0.2s"}}
@@ -446,10 +445,10 @@ function StaircaseBlock({ data, onStepClick, goals = {} }) {
         <div style={{display:"flex",flexDirection:"column",alignItems:"center",minWidth:56}}>
           <div style={{marginBottom:8,textAlign:"center"}}>
             <div style={{fontSize:11,color:"#9ca3af",marginBottom:2}}>total</div>
-            <div style={{fontSize:22,fontWeight:700,lineHeight:1,fontFamily:"'Playfair Display',Georgia,serif",color:"#7c3aed"}}>{goalTotal}</div>
+            <div style={{fontSize:22,fontWeight:700,lineHeight:1,fontFamily:"'Inter',system-ui,sans-serif",color:"#1a1a1a"}}>{goalTotal}</div>
           </div>
-          <div style={{width:48,height:BASE_H+STEP_INC*5,background:"linear-gradient(180deg,#f5f3ff,#ede9fe)",border:"2px dashed #7c3aed",borderRadius:"10px 10px 0 0",display:"flex",alignItems:"center",justifyContent:"center"}}>
-            <Target size={16} color="#7c3aed"/>
+          <div style={{width:48,height:BASE_H+STEP_INC*5,background:"linear-gradient(180deg,#f9fafb,#f3f4f6)",border:"2px dashed #9ca3af",borderRadius:"10px 10px 0 0",display:"flex",alignItems:"center",justifyContent:"center"}}>
+            <Target size={16} color="#9ca3af"/>
           </div>
           <div style={{fontSize:10,color:"#9ca3af",marginTop:6}}>target</div>
         </div>
@@ -467,7 +466,7 @@ function RecordsModal({ title, subtitle, rows, onClose, onEdit }) {
       <div style={{background:"#fff",borderRadius:16,width:860,maxWidth:"100%",maxHeight:"85vh",display:"flex",flexDirection:"column",boxShadow:"0 24px 64px rgba(0,0,0,0.18)"}}>
         <div style={{padding:"20px 24px",borderBottom:"1px solid #f3f4f6",display:"flex",alignItems:"center",gap:12}}>
           <div style={{flex:1}}>
-            <h2 style={{margin:0,fontSize:17,fontWeight:700,fontFamily:"'Playfair Display',Georgia,serif"}}>{title}</h2>
+            <h2 style={{margin:0,fontSize:17,fontWeight:700,fontFamily:"'Inter',system-ui,sans-serif"}}>{title}</h2>
             {subtitle&&<p style={{margin:"2px 0 0",fontSize:12,color:"#6b7280"}}>{subtitle}</p>}
           </div>
           <span style={{background:"#f3f4f6",borderRadius:20,padding:"3px 10px",fontSize:12,fontWeight:600,color:"#374151"}}>{rows.length} records</span>
@@ -534,7 +533,7 @@ function EditModal({ row, onClose, onSave, onExpandCountry }) {
       <div style={{background:"#fff",borderRadius:16,padding:28,width:560,maxWidth:"100%",maxHeight:"92vh",overflowY:"auto",boxShadow:"0 24px 64px rgba(0,0,0,0.2)"}}>
         <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:22}}>
           <Globe size={18} color="#f59e0b"/>
-          <h2 style={{fontSize:18,fontWeight:700,margin:0,fontFamily:"'Playfair Display',Georgia,serif"}}>{f.country||"New Country"}</h2>
+          <h2 style={{fontSize:18,fontWeight:700,margin:0,fontFamily:"'Inter',system-ui,sans-serif"}}>{f.country||"New Country"}</h2>
           {f.country && onExpandCountry && (
             <button onClick={()=>{onSave(f);onClose();onExpandCountry(f);}}
               style={{display:"flex",alignItems:"center",gap:4,background:"none",border:"1px solid #e0e7ff",borderRadius:20,padding:"3px 10px",cursor:"pointer",fontSize:11,color:"#6366f1",fontWeight:600,marginLeft:4}}
@@ -860,7 +859,7 @@ function WorldMap({ countries, onCountryClick, showTrophies, showTasks, responsi
             txt.setAttribute("font-weight","800");
             txt.setAttribute("fill","#1a1a1a");
             txt.setAttribute("letter-spacing","1.1");
-            txt.setAttribute("font-family","DM Sans,system-ui,sans-serif");
+            txt.setAttribute("font-family","Inter,system-ui,sans-serif");
             txt.setAttribute("pointer-events","none");
             txt.textContent = label;
             gCont.appendChild(txt);
@@ -940,7 +939,7 @@ function WorldMap({ countries, onCountryClick, showTrophies, showTasks, responsi
         txt.setAttribute("x",x); txt.setAttribute("y",y+r*0.36);
         txt.setAttribute("text-anchor","middle"); txt.setAttribute("font-size",r*0.9);
         txt.setAttribute("font-weight","700"); txt.setAttribute("fill","#fff");
-        txt.setAttribute("font-family","DM Sans,system-ui,sans-serif");
+        txt.setAttribute("font-family","Inter,system-ui,sans-serif");
         txt.setAttribute("pointer-events","none"); txt.textContent=avatarInit(name);
         g.appendChild(txt);
       }
@@ -954,11 +953,13 @@ function WorldMap({ countries, onCountryClick, showTrophies, showTasks, responsi
       const hasTrophy = showTrophies && c.tournament;
       const tasks = c.tasks||[];
       const openTasks = tasks.filter(t=>t.taskStatus!=="Done");
+      const today = new Date(); today.setHours(0,0,0,0);
+      const overdueTasks = openTasks.filter(t => t.deadline && new Date(t.deadline) < today);
 
-      // Collect unique responsible persons for open tasks
+      // Show avatars only for OVERDUE tasks on the map
       const responsibleMap = {};
       if (showTasks) {
-        openTasks.forEach(t => {
+        overdueTasks.forEach(t => {
           const name = (t.responsible||"").trim();
           if (name && !responsibleMap[name]) responsibleMap[name] = t;
         });
@@ -1394,7 +1395,7 @@ function GoogleTasksSyncButton({ tasks, countryName, onTasksUpdate }) {
         <>
           <button onClick={syncAll} disabled={syncing}
             style={{display:"flex",alignItems:"center",gap:5,background:syncing?"#f3f4f6":"#e0f2fe",border:"1px solid #7dd3fc",borderRadius:8,padding:"6px 12px",cursor:syncing?"not-allowed":"pointer",fontSize:12,color:"#0369a1",fontWeight:600}}>
-            {syncing ? "⏳ Syncing…" : "🔄 Sync to Google"}
+            {syncing ? "Syncing…" : "Sync to Google"}
           </button>
           {result && <span style={{fontSize:11,color:result.fail>0?"#dc2626":"#16a34a",fontWeight:700}}>{result.ok} synced{result.fail>0?`, ${result.fail} failed`:""}</span>}
           <button onClick={signOut} title="Disconnect Google" style={{background:"none",border:"none",cursor:"pointer",fontSize:11,color:"#9ca3af",padding:"2px 4px"}}title="Sign out">✕</button>
@@ -1433,7 +1434,7 @@ function CountryHistoryBlock({ country }) {
     <div id="country-history" style={{background:"#fff",borderRadius:16,padding:"22px 24px",marginTop:18,boxShadow:"0 1px 4px rgba(0,0,0,0.07)"}}>
       <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:16}}>
         <BookOpen size={16} color="#6366f1"/>
-        <h2 style={{fontSize:15,fontWeight:700,margin:0,fontFamily:"'Playfair Display',Georgia,serif"}}>History</h2>
+        <h2 style={{fontSize:15,fontWeight:700,margin:0,fontFamily:"'Inter',system-ui,sans-serif"}}>History</h2>
         <span style={{fontSize:11,background:"#eef2ff",color:"#6366f1",borderRadius:20,padding:"2px 8px",fontWeight:600}}>{entries.length} entries</span>
       </div>
 
@@ -1451,7 +1452,7 @@ function CountryHistoryBlock({ country }) {
           <textarea value={note} onChange={e=>setNote(e.target.value)}
             onKeyDown={e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)) add();}}
             placeholder={`Add a note about ${country.country}… (Cmd+Enter to save)`}
-            style={{flex:1,border:"1px solid #e5e7eb",borderRadius:8,padding:"7px 10px",fontSize:12,outline:"none",resize:"vertical",minHeight:56,fontFamily:"'DM Sans',system-ui,sans-serif"}}/>
+            style={{flex:1,border:"1px solid #e5e7eb",borderRadius:8,padding:"7px 10px",fontSize:12,outline:"none",resize:"vertical",minHeight:56,fontFamily:"'Inter',system-ui,sans-serif"}}/>
           <button onClick={add}
             style={{background:"#1a1a1a",color:"#fff",border:"none",borderRadius:8,padding:"0 16px",cursor:"pointer",fontSize:12,fontWeight:600,flexShrink:0}}>
             <Plus size={13} style={{display:"block",margin:"0 auto 2px"}}/>Save
@@ -1595,7 +1596,7 @@ Respond ONLY with the raw JSON array.`;
   const TAG_CFG = { Risk:{bg:"#fee2e2",color:"#dc2626"}, Opportunity:{bg:"#dcfce7",color:"#15803d"}, "Follow-up":{bg:"#dbeafe",color:"#1d4ed8"}, Action:{bg:"#fef3c7",color:"#b45309"}, Info:{bg:"#f3f4f6",color:"#374151"} };
 
   return (
-    <div style={{minHeight:"100vh",background:"#f7f6f3",fontFamily:"'DM Sans',system-ui,sans-serif"}}>
+    <div style={{minHeight:"100vh",background:"#f7f6f3",fontFamily:"'Inter',system-ui,sans-serif"}}>
       {/* ── Top bar ── */}
       <div style={{background:"#fff",borderBottom:"1px solid #ede9e3",padding:"0 28px",display:"flex",alignItems:"center",gap:12,height:52,position:"sticky",top:0,zIndex:50}}>
         <button onClick={onBack}
@@ -1606,8 +1607,8 @@ Respond ONLY with the raw JSON array.`;
         </button>
         <span style={{color:"#e5e7eb",fontSize:16}}>|</span>
         <Map size={15} color="#f59e0b"/>
-        <span style={{fontSize:15,fontWeight:700,fontFamily:"'Playfair Display',Georgia,serif"}}>
-          {country.country} — State Map
+        <span style={{fontSize:15,fontWeight:700,fontFamily:"'Inter',system-ui,sans-serif"}}>
+          {country.country}
         </span>
         <div style={{marginLeft:"auto",display:"flex",gap:6,flexWrap:"wrap"}}>
           {Object.entries(STATUS_CFG).map(([s,c])=>(
@@ -1624,7 +1625,7 @@ Respond ONLY with the raw JSON array.`;
         <div style={{display:"grid",gridTemplateColumns:"1fr 340px",gap:18,marginBottom:22,alignItems:"start"}}>
           {/* Map */}
           <div style={{background:"#fff",borderRadius:16,padding:"22px 24px",boxShadow:"0 1px 4px rgba(0,0,0,0.07)"}}>
-            <h2 style={{fontSize:15,fontWeight:700,margin:"0 0 16px",fontFamily:"'Playfair Display',Georgia,serif"}}>
+            <h2 style={{fontSize:15,fontWeight:700,margin:"0 0 16px",fontFamily:"'Inter',system-ui,sans-serif"}}>
               {country.country}
             </h2>
             <CountryZoomMap
@@ -1686,7 +1687,7 @@ Respond ONLY with the raw JSON array.`;
         {/* ── National Entities Table ── */}
         <div style={{background:"#fff",borderRadius:16,padding:"22px 24px",marginBottom:18,boxShadow:"0 1px 4px rgba(0,0,0,0.07)"}}>
           <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
-            <h2 style={{fontSize:15,fontWeight:700,margin:0,fontFamily:"'Playfair Display',Georgia,serif"}}>National Entities</h2>
+            <h2 style={{fontSize:15,fontWeight:700,margin:0,fontFamily:"'Inter',system-ui,sans-serif"}}>🌍 National Entities</h2>
             <div style={{display:"flex",gap:8,alignItems:"center"}}>
               <span style={{background:"#f3f4f6",borderRadius:20,padding:"3px 10px",fontSize:11,fontWeight:600,color:"#6b7280"}}>{localStates.length} records</span>
               <button onClick={addState}
@@ -1749,7 +1750,7 @@ Respond ONLY with the raw JSON array.`;
         {/* ── Media section ── */}
         <div style={{background:"#fff",borderRadius:16,padding:"22px 24px",marginBottom:18,boxShadow:"0 1px 4px rgba(0,0,0,0.07)"}}>
           <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
-            <h2 style={{fontSize:15,fontWeight:700,margin:0,fontFamily:"'Playfair Display',Georgia,serif"}}>📺 Media</h2>
+            <h2 style={{fontSize:15,fontWeight:700,margin:0,fontFamily:"'Inter',system-ui,sans-serif"}}>📡 Media</h2>
             <button onClick={()=>{const m={id:`m${Date.now()}`,name:"",email:"",representative:""};setLocalMedia(p=>[...p,m]);}}
               style={{display:"flex",alignItems:"center",gap:4,background:"#f5f3ff",border:"1px solid #c4b5fd",borderRadius:8,padding:"6px 12px",cursor:"pointer",fontSize:12,color:"#7c3aed",fontWeight:600}}
               onMouseEnter={e=>e.currentTarget.style.background="#ede9fe"}
@@ -1788,7 +1789,7 @@ Respond ONLY with the raw JSON array.`;
         {/* ── Tasks ── */}
         <div style={{background:"#fff",borderRadius:16,padding:"22px 24px",boxShadow:"0 1px 4px rgba(0,0,0,0.07)"}}>
           <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16}}>
-            <h2 style={{fontSize:15,fontWeight:700,margin:0,fontFamily:"'Playfair Display',Georgia,serif"}}>⚠️ Tasks</h2>
+            <h2 style={{fontSize:15,fontWeight:700,margin:0,fontFamily:"'Inter',system-ui,sans-serif"}}>✅ Tasks</h2>
             <div style={{display:"flex",gap:8,alignItems:"center"}}>
               {localTasks.filter(t=>t.taskStatus!=="Done"&&t.deadline&&new Date(t.deadline)<new Date()).length>0&&(
                 <span style={{fontSize:11,color:"#dc2626",background:"#fee2e2",padding:"3px 10px",borderRadius:20,fontWeight:700}}>
@@ -2038,7 +2039,7 @@ Respond ONLY with the raw JSON array.`;
             <div style={{borderTop:"1px solid #e0e7ff",paddingTop:14}}>
               <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}>
                 <Map size={13} color="#16a34a"/>
-                <span style={{fontSize:11,fontWeight:700,color:"#16a34a",textTransform:"uppercase",letterSpacing:.8}}>National Entities</span>
+                <span style={{fontSize:11,fontWeight:700,color:"#16a34a",textTransform:"uppercase",letterSpacing:.8}}>🌍 National Entities</span>
                 <span style={{fontSize:10,color:"#9ca3af",background:"#dcfce7",padding:"1px 7px",borderRadius:10}}>{statesList.length}</span>
               </div>
               {statesList.length === 0 && <div style={{fontSize:12,color:"#9ca3af",padding:"4px 0 10px",fontStyle:"italic"}}>No entities added yet.</div>}
@@ -2071,8 +2072,8 @@ Respond ONLY with the raw JSON array.`;
             {/* Media */}
             <div style={{borderTop:"1px solid #e0e7ff",paddingTop:14,marginTop:14}}>
               <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}>
-                <span style={{fontSize:13}}>📺</span>
-                <span style={{fontSize:11,fontWeight:700,color:"#7c3aed",textTransform:"uppercase",letterSpacing:.8}}>Media</span>
+                
+                <span style={{fontSize:11,fontWeight:700,color:"#7c3aed",textTransform:"uppercase",letterSpacing:.8}}>📡 Media</span>
                 <span style={{fontSize:10,color:"#9ca3af",background:"#f5f3ff",padding:"1px 7px",borderRadius:10}}>{mediaList.length}</span>
               </div>
               {mediaList.length === 0 && <div style={{fontSize:12,color:"#9ca3af",padding:"4px 0 10px",fontStyle:"italic"}}>No media contacts added yet.</div>}
@@ -2102,7 +2103,7 @@ Respond ONLY with the raw JSON array.`;
             <div style={{borderTop:"1px solid #e0e7ff",paddingTop:14,marginTop:14}}>
               <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}>
                 <Target size={13} color="#f59e0b"/>
-                <span style={{fontSize:11,fontWeight:700,color:"#b45309",textTransform:"uppercase",letterSpacing:.8}}>Tasks</span>
+                <span style={{fontSize:11,fontWeight:700,color:"#b45309",textTransform:"uppercase",letterSpacing:.8}}>✅ Tasks</span>
                 <span style={{fontSize:10,color:"#9ca3af",background:"#fef3c7",padding:"1px 7px",borderRadius:10}}>{tasksList.length}</span>
                 {tasksList.filter(t=>t.taskStatus!=="Done"&&t.deadline&&new Date(t.deadline)<new Date()).length>0&&(
                   <span style={{fontSize:10,color:"#dc2626",background:"#fee2e2",padding:"1px 7px",borderRadius:10,fontWeight:700}}>
@@ -2377,7 +2378,7 @@ Respond ONLY with the raw JSON array. No markdown, no explanation.`;
         <div style={{padding:"16px 24px",borderBottom:"1px solid #f3f4f6",display:"flex",alignItems:"center",gap:14,flexShrink:0}}>
           <div style={{width:13,height:13,borderRadius:"50%",background:style.stroke,flexShrink:0}}/>
           <div style={{flex:1}}>
-            <h2 style={{margin:0,fontSize:17,fontWeight:700,fontFamily:"'Playfair Display',Georgia,serif"}}>{continent}</h2>
+            <h2 style={{margin:0,fontSize:17,fontWeight:700,fontFamily:"'Inter',system-ui,sans-serif"}}>{continent}</h2>
             <p style={{margin:"2px 0 0",fontSize:11,color:"#9ca3af"}}>{contCountries.length} tracked · {members} members</p>
           </div>
           <div style={{display:"flex",gap:6,flexWrap:"wrap",justifyContent:"flex-end"}}>
@@ -2501,7 +2502,7 @@ function DashboardTab({ data, setData, goals = {}, responsibles = [], history = 
   return (
     <div style={{maxWidth:1160,margin:"0 auto",padding:"32px 20px",background:"#f7f6f3"}}>
       <div style={{marginBottom:26}}>
-        <h1 style={{fontSize:28,fontWeight:700,margin:"0 0 3px",fontFamily:"'Playfair Display',Georgia,serif"}}>WPF Member Nations</h1>
+        <h1 style={{fontSize:28,fontWeight:700,margin:"0 0 3px",fontFamily:"'Inter',system-ui,sans-serif"}}>WPF Member Nations</h1>
         <p style={{fontSize:12,color:"#9ca3af",margin:0,textTransform:"uppercase",letterSpacing:"1.5px",fontWeight:500}}>World Poker Federation · Member tracking</p>
       </div>
 
@@ -2513,7 +2514,7 @@ function DashboardTab({ data, setData, goals = {}, responsibles = [], history = 
             onMouseLeave={e=>{e.currentTarget.style.borderColor="transparent";e.currentTarget.style.boxShadow="0 1px 4px rgba(0,0,0,0.07)";e.currentTarget.style.transform="translateY(0)";}}>
             <div style={{padding:10,background:iconBg,borderRadius:10,flexShrink:0}}>{icon}</div>
             <div>
-              <div style={{fontSize:30,fontWeight:600,lineHeight:1,color:"#1a1a1a",fontFamily:"'Playfair Display',Georgia,serif"}}>{kpis[key].val}</div>
+              <div style={{fontSize:30,fontWeight:600,lineHeight:1,color:"#1a1a1a",fontFamily:"'Inter',system-ui,sans-serif"}}>{kpis[key].val}</div>
               <div style={{fontSize:11,color:"#9ca3af",marginTop:3,fontWeight:500}}>{label}</div>
             </div>
           </button>
@@ -2524,7 +2525,7 @@ function DashboardTab({ data, setData, goals = {}, responsibles = [], history = 
 
       <div style={{background:"#fff",borderRadius:12,padding:22,marginBottom:18,boxShadow:"0 1px 4px rgba(0,0,0,0.07)"}}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:14}}>
-          <h2 style={{fontSize:14,fontWeight:700,margin:0}}>Member Map</h2>
+          <h2 style={{fontSize:14,fontWeight:700,margin:0,letterSpacing:1,textTransform:"uppercase"}}>Map</h2>
           <div style={{display:"flex",gap:16,alignItems:"center",flexWrap:"wrap"}}>
             {Object.entries(STATUS_CFG).map(([s,c])=>(
               <span key={s} style={{display:"flex",alignItems:"center",gap:5,fontSize:11,color:"#6b7280"}}>
@@ -2533,11 +2534,11 @@ function DashboardTab({ data, setData, goals = {}, responsibles = [], history = 
             ))}
             <label style={{display:"flex",alignItems:"center",gap:6,cursor:"pointer",fontSize:11,color:showTrophies?"#1a1a1a":"#9ca3af",padding:"4px 10px",borderRadius:20,border:"1px solid",borderColor:showTrophies?"#d4af37":"#e5e7eb",background:showTrophies?"#fffbeb":"#fafafa",transition:"all .2s",userSelect:"none"}}>
               <input type="checkbox" checked={showTrophies} onChange={e=>setShowTrophies(e.target.checked)} style={{accentColor:"#d4af37",width:13,height:13,cursor:"pointer"}}/>
-              🏆 Tournaments
+              Tournaments
             </label>
             <label style={{display:"flex",alignItems:"center",gap:6,cursor:"pointer",fontSize:11,color:showTasks?"#1a1a1a":"#9ca3af",padding:"4px 10px",borderRadius:20,border:"1px solid",borderColor:showTasks?"#f59e0b":"#e5e7eb",background:showTasks?"#fff7ed":"#fafafa",transition:"all .2s",userSelect:"none"}}>
               <input type="checkbox" checked={showTasks} onChange={e=>setShowTasks(e.target.checked)} style={{accentColor:"#f59e0b",width:13,height:13,cursor:"pointer"}}/>
-              ⚠️ Tasks
+              Tasks
             </label>
           </div>
         </div>
@@ -2549,7 +2550,7 @@ function DashboardTab({ data, setData, goals = {}, responsibles = [], history = 
 
       <div style={{background:"#fff",borderRadius:12,padding:22,marginBottom:18,boxShadow:"0 1px 4px rgba(0,0,0,0.07)"}}>
         <div style={{marginBottom:14}}>
-          <h2 style={{fontSize:14,fontWeight:700,margin:"0 0 2px"}}>Monthly Status Progression</h2>
+          <h2 style={{fontSize:14,fontWeight:700,margin:"0 0 2px",letterSpacing:1,textTransform:"uppercase"}}>Progression</h2>
           <p style={{fontSize:11,color:"#9ca3af",margin:0}}>Derived from status history · Click a month to see records</p>
         </div>
         {chartData.length===0
@@ -2639,12 +2640,12 @@ function DataTab({ data, setData, responsibles, setResponsibles, history = [], g
   return (
     <div style={{maxWidth:1400,margin:"0 auto",padding:"32px 20px"}}>
       <div style={{marginBottom:22}}>
-        <h1 style={{fontSize:26,fontWeight:700,margin:"0 0 3px",fontFamily:"'Playfair Display',Georgia,serif"}}>Master Data</h1>
+        <h1 style={{fontSize:26,fontWeight:700,margin:"0 0 3px",fontFamily:"'Inter',system-ui,sans-serif"}}>Master Data</h1>
         <p style={{fontSize:12,color:"#9ca3af",margin:0,textTransform:"uppercase",letterSpacing:"1.5px",fontWeight:500}}>Complete database · expand any row to edit status history</p>
       </div>
 
       <div style={{display:"flex",gap:10,alignItems:"center",marginBottom:16,flexWrap:"wrap"}}>
-        <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="🔍  Search countries, companies, quarters..."
+        <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search countries, companies, quarters..."
           style={{flex:1,minWidth:200,border:"1px solid #e5e7eb",borderRadius:8,padding:"7px 14px",fontSize:13,outline:"none"}}/>
         {[{val:sfilt,set:setSfilt,opts:STATUSES},{val:cfilt,set:setCfilt,opts:CONTINENTS}].map((sel,i)=>(
           <select key={i} value={sel.val} onChange={e=>sel.set(e.target.value)}
@@ -2779,7 +2780,7 @@ function Avatar({ name, size=42, photo }) {
   );
   return (
     <div style={{width:size,height:size,borderRadius:"50%",background:bg,display:"flex",alignItems:"center",justifyContent:"center",
-      color:"#fff",fontWeight:700,fontSize:size*0.36,flexShrink:0,fontFamily:"'DM Sans',system-ui,sans-serif",letterSpacing:".5px"}}>
+      color:"#fff",fontWeight:700,fontSize:size*0.36,flexShrink:0,fontFamily:"'Inter',system-ui,sans-serif",letterSpacing:".5px"}}>
       {initials(name)}
     </div>
   );
@@ -2820,7 +2821,7 @@ function ResponsibleModal({ person, onClose, onPhotoChange }) {
             }}/>
           </label>
           <div style={{flex:1}}>
-            <h2 style={{margin:"0 0 4px",fontSize:20,fontWeight:700,fontFamily:"'Playfair Display',Georgia,serif"}}>{name}</h2>
+            <h2 style={{margin:"0 0 4px",fontSize:20,fontWeight:700,fontFamily:"'Inter',system-ui,sans-serif"}}>{name}</h2>
             <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
               {area.map(a=>(
                 <span key={a} style={{background:"#f3f4f6",color:"#374151",borderRadius:20,padding:"2px 10px",fontSize:11,fontWeight:600}}>{a}</span>
@@ -2838,7 +2839,7 @@ function ResponsibleModal({ person, onClose, onPhotoChange }) {
             {label:"Overdue 🔴",     val:`${overdue} (${overduePct}%)`, color:"#dc2626", bg:"#fee2e2"},
           ].map(({label,val,color,bg})=>(
             <div key={label} style={{background:bg,borderRadius:12,padding:"14px 16px",textAlign:"center"}}>
-              <div style={{fontSize:22,fontWeight:700,color,fontFamily:"'Playfair Display',Georgia,serif",lineHeight:1}}>{val}</div>
+              <div style={{fontSize:22,fontWeight:700,color,fontFamily:"'Inter',system-ui,sans-serif",lineHeight:1}}>{val}</div>
               <div style={{fontSize:11,color,opacity:.8,marginTop:4,fontWeight:600}}>{label}</div>
             </div>
           ))}
@@ -2938,7 +2939,7 @@ function ResponsiblesTab({ data, responsibles, setResponsibles }) {
     padding: "3px 0",
     width: "100%",
     color: hasVal ? "#1a1a1a" : "#ef4444",
-    fontFamily: "'DM Sans',system-ui,sans-serif",
+    fontFamily: "'Inter',system-ui,sans-serif",
     transition: "border-color 0.15s",
   });
 
@@ -2948,13 +2949,13 @@ function ResponsiblesTab({ data, responsibles, setResponsibles }) {
       {/* ── Header ── */}
       <div style={{display:"flex",alignItems:"flex-end",justifyContent:"space-between",marginBottom:24,flexWrap:"wrap",gap:12}}>
         <div>
-          <h1 style={{fontSize:26,fontWeight:700,margin:"0 0 3px",fontFamily:"'Playfair Display',Georgia,serif"}}>Responsibles</h1>
+          <h1 style={{fontSize:26,fontWeight:700,margin:"0 0 3px",fontFamily:"'Inter',system-ui,sans-serif"}}>Responsibles</h1>
           <p style={{fontSize:12,color:"#9ca3af",margin:0,textTransform:"uppercase",letterSpacing:"1.5px",fontWeight:500}}>
             {responsibles.length} {responsibles.length===1?"person":"people"} · edite direto na tabela · clique no nome para ver perfil
           </p>
         </div>
         <div style={{display:"flex",gap:8,alignItems:"center"}}>
-          <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="🔍  buscar…"
+          <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Buscar responsáveis..."
             style={{border:"1px solid #e5e7eb",borderRadius:8,padding:"7px 13px",fontSize:12,outline:"none",width:200}}/>
           <span style={{fontSize:11,color:"#9ca3af",background:"#f3f4f6",padding:"5px 11px",borderRadius:20,whiteSpace:"nowrap"}}>{filtered.length} results</span>
         </div>
@@ -3183,7 +3184,7 @@ function GoalsKPIsBlock({ goals, setGoals, data }) {
     Q4: { target: 55, label: "Oct – Dec" },
   });
 
-  const purpleQ = ["#c4b5fd","#a78bfa","#7c3aed","#4c1d95"];
+  const purpleQ = ["#d1d5db","#9ca3af","#6b7280","#374151"];
   const greenQ  = ["#86efac","#4ade80","#16a34a","#14532d"];
   let _cum = 0;
   const qOnTrack = {};
@@ -3202,7 +3203,7 @@ function GoalsKPIsBlock({ goals, setGoals, data }) {
     <div style={{marginTop:20}}>
       <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:16,padding:"0 2px"}}>
         <div>
-          <h2 style={{fontSize:16,fontWeight:700,margin:"0 0 2px",fontFamily:"'Playfair Display',Georgia,serif"}}>Goals & KPIs</h2>
+          <h2 style={{fontSize:16,fontWeight:700,margin:"0 0 2px",fontFamily:"'Inter',system-ui,sans-serif"}}>Goals & KPIs</h2>
           <p style={{fontSize:12,color:"#9ca3af",margin:0}}>Edit targets for the Path to Federations chart</p>
         </div>
         <button onClick={resetGoals}
@@ -3222,18 +3223,18 @@ function GoalsKPIsBlock({ goals, setGoals, data }) {
             <div style={{display:"flex",alignItems:"center",gap:10}}>
               <input type="number" value={goals.total || 55} min={1}
                 onChange={e => updateGoal("total", e.target.value)}
-                style={{border:"2px solid #6366f1",borderRadius:8,padding:"8px 12px",fontSize:20,fontWeight:700,color:"#6366f1",width:100,outline:"none",fontFamily:"'Playfair Display',Georgia,serif"}}/>
+                style={{border:"2px solid #6366f1",borderRadius:8,padding:"8px 12px",fontSize:20,fontWeight:700,color:"#6366f1",width:100,outline:"none",fontFamily:"'Inter',system-ui,sans-serif"}}/>
               <span style={{fontSize:12,color:"#9ca3af"}}>federations</span>
             </div>
           </div>
           <div style={{display:"flex",alignItems:"center",gap:16,padding:"0 20px",borderLeft:"1px solid #f3f4f6",borderRight:"1px solid #f3f4f6"}}>
             <div style={{textAlign:"center"}}>
-              <div style={{fontSize:32,fontWeight:700,color:"#22c55e",fontFamily:"'Playfair Display',Georgia,serif",lineHeight:1}}>{totalMembers}</div>
+              <div style={{fontSize:32,fontWeight:700,color:"#22c55e",fontFamily:"'Inter',system-ui,sans-serif",lineHeight:1}}>{totalMembers}</div>
               <div style={{fontSize:11,color:"#9ca3af",marginTop:4}}>current members</div>
             </div>
           </div>
           <div style={{textAlign:"center"}}>
-            <div style={{fontSize:32,fontWeight:700,color:"#6366f1",fontFamily:"'Playfair Display',Georgia,serif",lineHeight:1}}>
+            <div style={{fontSize:32,fontWeight:700,color:"#6366f1",fontFamily:"'Inter',system-ui,sans-serif",lineHeight:1}}>
               {Math.round((totalMembers / (goals.total||55)) * 100)}%
             </div>
             <div style={{fontSize:11,color:"#9ca3af",marginTop:4}}>of goal reached</div>
@@ -3266,11 +3267,11 @@ function GoalsKPIsBlock({ goals, setGoals, data }) {
               const pct = Math.min((thisCum/qGoal)*100,100);
               const onTrack = thisCum >= qGoal;
               return (
-                <tr key={q} style={{borderBottom:"1px solid #f3f4f6"}}
-                  onMouseEnter={e=>e.currentTarget.style.background="#f8faff"}
-                  onMouseLeave={e=>e.currentTarget.style.background="transparent"}>
+                <tr key={q} style={{borderBottom:"1px solid #f3f4f6", background:onTrack?"#f0fdf4":"transparent"}}
+                  onMouseEnter={e=>e.currentTarget.style.background=onTrack?"#dcfce7":"#f8faff"}
+                  onMouseLeave={e=>e.currentTarget.style.background=onTrack?"#f0fdf4":"transparent"}>
                   <td style={{padding:"14px 14px"}}>
-                    <span style={{fontWeight:800,fontSize:15,color:qColors[q],fontFamily:"'Playfair Display',Georgia,serif"}}>{q}</span>
+                    <span style={{fontWeight:800,fontSize:15,color:onTrack?"#16a34a":qColors[q],fontFamily:"'Inter',system-ui,sans-serif"}}>{q}</span>
                   </td>
                   <td style={{padding:"14px 14px"}}>
                     <input value={goals[q]?.label || ""} onChange={e=>updateQ(q,"label",e.target.value)}
@@ -3280,24 +3281,24 @@ function GoalsKPIsBlock({ goals, setGoals, data }) {
                     <div style={{display:"flex",alignItems:"center",gap:8}}>
                       <input type="number" min={1} value={qGoal}
                         onChange={e=>updateQ(q,"target",e.target.value)}
-                        style={{border:`2px solid ${qColors[q]}`,borderRadius:8,padding:"6px 10px",fontSize:15,fontWeight:700,
-                          color:qColors[q],width:72,outline:"none",fontFamily:"'Playfair Display',Georgia,serif",background:"#fff"}}/>
+                        style={{border:`2px solid ${onTrack?"#16a34a":qColors[q]}`,borderRadius:8,padding:"6px 10px",fontSize:15,fontWeight:700,
+                          color:onTrack?"#16a34a":qColors[q],width:72,outline:"none",fontFamily:"'Inter',system-ui,sans-serif",background:onTrack?"#f0fdf4":"#fff"}}/>
                       <span style={{fontSize:11,color:"#9ca3af"}}>members</span>
                     </div>
                   </td>
                   <td style={{padding:"14px 14px"}}>
-                    <span style={{fontSize:16,fontWeight:700,color:"#1a1a1a",fontFamily:"'Playfair Display',Georgia,serif"}}>{thisCum}</span>
+                    <span style={{fontSize:16,fontWeight:700,color:"#1a1a1a",fontFamily:"'Inter',system-ui,sans-serif"}}>{thisCum}</span>
                   </td>
                   <td style={{padding:"14px 14px",minWidth:140}}>
                     <div style={{height:6,background:"#f3f4f6",borderRadius:4,overflow:"hidden",width:120}}>
-                      <div style={{height:"100%",width:`${pct}%`,background:qColors[q],borderRadius:4,transition:"width .4s"}}/>
+                      <div style={{height:"100%",width:`${pct}%`,background:onTrack?"#16a34a":qColors[q],borderRadius:4,transition:"width .4s"}}/>
                     </div>
                     <div style={{fontSize:10,color:"#9ca3af",marginTop:4}}>{Math.round(pct)}%</div>
                   </td>
                   <td style={{padding:"14px 14px"}}>
                     <span style={{fontSize:11,fontWeight:700,padding:"3px 10px",borderRadius:20,
                       background:onTrack?"#dcfce7":"#fee2e2",color:onTrack?"#16a34a":"#dc2626"}}>
-                      {onTrack?"✓ On track":"✗ Behind"}
+                      {onTrack?"On track":"Behind"}
                     </span>
                   </td>
                 </tr>
@@ -3359,7 +3360,7 @@ function HistoryTab({ data, history, setHistory }) {
   return (
     <div style={{maxWidth:900,margin:"0 auto",padding:"32px 20px"}}>
       <div style={{marginBottom:24}}>
-        <h1 style={{fontSize:26,fontWeight:700,margin:"0 0 3px",fontFamily:"'Playfair Display',Georgia,serif"}}>History</h1>
+        <h1 style={{fontSize:26,fontWeight:700,margin:"0 0 3px",fontFamily:"'Inter',system-ui,sans-serif"}}>History</h1>
         <p style={{fontSize:12,color:"#9ca3af",margin:0,textTransform:"uppercase",letterSpacing:"1.5px",fontWeight:500}}>
           Regional log · used by AI to generate discussion topics
         </p>
@@ -3384,7 +3385,7 @@ function HistoryTab({ data, history, setHistory }) {
           <textarea value={note} onChange={e=>setNote(e.target.value)}
             onKeyDown={e=>{if(e.key==="Enter"&&(e.metaKey||e.ctrlKey)) addEntry();}}
             placeholder="Write your note here… (Cmd+Enter to save)"
-            style={{flex:1,border:"1px solid #e5e7eb",borderRadius:8,padding:"8px 12px",fontSize:13,outline:"none",resize:"vertical",minHeight:72,fontFamily:"'DM Sans',system-ui,sans-serif"}}/>
+            style={{flex:1,border:"1px solid #e5e7eb",borderRadius:8,padding:"8px 12px",fontSize:13,outline:"none",resize:"vertical",minHeight:72,fontFamily:"'Inter',system-ui,sans-serif"}}/>
           <button onClick={addEntry}
             style={{background:"#1a1a1a",color:"#fff",border:"none",borderRadius:8,padding:"0 18px",cursor:"pointer",fontSize:12,fontWeight:600,alignSelf:"stretch"}}>
             <Plus size={14} style={{display:"block",margin:"0 auto 2px"}}/>Save
@@ -3394,7 +3395,7 @@ function HistoryTab({ data, history, setHistory }) {
 
       {/* Filters */}
       <div style={{display:"flex",gap:8,marginBottom:16,flexWrap:"wrap",alignItems:"center"}}>
-        <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="🔍 Search notes…"
+        <input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search notes…"
           style={{flex:1,minWidth:180,border:"1px solid #e5e7eb",borderRadius:8,padding:"6px 12px",fontSize:12,outline:"none"}}/>
         <select value={filterScope} onChange={e=>setFilterScope(e.target.value)}
           style={{border:"1px solid #e5e7eb",borderRadius:8,padding:"6px 10px",fontSize:12,background:"#fff",outline:"none"}}>
@@ -3507,7 +3508,7 @@ function SyncModal({ data, responsibles, onClose }) {
             <ExternalLink size={16} color="#fff"/>
           </div>
           <div style={{flex:1}}>
-            <h2 style={{margin:0,fontSize:17,fontWeight:700,fontFamily:"'Playfair Display',Georgia,serif"}}>Sync Tasks → Google Sheets</h2>
+            <h2 style={{margin:0,fontSize:17,fontWeight:700,fontFamily:"'Inter',system-ui,sans-serif"}}>Sync Tasks → Google Sheets</h2>
             <p style={{margin:"2px 0 0",fontSize:12,color:"#9ca3af"}}>
               {payload.length} responsáveis · {totalTasks} tasks no total
             </p>
@@ -3530,7 +3531,7 @@ function SyncModal({ data, responsibles, onClose }) {
                     <div style={{width:28,height:28,borderRadius:"50%",background:avatarColor(p.name),display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",fontSize:11,fontWeight:700,flexShrink:0}}>{initials(p.name)}</div>
                     <div>
                       <div style={{fontSize:13,fontWeight:700,color:"#1a1a1a"}}>{p.name}</div>
-                      <div style={{fontSize:11,color:p.email?"#6366f1":"#ef4444"}}>{p.email||"⚠️ sem email — adicione em Responsibles"}</div>
+                      <div style={{fontSize:11,color:p.email?"#6366f1":"#ef4444"}}>{p.email||"sem email — adicione em Responsibles"}</div>
                     </div>
                     <span style={{marginLeft:"auto",background:"#eef2ff",color:"#6366f1",borderRadius:20,padding:"2px 9px",fontSize:11,fontWeight:700}}>{p.tasks.length} tasks</span>
                   </div>
@@ -3559,7 +3560,7 @@ function SyncModal({ data, responsibles, onClose }) {
               style={{width:"100%",border:"1px solid #e5e7eb",borderRadius:8,padding:"8px 12px",fontSize:12,outline:"none",boxSizing:"border-box",
                 borderColor: status==="no_url"?"#ef4444":"#e5e7eb"}}
             />
-            {status==="no_url" && <div style={{fontSize:11,color:"#ef4444",marginTop:4}}>⚠️ Cole a URL do Apps Script antes de sincronizar.</div>}
+            {status==="no_url" && <div style={{fontSize:11,color:"#ef4444",marginTop:4}}>Cole a URL do Apps Script antes de sincronizar.</div>}
             <div style={{fontSize:11,color:"#9ca3af",marginTop:6,lineHeight:1.6}}>
               Ainda não tem? Siga o guia abaixo para criar o script no Google Sheets.
             </div>
@@ -3567,7 +3568,7 @@ function SyncModal({ data, responsibles, onClose }) {
 
           {/* How-to guide */}
           <details style={{marginBottom:20}}>
-            <summary style={{fontSize:12,fontWeight:700,color:"#6366f1",cursor:"pointer",marginBottom:8}}>📋 Como configurar o Apps Script (passo a passo)</summary>
+            <summary style={{fontSize:12,fontWeight:700,color:"#6366f1",cursor:"pointer",marginBottom:8}}>Como configurar o Apps Script (passo a passo)</summary>
             <div style={{fontSize:12,color:"#374151",lineHeight:1.8,background:"#f8faff",borderRadius:10,padding:"12px 14px",border:"1px solid #e0e7ff",marginTop:8}}>
               <b>1.</b> Abra a Google Planilha: <a href={`https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/edit`} target="_blank" rel="noreferrer" style={{color:"#4285f4"}}>clique aqui ↗</a><br/>
               <b>2.</b> Menu <b>Extensões → Apps Script</b><br/>
@@ -3587,7 +3588,7 @@ function SyncModal({ data, responsibles, onClose }) {
           )}
           {status==="loading" && (
             <div style={{background:"#fffbeb",borderRadius:10,padding:"12px 14px",border:"1px solid #fcd34d",marginBottom:16,display:"flex",alignItems:"center",gap:10}}>
-              <span style={{fontSize:18}}>🔄</span>
+              
               <div style={{fontSize:13,color:"#b45309",fontWeight:600}}>
                 Uma nova aba foi aberta para executar o script no Google. Ela fechará automaticamente em instantes…
               </div>
@@ -3595,9 +3596,9 @@ function SyncModal({ data, responsibles, onClose }) {
           )}
           {status==="success" && (
             <div style={{background:"#f0fdf4",borderRadius:10,padding:"12px 14px",border:"1px solid #bbf7d0",marginBottom:16,display:"flex",alignItems:"center",gap:10}}>
-              <span style={{fontSize:18}}>🎉</span>
+              
               <div style={{fontSize:13,color:"#15803d",fontWeight:600}}>
-                Planilha atualizada! Abra a planilha e clique em 🎯 WPF Tasks → Atribuir Tasks para criar as tasks no Google Tasks.
+                Planilha atualizada! Abra a planilha e clique em WPF Tasks → Atribuir Tasks para criar as tasks no Google Tasks.
                 <a href={`https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/edit`} target="_blank" rel="noreferrer"
                   style={{display:"block",fontSize:11,color:"#4285f4",marginTop:4}}>Abrir Planilha ↗</a>
               </div>
@@ -3633,13 +3634,13 @@ export default function App() {
   const [showSync, setShowSync] = useState(false);
 
   return (
-    <div style={{background:"#f7f6f3",minHeight:"100vh",fontFamily:"'DM Sans',system-ui,sans-serif"}}>
+    <div style={{background:"#f7f6f3",minHeight:"100vh",fontFamily:"'Inter',system-ui,sans-serif"}}>
       <div style={{background:"#fff",borderBottom:"1px solid #ede9e3",padding:"0 20px",position:"sticky",top:0,zIndex:100,display:"flex",alignItems:"center",gap:4}}>
         <div style={{display:"flex",alignItems:"center",gap:8,padding:"12px 0",marginRight:24}}>
           <div style={{width:28,height:28,background:"#1a1a1a",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center"}}>
             <Globe size={15} color="#fff"/>
           </div>
-          <span style={{fontSize:14,fontWeight:700,color:"#1a1a1a",fontFamily:"'Playfair Display',Georgia,serif",letterSpacing:".2px"}}>WPF</span>
+          <span style={{fontSize:14,fontWeight:700,color:"#1a1a1a",fontFamily:"'Inter',system-ui,sans-serif",letterSpacing:".2px"}}>WPF</span>
         </div>
         {[
           {id:"dashboard",    label:"Dashboard",    icon:<LayoutDashboard size={14}/>},
@@ -3649,7 +3650,7 @@ export default function App() {
         ].map(t=>(
           <button key={t.id} onClick={()=>setTab(t.id)}
             style={{display:"flex",alignItems:"center",gap:6,padding:"14px 14px",background:"none",border:"none",cursor:"pointer",
-              fontSize:13,fontWeight:tab===t.id?600:400,color:tab===t.id?"#1a1a1a":"#9ca3af",fontFamily:"'DM Sans',system-ui,sans-serif",
+              fontSize:13,fontWeight:tab===t.id?600:400,color:tab===t.id?"#1a1a1a":"#9ca3af",fontFamily:"'Inter',system-ui,sans-serif",
               borderBottom:tab===t.id?"2px solid #1a1a1a":"2px solid transparent",transition:"all 0.15s",marginBottom:"-1px"}}>
             {t.icon}{t.label}
           </button>
