@@ -362,7 +362,7 @@ function StaircaseBlock({ data, onStepClick, goals = {} }) {
       cumulative += count;
       const qGoal = goals[q]?.target ?? [10,20,35,55][i];
       const onTrack = cumulative >= qGoal;
-      const purpleColors = ["#d1d5db","#9ca3af","#6b7280","#374151"];
+      const purpleColors = ["#94a3b8","#64748b","#475569","#1e293b"];
       const greenColors  = ["#86efac","#4ade80","#16a34a","#14532d"];
       const color = onTrack ? greenColors[i] : purpleColors[i];
       return {
@@ -420,7 +420,7 @@ function StaircaseBlock({ data, onStepClick, goals = {} }) {
                 })}
                 style={{width:"100%",height:stepH,
                   background:isActive?`linear-gradient(180deg,${step.color}22 0%,${step.color}44 100%)`:"#f9fafb",
-                  border:`2px solid ${isActive?step.color:"#d1d5db"}`,
+                  border:`2px solid ${isActive?step.color:"#94a3b8"}`,
                   borderRadius:"10px 10px 0 0",cursor:step.rows.length>0?"pointer":"default",
                   display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"flex-start",
                   padding:"12px 8px 0",transition:"all 0.2s"}}
@@ -2472,7 +2472,8 @@ function DashboardTab({ data, setData, goals = {}, responsibles = [], history = 
 
   const kpis = useMemo(()=>({
     total:    {val:named.length,rows:named},
-    active:   {val:named.filter(c=>c.memberStatus==="Member").length,rows:named.filter(c=>c.memberStatus==="Member")},
+    active:        {val:named.filter(c=>c.memberStatus==="Member").length,rows:named.filter(c=>c.memberStatus==="Member")},
+    documentation: {val:named.filter(c=>c.memberStatus==="Documentation").length,rows:named.filter(c=>c.memberStatus==="Documentation")},
     expiring: {val:named.filter(c=>calcVig(c.inicio,c.fim).status==="Expiring").length,rows:named.filter(c=>calcVig(c.inicio,c.fim).status==="Expiring")},
     expired:  {val:named.filter(c=>calcVig(c.inicio,c.fim).status==="Expired").length,rows:named.filter(c=>calcVig(c.inicio,c.fim).status==="Expired")},
   }),[named]);
@@ -2488,7 +2489,8 @@ function DashboardTab({ data, setData, goals = {}, responsibles = [], history = 
   };
 
   const KPI_DEFS=[
-    {key:"active",   icon:<Users size={20} color="#22c55e"/>,         label:"Active Members",       iconBg:"#dcfce7"},
+    {key:"active",        icon:<Users size={20} color="#22c55e"/>,         label:"Active Members",       iconBg:"#dcfce7"},
+    {key:"documentation", icon:<Database size={20} color="#3b82f6"/>,       label:"Documentation",        iconBg:"#dbeafe"},
     {key:"expiring", icon:<AlertTriangle size={20} color="#f59e0b"/>, label:"Expiring Memberships", iconBg:"#fef3c7"},
     {key:"expired",  icon:<XCircle size={20} color="#ef4444"/>,       label:"Expired Memberships",  iconBg:"#fee2e2"},
   ];
@@ -2502,7 +2504,7 @@ function DashboardTab({ data, setData, goals = {}, responsibles = [], history = 
   return (
     <div style={{maxWidth:1160,margin:"0 auto",padding:"32px 20px",background:"#f7f6f3"}}>
       <div style={{marginBottom:26}}>
-        <h1 style={{fontSize:28,fontWeight:700,margin:"0 0 3px",fontFamily:"'Inter',system-ui,sans-serif"}}>WPF Member Nations</h1>
+        <h1 style={{fontSize:28,fontWeight:700,margin:"0 0 3px",fontFamily:"'Inter',system-ui,sans-serif"}}>Federations</h1>
         <p style={{fontSize:12,color:"#9ca3af",margin:0,textTransform:"uppercase",letterSpacing:"1.5px",fontWeight:500}}>World Poker Federation · Member tracking</p>
       </div>
 
@@ -2622,6 +2624,36 @@ function DataTab({ data, setData, responsibles, setResponsibles, history = [], g
     setData(p=>[...p,novo]); setEditModal(novo);
   };
 
+  const [pasteModal, setPasteModal] = useState(false);
+  const [pasteText,  setPasteText]  = useState("");
+  const [pastePreview, setPastePreview] = useState([]);
+
+  const parsePaste = (text) => {
+    const lines = text.trim().split(/\r?\n/).filter(l=>l.trim());
+    if (!lines.length) return [];
+    // Detect if first row is a header (contains non-numeric, non-date text in country-like position)
+    const rows = lines.map(line => line.split(/	/));
+    // Map columns by position: Country, Continent, Company, Status, Quarter, Start, End, Rep, Email, Phone, Tournament
+    const colKeys = ["country","continent","empresa","memberStatus","quarter","inicio","fim","rep","email","tel","tournament"];
+    const VALID_STATUSES = ["Member","Negotiating","Documentation","Needed","Expired"];
+    return rows.map(cells => {
+      const obj = {id:Date.now()+Math.random(), states:[], tasks:[], statusHistory:[]};
+      colKeys.forEach((k,i) => { if (cells[i] !== undefined) obj[k] = cells[i].trim(); });
+      if (!VALID_STATUSES.includes(obj.memberStatus)) obj.memberStatus = "Needed";
+      if (obj.inicio) obj.quarter = quarterFromDate(obj.inicio);
+      return obj;
+    }).filter(r => r.country);
+  };
+
+  const handlePasteImport = () => {
+    const rows = parsePaste(pasteText);
+    if (!rows.length) return;
+    setData(p => [...p, ...rows]);
+    setPasteModal(false);
+    setPasteText("");
+    setPastePreview([]);
+  };
+
   const COLS=[
     {key:"country",      label:"Country",   w:120},
     {key:"continent",    label:"Continent", w:120},
@@ -2657,7 +2689,67 @@ function DataTab({ data, setData, responsibles, setResponsibles, history = [], g
         <button onClick={addRow} style={{display:"flex",alignItems:"center",gap:6,background:"#1a1a1a",color:"#fff",border:"none",borderRadius:8,padding:"7px 14px",cursor:"pointer",fontSize:12,fontWeight:600}}>
           <Plus size={13}/> Add Country
         </button>
+        <button onClick={()=>setPasteModal(true)} style={{display:"flex",alignItems:"center",gap:6,background:"#f0fdf4",color:"#16a34a",border:"1px solid #bbf7d0",borderRadius:8,padding:"7px 14px",cursor:"pointer",fontSize:12,fontWeight:600}}>
+          <Plus size={13}/> Paste from Spreadsheet
+        </button>
       </div>
+
+      {pasteModal && (
+        <div onClick={e=>e.target===e.currentTarget&&setPasteModal(false)}
+          style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.45)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:2000,padding:16}}>
+          <div style={{background:"#fff",borderRadius:16,width:680,maxWidth:"100%",maxHeight:"90vh",display:"flex",flexDirection:"column",boxShadow:"0 24px 64px rgba(0,0,0,0.18)"}}>
+            <div style={{padding:"20px 24px",borderBottom:"1px solid #f3f4f6",display:"flex",alignItems:"center",justifyContent:"space-between"}}>
+              <div>
+                <div style={{fontSize:16,fontWeight:700,color:"#1a1a1a"}}>Paste from Spreadsheet</div>
+                <div style={{fontSize:11,color:"#9ca3af",marginTop:2}}>Cole dados copiados do Excel ou Google Sheets · colunas: Country, Continent, Company, Status, Quarter, Start, End, Rep, Email, Phone, Tournament</div>
+              </div>
+              <button onClick={()=>setPasteModal(false)} style={{background:"none",border:"none",cursor:"pointer",color:"#9ca3af",padding:4}}><X size={16}/></button>
+            </div>
+            <div style={{padding:"16px 24px",flex:1,overflowY:"auto"}}>
+              <textarea
+                value={pasteText}
+                onChange={e=>{setPasteText(e.target.value);setPastePreview(parsePaste(e.target.value));}}
+                placeholder="Cole aqui os dados copiados da planilha (Ctrl+V)..."
+                style={{width:"100%",height:160,border:"1px solid #e5e7eb",borderRadius:8,padding:"10px 12px",fontSize:12,outline:"none",resize:"vertical",boxSizing:"border-box",fontFamily:"monospace",lineHeight:1.6}}
+                autoFocus
+              />
+              {pastePreview.length > 0 && (
+                <div style={{marginTop:12}}>
+                  <div style={{fontSize:11,fontWeight:700,color:"#16a34a",marginBottom:6}}>{pastePreview.length} registro(s) detectado(s):</div>
+                  <div style={{overflowX:"auto",borderRadius:8,border:"1px solid #e5e7eb"}}>
+                    <table style={{width:"100%",borderCollapse:"collapse",fontSize:11}}>
+                      <thead>
+                        <tr style={{background:"#f9fafb"}}>
+                          {["Country","Continent","Company","Status","Start","End","Rep"].map(h=>(
+                            <th key={h} style={{padding:"6px 10px",textAlign:"left",fontWeight:600,color:"#6b7280",borderBottom:"1px solid #e5e7eb",whiteSpace:"nowrap"}}>{h}</th>
+                          ))}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {pastePreview.slice(0,8).map((r,i)=>(
+                          <tr key={i} style={{borderBottom:"1px solid #f3f4f6"}}>
+                            {["country","continent","empresa","memberStatus","inicio","fim","rep"].map(k=>(
+                              <td key={k} style={{padding:"5px 10px",color:"#374151",whiteSpace:"nowrap",maxWidth:120,overflow:"hidden",textOverflow:"ellipsis"}}>{r[k]||"—"}</td>
+                            ))}
+                          </tr>
+                        ))}
+                        {pastePreview.length > 8 && <tr><td colSpan={7} style={{padding:"5px 10px",color:"#9ca3af",fontSize:10}}>+{pastePreview.length-8} mais...</td></tr>}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div style={{padding:"14px 24px",borderTop:"1px solid #f3f4f6",display:"flex",gap:10,justifyContent:"flex-end"}}>
+              <button onClick={()=>setPasteModal(false)} style={{background:"none",border:"1px solid #e5e7eb",borderRadius:8,padding:"7px 18px",cursor:"pointer",fontSize:12,color:"#6b7280"}}>Cancelar</button>
+              <button onClick={handlePasteImport} disabled={pastePreview.length===0}
+                style={{background:pastePreview.length>0?"#16a34a":"#9ca3af",color:"#fff",border:"none",borderRadius:8,padding:"7px 18px",cursor:pastePreview.length>0?"pointer":"not-allowed",fontSize:12,fontWeight:700}}>
+                Importar {pastePreview.length > 0 ? pastePreview.length+" registro(s)" : ""}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div style={{background:"#fff",borderRadius:12,boxShadow:"0 1px 4px rgba(0,0,0,0.07)",overflow:"hidden"}}>
         <div style={{overflowX:"auto"}}>
@@ -3184,7 +3276,7 @@ function GoalsKPIsBlock({ goals, setGoals, data }) {
     Q4: { target: 55, label: "Oct – Dec" },
   });
 
-  const purpleQ = ["#d1d5db","#9ca3af","#6b7280","#374151"];
+  const purpleQ = ["#94a3b8","#64748b","#475569","#1e293b"];
   const greenQ  = ["#86efac","#4ade80","#16a34a","#14532d"];
   let _cum = 0;
   const qOnTrack = {};
@@ -3321,7 +3413,7 @@ const HISTORY_TYPE_CFG = {
   Alert:    { bg:"#fee2e2", color:"#dc2626", icon:"🚨" },
 };
 
-function HistoryTab({ data, history, setHistory }) {
+function HistoryTab({ data, history, setHistory, responsibles=[] }) {
   const allCountries = data.filter(c=>c.country).map(c=>c.country);
   const allContinents = [...new Set(data.filter(c=>c.continent).map(c=>c.continent))];
   const scopeOptions = ["Global", ...allContinents, ...allCountries.sort()];
@@ -3330,13 +3422,14 @@ function HistoryTab({ data, history, setHistory }) {
   const [scope, setScope] = useState("Global");
   const [type, setType]   = useState("Note");
   const [date, setDate]   = useState(new Date().toISOString().slice(0,10));
+  const [responsible, setResponsible] = useState("");
   const [filterScope, setFilterScope] = useState("All");
   const [filterType,  setFilterType]  = useState("All");
   const [search, setSearch] = useState("");
 
   const addEntry = () => {
     const n = note.trim(); if (!n) return;
-    setHistory(p => [{id:`hist_${Date.now()}`, date, scope, type, note:n}, ...p]);
+    setHistory(p => [{id:`hist_${Date.now()}`, date, scope, type, note:n, responsible:responsible}, ...p]);
     setNote("");
   };
 
@@ -3346,7 +3439,7 @@ function HistoryTab({ data, history, setHistory }) {
     return (history||[]).filter(e => {
       if (filterScope !== "All" && e.scope !== filterScope) return false;
       if (filterType  !== "All" && e.type  !== filterType)  return false;
-      if (search) { const q=search.toLowerCase(); return e.note.toLowerCase().includes(q)||e.scope?.toLowerCase().includes(q); }
+      if (search) { const q=search.toLowerCase(); return e.note.toLowerCase().includes(q)||e.scope?.toLowerCase().includes(q)||e.responsible?.toLowerCase().includes(q); }
       return true;
     });
   }, [history, filterScope, filterType, search]);
@@ -3379,6 +3472,11 @@ function HistoryTab({ data, history, setHistory }) {
           <select value={type} onChange={e=>setType(e.target.value)}
             style={{border:"1px solid #e5e7eb",borderRadius:8,padding:"6px 10px",fontSize:12,background:"#fff",outline:"none"}}>
             {HISTORY_TYPES.map(t=><option key={t}>{t}</option>)}
+          </select>
+          <select value={responsible} onChange={e=>setResponsible(e.target.value)}
+            style={{border:"1px solid #e5e7eb",borderRadius:8,padding:"6px 10px",fontSize:12,background:"#fff",outline:"none",minWidth:160}}>
+            <option value="">Responsible</option>
+            {responsibles.map(r=><option key={r.id} value={r.name}>{r.name}</option>)}
           </select>
         </div>
         <div style={{display:"flex",gap:8}}>
@@ -3435,6 +3533,7 @@ function HistoryTab({ data, history, setHistory }) {
                       <div style={{display:"flex",alignItems:"center",gap:7,marginBottom:4,flexWrap:"wrap"}}>
                         <span style={{fontSize:11,fontWeight:700,padding:"2px 8px",borderRadius:10,background:cfg.bg,color:cfg.color}}>{e.type}</span>
                         <span style={{fontSize:11,background:"#f3f4f6",color:"#374151",borderRadius:10,padding:"2px 8px",fontWeight:500}}>{e.scope}</span>
+                        {e.responsible && <span style={{fontSize:11,background:"#ede9fe",color:"#6d28d9",borderRadius:10,padding:"2px 8px",fontWeight:500}}>{e.responsible}</span>}
                       </div>
                       <p style={{margin:0,fontSize:13,color:"#1a1a1a",lineHeight:1.5}}>{e.note}</p>
                     </div>
@@ -3655,18 +3754,12 @@ export default function App() {
             {t.icon}{t.label}
           </button>
         ))}
-        {/* Sync button in navbar */}
-        <div style={{marginLeft:"auto"}}>
-          <button onClick={()=>setShowSync(true)}
-            style={{display:"flex",alignItems:"center",gap:6,background:"linear-gradient(135deg,#4285f4,#34a853)",color:"#fff",border:"none",borderRadius:8,padding:"7px 14px",cursor:"pointer",fontSize:12,fontWeight:700,boxShadow:"0 2px 8px rgba(66,133,244,0.25)"}}>
-            <ExternalLink size={13}/> Sync → Docs
-          </button>
-        </div>
+<div style={{marginLeft:"auto"}}>        </div>
       </div>
       {tab==="dashboard"    && <DashboardTab     data={data} setData={setData} goals={goals} responsibles={responsibles} history={history}/>}
       {tab==="data"         && <DataTab          data={data} setData={setData} responsibles={responsibles} setResponsibles={setResponsibles} history={history} goals={goals} setGoals={setGoals}/>}
       {tab==="responsibles" && <ResponsiblesTab  data={data} responsibles={responsibles} setResponsibles={setResponsibles}/>}
-      {tab==="history"      && <HistoryTab       data={data} history={history} setHistory={setHistory}/>}
+      {tab==="history"      && <HistoryTab       data={data} history={history} setHistory={setHistory} responsibles={responsibles}/>}
       {showSync && <SyncModal data={data} responsibles={responsibles} onClose={()=>setShowSync(false)}/>}
     </div>
   );
