@@ -14,8 +14,9 @@ if (typeof document !== "undefined" && !document.getElementById("wpf-fonts")) {
 // ── Constants ──────────────────────────────────────────────────
 const STATUS_CFG = {
   Member:        { color:"#15803d", bg:"#dcfce7", dot:"#22c55e" },
-  Negotiating:   { color:"#b45309", bg:"#fef3c7", dot:"#f59e0b" },
   Documentation: { color:"#1d4ed8", bg:"#dbeafe", dot:"#60a5fa" },
+  Negotiating:   { color:"#b45309", bg:"#fef3c7", dot:"#f59e0b" },
+  Replace:       { color:"#7c3aed", bg:"#ede9fe", dot:"#8b5cf6" },
   Needed:        { color:"#b91c1c", bg:"#fee2e2", dot:"#ef4444" },
 };
 const ALL_STATUSES = ["", ...Object.keys(STATUS_CFG)];
@@ -2624,6 +2625,43 @@ function DataTab({ data, setData, responsibles, setResponsibles, history = [], g
     setData(p=>[...p,novo]); setEditModal(novo);
   };
 
+  // Fill Down: apply a value to all visible rows below a given row index
+  const fillDown = (fromRowId, colKey, value) => {
+    const visibleIds = filtered.map(r => r.id);
+    const fromIdx = visibleIds.indexOf(fromRowId);
+    if (fromIdx === -1) return;
+    const toFill = visibleIds.slice(fromIdx + 1);
+    setData(p => p.map(r => {
+      if (!toFill.includes(r.id)) return r;
+      const updated = {...r, [colKey]: value};
+      if (colKey === "inicio") updated.quarter = quarterFromDate(value);
+      return updated;
+    }));
+  };
+
+  // Fill Selected: apply value to all currently selected rows
+  const [selectedRows, setSelectedRows] = useState(new Set());
+  const toggleSelect = (id) => setSelectedRows(prev => {
+    const next = new Set(prev);
+    next.has(id) ? next.delete(id) : next.add(id);
+    return next;
+  });
+  const selectAll = () => setSelectedRows(
+    selectedRows.size === filtered.length ? new Set() : new Set(filtered.map(r=>r.id))
+  );
+  const fillSelected = (colKey, value) => {
+    if (selectedRows.size === 0) return;
+    setData(p => p.map(r => {
+      if (!selectedRows.has(r.id)) return r;
+      const updated = {...r, [colKey]: value};
+      if (colKey === "inicio") updated.quarter = quarterFromDate(value);
+      return updated;
+    }));
+  };
+
+  const [bulkField, setBulkField] = useState("memberStatus");
+  const [bulkValue, setBulkValue] = useState("");
+
   const [pasteModal, setPasteModal] = useState(false);
   const [pasteText,  setPasteText]  = useState("");
   const [pastePreview, setPastePreview] = useState([]);
@@ -2694,6 +2732,46 @@ function DataTab({ data, setData, responsibles, setResponsibles, history = [], g
         </button>
       </div>
 
+      {selectedRows.size > 0 && (
+        <div style={{background:"#1a1a1a",borderRadius:10,padding:"10px 16px",marginBottom:12,display:"flex",alignItems:"center",gap:10,flexWrap:"wrap"}}>
+          <span style={{fontSize:12,fontWeight:700,color:"#fff"}}>{selectedRows.size} linha(s) selecionada(s)</span>
+          <span style={{color:"#555",fontSize:12}}>—</span>
+          <span style={{fontSize:12,color:"#9ca3af"}}>Preencher campo:</span>
+          <select value={bulkField} onChange={e=>setBulkField(e.target.value)}
+            style={{border:"none",borderRadius:6,padding:"4px 8px",fontSize:12,background:"#333",color:"#fff",outline:"none"}}>
+            {COLS.filter(c=>c.key!=="country"&&c.key!=="quarter").map(c=>(
+              <option key={c.key} value={c.key}>{c.label}</option>
+            ))}
+          </select>
+          {bulkField==="memberStatus"
+            ?<select value={bulkValue} onChange={e=>setBulkValue(e.target.value)}
+                style={{border:"none",borderRadius:6,padding:"4px 8px",fontSize:12,background:"#333",color:"#fff",outline:"none"}}>
+                <option value="">-- selecione --</option>
+                {Object.keys(STATUS_CFG).map(s=><option key={s}>{s}</option>)}
+              </select>
+            :bulkField==="continent"
+            ?<select value={bulkValue} onChange={e=>setBulkValue(e.target.value)}
+                style={{border:"none",borderRadius:6,padding:"4px 8px",fontSize:12,background:"#333",color:"#fff",outline:"none"}}>
+                <option value="">-- selecione --</option>
+                {CONTINENTS.slice(1).map(c=><option key={c}>{c}</option>)}
+              </select>
+            :<input value={bulkValue} onChange={e=>setBulkValue(e.target.value)}
+                placeholder="Valor…"
+                style={{border:"none",borderRadius:6,padding:"4px 8px",fontSize:12,background:"#333",color:"#fff",outline:"none",width:140}}
+                type={bulkField==="inicio"||bulkField==="fim"?"date":"text"}/>
+          }
+          <button onClick={()=>{if(bulkValue)fillSelected(bulkField,bulkValue);}}
+            disabled={!bulkValue}
+            style={{background:bulkValue?"#6366f1":"#444",color:"#fff",border:"none",borderRadius:6,padding:"4px 14px",cursor:bulkValue?"pointer":"not-allowed",fontSize:12,fontWeight:700}}>
+            Aplicar
+          </button>
+          <button onClick={()=>setSelectedRows(new Set())}
+            style={{background:"none",border:"1px solid #444",color:"#9ca3af",borderRadius:6,padding:"4px 10px",cursor:"pointer",fontSize:12,marginLeft:"auto"}}>
+            Limpar seleção
+          </button>
+        </div>
+      )}
+
       {pasteModal && (
         <div onClick={e=>e.target===e.currentTarget&&setPasteModal(false)}
           style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.45)",display:"flex",alignItems:"center",justifyContent:"center",zIndex:2000,padding:16}}>
@@ -2756,7 +2834,12 @@ function DataTab({ data, setData, responsibles, setResponsibles, history = [], g
           <table style={{width:"100%",borderCollapse:"collapse",fontSize:12}}>
             <thead>
               <tr style={{background:"#fafafa",borderBottom:"2px solid #f3f4f6"}}>
-                <th style={{width:36,padding:"11px 6px 11px 14px"}}/>
+                <th style={{width:36,padding:"11px 6px 11px 14px"}}>
+                  <input type="checkbox"
+                    checked={selectedRows.size===filtered.length && filtered.length>0}
+                    onChange={selectAll}
+                    style={{cursor:"pointer",accentColor:"#6366f1"}}/>
+                </th>
                 {COLS.map(c=>(
                   <th key={c.key} style={{textAlign:"left",padding:"11px 14px",fontSize:10,color:"#9ca3af",fontWeight:700,whiteSpace:"nowrap",textTransform:"uppercase",letterSpacing:.6,minWidth:c.w}}>{c.label}</th>
                 ))}
@@ -2777,6 +2860,12 @@ function DataTab({ data, setData, responsibles, setResponsibles, history = [], g
                       onMouseLeave={e=>{if(!isOpen)e.currentTarget.style.background=i%2===0?"#fff":"#fafbfc";}}>
 
                       <td style={{padding:"4px 6px 4px 14px",verticalAlign:"middle",textAlign:"center"}}>
+                        <input type="checkbox"
+                          checked={selectedRows.has(row.id)}
+                          onChange={()=>toggleSelect(row.id)}
+                          style={{cursor:"pointer",accentColor:"#6366f1"}}/>
+                      </td>
+                      <td style={{padding:"4px 6px 4px 14px",verticalAlign:"middle",textAlign:"center"}}>
                         <button onClick={()=>toggleExpand(row.id)}
                           style={{background:"none",border:"none",cursor:"pointer",color:isOpen?"#6366f1":"#9ca3af",padding:3,borderRadius:4,display:"flex",alignItems:"center"}}
                           title={isOpen?"Hide history":"Show history"}>
@@ -2785,7 +2874,20 @@ function DataTab({ data, setData, responsibles, setResponsibles, history = [], g
                       </td>
 
                       {COLS.map(c=>(
-                        <td key={c.key} style={{padding:"4px 14px",verticalAlign:"middle"}} onClick={e=>e.stopPropagation()}>
+                        <td key={c.key} style={{padding:"4px 14px",verticalAlign:"middle",position:"relative"}} onClick={e=>e.stopPropagation()}
+                          onContextMenu={e=>{
+                            e.preventDefault();
+                            const val = row[c.key];
+                            if (!val) return;
+                            if (selectedRows.size > 1 && selectedRows.has(row.id)) {
+                              if (window.confirm(`Aplicar "${val}" em ${selectedRows.size} linhas selecionadas (campo: ${c.label})?`))
+                                fillSelected(c.key, val);
+                            } else {
+                              const below = filtered.length - filtered.findIndex(r=>r.id===row.id) - 1;
+                              if (below > 0 && window.confirm(`Preencher "${val}" nas ${below} linha(s) abaixo (campo: ${c.label})?`))
+                                fillDown(row.id, c.key, val);
+                            }
+                          }}>
                           {c.key==="memberStatus"
                             ?<EditableCell value={row[c.key]} type="select" opts={Object.keys(STATUS_CFG)} onChange={val=>save({...row,[c.key]:val})}/>
                             :c.key==="continent"
